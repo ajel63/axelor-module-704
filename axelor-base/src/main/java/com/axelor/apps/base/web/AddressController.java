@@ -365,6 +365,7 @@ public class AddressController {
   public void autocompleteAddress(ActionRequest request, ActionResponse response) {
     Address address = request.getContext().asType(Address.class);
     Beans.get(AddressService.class).autocompleteAddress(address);
+    System.err.println(address);
     response.setValues(address);
   }
 }

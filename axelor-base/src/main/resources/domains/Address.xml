@@ -15,6 +15,7 @@
     <many-to-one name="addressL7Country" ref="com.axelor.apps.base.db.Country"
       title="Country"/>
     <many-to-one name="city" ref="City" title="City"/>
+    <string name="cityName"/>
     <decimal name="latit" title="Latitude" precision="38" scale="18" nullable="true"/>
     <decimal name="longit" title="Longitude" precision="38" scale="18" nullable="true"/>
     <boolean name="isValidLatLong" title="Valid Latitude Longitude" default="true"/>
@@ -31,6 +32,9 @@
     <string name="fullName" namecolumn="true"
       search="addressL2,addressL3,addressL4,addressL5,addressL6" title="Address"/>
 
+    <string name="state" title="State"/>
+    <many-to-one ref="com.axelor.apps.base.db.PostalCode" name="postalCode"
+      title="Postal Code"/>
   </entity>
 
 </domain-models>

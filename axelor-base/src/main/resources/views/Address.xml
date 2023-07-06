@@ -17,7 +17,7 @@
   <form name="address-form" title="Address" model="com.axelor.apps.base.db.Address"
     onSave="action-group-base-address-onsave,save,action-base-address-method-update-lat-long"
     onNew="default-address-record" width="large">
-    <panel name="mainPanel" title="Address details" colSpan="12">
+    <panel name="mainPanel" title="Address details" colSpan="12" hidden="true">
       <field name="addressL7Country" onChange="action-address-record-clear-fields"
         required="true" canEdit="false" form-view="country-form" grid-view="country-grid"
         colSpan="12"/>
@@ -38,7 +38,7 @@
         canNew="true" onChange="action-address-change-city" form-view="city-form"
         grid-view="city-grid"/>
       <field name="zip" onChange="action-address-method-autocomplete-address"/>
-      <field name="addressL6" x-bind="{{addressL6|uppercase}}" required="true" colSpan="12"/>
+      <field name="addressL6" x-bind="{{addressL6|uppercase}}" colSpan="12"/>
       <static name="addressL6Text" colSpan="12"><![CDATA[Notice: The Zip/City field is automatically filled when the city is selected. You can change it when the Zip/City pair is missing or in case of minor change.]]></static>
       <button-group name="map1BtnGroup" colSpan="6" hideIf="$popup()" readonlyIf="!id">
         <button name="mapBtn" title="View map" icon="fa-map-marker"
@@ -56,6 +56,61 @@
       <field name="isUsed" hidden="true" type="boolean"/>
       <field name="isValidLatLong" hidden="true"/>
     </panel>
+
+    <!-- This panel for USA address -->
+
+    <panel name="mainPanel-usa" title="Address details" colSpan="12">
+      <field name="addressL7Country" onChange="action-address-record-clear-fields"
+        required="true" canEdit="false" form-view="country-form" grid-view="country-grid"/>
+      <field name="addressL2" x-bind="{{addressL2|uppercase}}"
+        placeholder="e.g. Financial department, CEO"/>
+      <field name="streetNumber" hidden="true" x-bind="{{streetNumber|uppercase}}"
+        onChange="action-address-record-change-addressL4"
+        if="__config__.app.getApp('base').getStoreStreets()"/>
+      <field name="street" hidden="true" onSelect="action-address-attrs-update-domain-street"
+        onChange="action-address-record-change-addressL4" form-view="street-form"
+        grid-view="street-grid" canNew="true" if="__config__.app.getApp('base').getStoreStreets()"/>
+      <field name="addressL4" title="Address" x-bind="{{addressL4|uppercase}}"
+        if="!__config__.app.getApp('base').getStoreStreets()"/>
+      <spacer/>
+      <field name="addressL3" title="Address-2nd Line" x-bind="{{addressL3|uppercase}}"
+        placeholder="e.g. Building A, Entry 2, 2nd Floor, Door 2E"/>
+      <spacer/>
+      <field name="city" showIf="city == null"
+        onSelect="action-address-attrs-update-domain-for-usa-city" canEdit="true" canNew="true"
+        onChange="action-address-change-city,action-address-set-counties-region"
+        form-view="city-form" grid-view="city-grid"/>
+      <spacer/>
+      <field name="cityName" showIf="city != null"
+        onChange="action-attrs-address-remove-city-from-city-field" title="City"/>
+      <spacer/>
+      <field name="state" title="State"/>
+      <field name="addressL5" title="County" x-bind="{{addressL5|uppercase}}"
+        placeholder="e.g. POB 254"/>
+      <field name="postalCode" canNew="true" domain="self.city = :city"
+        onChange="action-address-attrs-set-postal-code"/>
+      <field name="zip" title="Postal code" hidden="true" onChange=""/>
+      <field name="addressL6" x-bind="{{addressL6|uppercase}}" hidden="true" colSpan="12"/>
+      <static name="addressL6Text" hidden="true" colSpan="12">Notice: The Zip/City field is
+        automatically filled when the city is selected. You can change it when the Zip/City pair is
+        missing or in case of minor change.</static>
+      <button-group name="map1BtnGroup" colSpan="6" hideIf="$popup()" readonlyIf="!id">
+        <button name="mapBtn" title="View map" icon="fa-map-marker"
+          onClick="action-base-address-method-view-map"/>
+        <button name="directionsBtn" title="Get direction" icon="fa-location-arrow"
+          onClick="action-base-address-method-view-direction"/>
+      </button-group>
+      <spacer name="btnGrpSpacer" colSpan="6"/>
+      <button-group name="map2BtnGroup" colSpan="6" showIf="$popup()" readonlyIf="!id">
+        <button name="mapBtn" title="View map" icon="fa-map-marker"
+          onClick="action-base-address-method-view-map,close"/>
+        <button name="directionsBtn" title="Get direction" icon="fa-location-arrow"
+          onClick="action-base-address-method-view-direction,close"/>
+      </button-group>
+      <field name="isUsed" hidden="true" type="boolean"/>
+      <field name="isValidLatLong" hidden="true"/>
+    </panel>
+
     <panel name="qasCertificationPanel" title="QAS certification" colSpan="12"
       if="__config__.app.getApp('base')?.getHasQasValidation()">
       <field name="certifiedOk" colSpan="4"/>
@@ -138,14 +193,6 @@
     <action name="action-base-address-check-address-used"/>
   </action-group>
 
-  <action-record name="default-address-record" model="com.axelor.apps.base.db.Address">
-    <field name="addressL7Country"
-      expr="eval: __user__?.activeCompany?.address?.addressL7Country"
-      if="__user__?.activeCompany?.address"/>
-    <field name="addressL7Country" expr="action:default-address-country-record"
-      if="!__user__?.activeCompany?.address"/>
-  </action-record>
-
   <action-record name="action-address-change-city"
     model="com.axelor.apps.base.db.Address">
     <field name="addressL6" if="city &amp;&amp; city.zip"
@@ -156,12 +203,6 @@
     <field name="addressL7Country" expr="eval: city?.country" if="city"/>
     <field name="zip" expr="eval: city?.zip"/>
     <field name="street" expr="eval: null"/>
-  </action-record>
-
-  <action-record name="default-address-country-record"
-    model="com.axelor.apps.base.db.Country" search="('self.alpha3Code LIKE ?1', 'FRA')">
-    <field name="alpha3Code" expr="FRA"/>
-    <field name="name" expr="FRANCE"/>
   </action-record>
 
   <action-record name="action-base-address-set-address-used"
@@ -252,4 +293,32 @@
     <field name="pickList" hidden="true"
       if="!__config__.app.getApp('base')?.getHasQasValidation()"/>
   </search-filters>
+
+  <action-attrs name="action-address-attrs-set-postal-code">
+    <attribute name="value" for="zip" expr="eval: postalCode?.code"/>
+  </action-attrs>
+
+  <action-record name="default-address-record" model="com.axelor.apps.base.db.Address">
+    <field name="addressL7Country" expr="action:default-address-country-record-usa"/>
+  </action-record>
+
+  <action-record name="default-address-country-record-usa"
+    model="com.axelor.apps.base.db.Country" search="('self.alpha3Code LIKE ?1', 'USA')">
+    <field name="alpha3Code" expr="USA"/>
+    <field name="name" expr="UNITED STATES OF AMERICA"/>
+  </action-record>
+
+  <action-attrs name="action-address-set-counties-region">
+    <attribute name="value" for="addressL5" expr="eval: city?.department?.name"/>
+    <attribute name="value" for="state" expr="eval: city?.department?.region?.name"/>
+    <attribute name="value" for="postalCode" expr="eval: null" if="city == null"/>
+    <attribute name="value" for="cityName" expr="eval: city?.name"/>
+  </action-attrs>
+
+  <action-attrs name="action-attrs-address-remove-city-from-city-field">
+    <attribute name="value" for="city" expr="eval: null"/>
+    <attribute name="value" for="state" expr="eval: null"/>
+    <attribute name="value" for="addressL5" expr="eval: null"/>
+    <attribute name="value" for="postalCode" expr="eval: null"/>
+  </action-attrs>
 </object-views>

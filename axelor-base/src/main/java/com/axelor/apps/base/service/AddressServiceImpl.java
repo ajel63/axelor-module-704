@@ -259,12 +259,14 @@ public class AddressServiceImpl implements AddressService {
     String l4 = address.getAddressL4();
     String l5 = address.getAddressL5();
     String l6 = address.getAddressL6();
+    String state = address.getState();
+    String zip = address.getZip();
 
-    return (!Strings.isNullOrEmpty(l2) ? l2 : "")
+    return (!Strings.isNullOrEmpty(l4) ? l4 : "")
         + (!Strings.isNullOrEmpty(l3) ? " " + l3 : "")
-        + (!Strings.isNullOrEmpty(l4) ? " " + l4 : "")
-        + (!Strings.isNullOrEmpty(l5) ? " " + l5 : "")
-        + (!Strings.isNullOrEmpty(l6) ? " " + l6 : "");
+        + (!Strings.isNullOrEmpty(l6) ? " " + l6 : "")
+        + (!Strings.isNullOrEmpty(state) ? " " + state : "")
+        + (!Strings.isNullOrEmpty(zip) ? " " + zip : "");
   }
 
   @Override

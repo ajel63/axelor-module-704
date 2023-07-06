@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_5.3.xsd">
+
+  <grid name="postal-code-grid" title="Postal Code" model="com.axelor.apps.base.db.PostalCode"
+    orderBy="code">
+    <field name="code"/>
+    <field name="city"/>
+    <field name="county"/>
+    <field name="state"/>
+    <field name="country"/>
+  </grid>
+
+  <form name="postal-code-form" title="Postal Code" model="com.axelor.apps.base.db.PostalCode"
+    width="large">
+    <panel name="mainPanel">
+      <field name="code"/>
+      <field name="areaCode"/>
+      <field name="city"/>
+      <field name="county"/>
+      <field name="state"/>
+      <field name="country"/>
+    </panel>
+  </form>
+
+</object-views>

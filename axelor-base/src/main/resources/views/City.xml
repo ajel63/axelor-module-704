@@ -11,25 +11,32 @@
         onClick="action-base-view-import-city-popup"/>
     </toolbar>
     <field name="name"/>
+    <field name="code"/>
     <field name="zip"/>
   </grid>
 
-  <form name="city-form" title="City" model="com.axelor.apps.base.db.City" width="large">
+  <form name="city-form" title="City" model="com.axelor.apps.base.db.City" width="large"
+    onNew="action-city-set-default-country-usa">
     <panel name="mainPanel">
       <field name="name"/>
-      <field name="artmin" colSpan="2"/>
-      <field name="zip" colSpan="4"/>
-      <field name="inseeCode"/>
-      <field name="hasZipOnRight"/>
+      <field name="code"/>
+      <field name="zip" colSpan="4" title="Code" hidden="true"/>
+      <field name="artmin" colSpan="2" hidden="true"/>
+      <field name="inseeCode" hidden="true"/>
+      <field name="hasZipOnRight" hidden="true"/>
     </panel>
     <panel name="localizationPanel" title="Localization">
       <field name="country" form-view="country-form" grid-view="country-grid"/>
-      <field name="department" form-view="department-form" grid-view="department-grid"/>
-      <field name="canton" form-view="canton-form" grid-view="canton-grid"/>
+      <field name="department" title="County" form-view="department-form"
+        grid-view="department-grid"/>
+      <field name="canton" hidden="true" form-view="canton-form" grid-view="canton-grid"/>
     </panel>
-    <panel name="demographyPanel" title="Demography">
+    <panel name="demographyPanel" title="Demography" hidden="true">
       <field name="nbInhCommune"/>
     </panel>
+
+    <panel-related field="postalCode"/>
+
   </form>
 
   <action-view name="action-base-view-import-city-popup" title="Import city"
@@ -79,4 +86,16 @@
   <action-method name="action-base-method-import-city">
     <call class="com.axelor.apps.base.web.ImportCityController" method="importCity"/>
   </action-method>
+
+  <action-record name="action-city-set-default-country-usa"
+    model="com.axelor.apps.base.db.City">
+    <field name="country" expr="action:action-city-default-address-country-record"/>
+  </action-record>
+
+  <action-record name="action-city-default-address-country-record"
+    model="com.axelor.apps.base.db.Country" search="('self.alpha3Code LIKE ?1', 'USA')">
+    <field name="alpha3Code" expr="USA"/>
+    <field name="name" expr="UNITED STATES OF AMERICA"/>
+  </action-record>
+
 </object-views>
