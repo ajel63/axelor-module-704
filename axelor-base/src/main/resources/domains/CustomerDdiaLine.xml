@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="base" package="com.axelor.apps.base.db"/>
+
+  <entity name="CustomerDdiaLine" cacheable="true">
+
+    <date name="startDate" title="Start Date"/>
+    <date name="endDate" title="End Date"/>
+    <string name="redemptionCode" title="redemptionCode"/>
+    <string name="groupName" title="Group Name"/>
+    <string name="groupNumber" title="Group Number"/>
+    <string name="subscriberId" title="Subscriber Id"/>
+
+    <many-to-one ref="com.axelor.apps.base.db.Partner" name="customer" title="Custumer"/>
+
+  </entity>
+
+</domain-models>

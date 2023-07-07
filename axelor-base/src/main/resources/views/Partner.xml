@@ -317,11 +317,10 @@
       <panel colSpan="6" name="partnerCategoryPanel">
         <field name="partnerCategory" widget="SuggestBox" colSpan="6"
           form-view="partner-category-form" grid-view="partner-category-grid"/>
-        <field name="industrySector" colSpan="6" widget="SuggestBox"
-          hideIf="partnerTypeSelect== 2"/>
         <field name="source" canEdit="false" colSpan="6" widget="SuggestBox"
           form-view="source-form" grid-view="source-grid"/>
         <field name="department" colSpan="6" hideIf="partnerTypeSelect== 2"/>
+        <field name="industrySector" colSpan="6" widget="SuggestBox" hidden="true"/>
         <panel name="functionPanel" colSpan="12" showIf="isContact || partnerTypeSelect == 2">
           <field name="jobTitleFunction"
             onChange="action-record-base-partner-set-business-card"/>
@@ -329,15 +328,15 @@
         </panel>
       </panel>
       <panel name="otherPartnerDetailsPanel">
-        <field name="registrationCode" hideIf="partnerTypeSelect== 2" colSpan="4"
-          onChange="action-method-partner-registration-code-onChange"/>
-        <field name="siren" hideIf="partnerTypeSelect== 2" colSpan="4" readonly="true"/>
-        <field name="nic" hideIf="partnerTypeSelect== 2" colSpan="4" readonly="true"/>
-        <field name="saleTurnover" hideIf="partnerTypeSelect== 2"/>
         <field name="mainActivity" hideIf="partnerTypeSelect== 2" domain="self.isFinal = true"
           form-view="main-activity-form"/>
-        <field name="taxNbr" hideIf="partnerTypeSelect== 2"/>
-        <field name="paymentDelay" if-module="axelor-cash-management"
+        <field name="registrationCode" colSpan="4" hidden="true"
+          onChange="action-method-partner-registration-code-onChange"/>
+        <field name="siren" colSpan="4" readonly="true" hidden="true"/>
+        <field name="nic" colSpan="4" readonly="true" hidden="true"/>
+        <field name="saleTurnover" hidden="true"/>
+        <field name="taxNbr" hidden="true"/>
+        <field name="paymentDelay" if-module="axelor-cash-management" hidden="true"
           if="__config__.app.isApp('cash-management')"/>
         <field name="parentPartner" hideIf="partnerTypeSelect != 1"
           if="__config__.app.getApp('base')?.getManageSubsidiaryPartner()"
@@ -542,6 +541,8 @@
             onChange="action-attrs-update-manually-blocked-account"/>
           <field name="hasManuallyBlockedAccount" hidden="true"/>
         </panel>
+        <panel-related field="customerDdiaLine" form-view="customer-ddia-line-form" colSpan="12"
+          grid-view="customer-ddia-line-grid"/>
         <panel name="saleOrderCommentsPanel" title="Comment to display on sale order"
           colSpan="12">
           <field name="saleOrderComments" widget="html" colSpan="12" showTitle="false"/>
@@ -594,15 +595,22 @@
         if-module="axelor-stock">
         <field name="deliveryDelay" showIf="isSupplier || isSubcontractor"/>
         <spacer name="deliveryDelaySpacer"/>
-        <field name="shipmentMode" form-view="shipment-mode-form"
-          grid-view="shipment-mode-grid" onChange="action-partner-record-empty-freight-carrier-mode"
-          title="Shipment Mode"/>
+        <field name="shipmentMode" form-view="shipment-mode-form" canEdit="true" canNew="true"
+          colSpan="4" grid-view="shipment-mode-grid"
+          onChange="action-partner-record-empty-freight-carrier-mode" title="Shipment Mode"/>
         <field name="freightCarrierMode" domain="self.shipmentMode = :shipmentMode"
-          onChange="action-partner-record-freight-carrier" form-view="freight-carrier-mode-form"
-          grid-view="freight-carrier-mode-grid" readonlyIf="shipmentMode == null"/>
+          colSpan="4" onChange="action-partner-record-freight-carrier"
+          form-view="freight-carrier-mode-form" grid-view="freight-carrier-mode-grid"
+          readonlyIf="shipmentMode == null"/>
+
+        <field name="carrierService" colSpan="4" form-view="carrier-service-form"
+          canNew="true" canEdit="true" grid-view="carrier-service-grid"/>
+
         <field name="carrierPartner" form-view="partner-form" grid-view="partner-grid"
-          title="Freight Carrier" readonly="true"/>
-        <field name="isIspmRequired" hidden="true" showIf="isCustomer || isProspect"/>
+          colSpan="4" title="Freight Carrier" readonly="true"/>
+        <field name="isIspmRequired" hidden="true" showIf="isCustomer || isProspect"
+          colSpan="4"/>
+        <field name="tracking" colSpan="4"/>
         <field name="isNeedingConformityCertificate" showIf="isCustomer || isProspect"/>
         <field name="partnerStockSettingsList" colSpan="12"
           form-view="partner-stock-settings-form" grid-view="partner-stock-settings-grid"/>
