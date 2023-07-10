@@ -516,13 +516,15 @@
       </panel>
       <panel name="customerPanel" title="Customer" if-module="axelor-sale" showIf="isCustomer"
         if="__config__.app.isApp('sale')">
-        <field name="saleOrderInformation"/>
+        <field name="saleOrderInformation" colSpan="3"/>
+        <field name="imPrintInfo" showTitle="true" widget="Image" colSpan="3"/>
         <field name="payerQuality" if-module="axelor-account"
           if="__config__.app.isApp('account')" hideIf="isEmployee"/>
         <field name="salePartnerPriceList" canEdit="false" domain="self.typeSelect = 1"
-          form-view="sale-partner-price-list-form" grid-view="partner-price-list-grid"/>
+          colSpan="3" form-view="sale-partner-price-list-form" grid-view="partner-price-list-grid"/>
+        <field name="stripeId" colSpan="3"/>
         <field name="chargeBackPurchaseSelect" colSpan="3" if-module="axelor-business-project"
-          if="__config__.app.isApp('business-project')"/>
+          title="Change to Commission" if="__config__.app.isApp('business-project')"/>
         <field name="chargeBackPurchase" colSpan="3" showIf="chargeBackPurchaseSelect == 3"
           if-module="axelor-business-project" if="__config__.app.isApp('business-project')"/>
         <panel name="clientPortalAccessPanel" title="Client portal access"
@@ -530,7 +532,7 @@
           if="__config__.app.isApp('portal') &amp;&amp; __config__.app.getApp('portal')?.getPortalSelect() == 2">
           <field name="password" widget="password"/>
         </panel>
-        <field name="factorizedCustomer"
+        <field name="factorizedCustomer" hidden="true"
           if="__config__.app.isApp('account') &amp;&amp; __config__.app.getApp('account')?.getManageFactors()"/>
         <field name="customerCatalogList" colSpan="12"
           form-view="customer-catalog-partner-form" grid-view="customer-catalog-partner-grid"
@@ -541,8 +543,8 @@
             onChange="action-attrs-update-manually-blocked-account"/>
           <field name="hasManuallyBlockedAccount" hidden="true"/>
         </panel>
-        <panel-related field="customerDdiaLine" form-view="customer-ddia-line-form" colSpan="12"
-          grid-view="customer-ddia-line-grid"/>
+        <panel-related field="customerDdiaLine" form-view="customer-ddia-line-form"
+          colSpan="12" grid-view="customer-ddia-line-grid"/>
         <panel name="saleOrderCommentsPanel" title="Comment to display on sale order"
           colSpan="12">
           <field name="saleOrderComments" widget="html" colSpan="12" showTitle="false"/>
@@ -1533,12 +1535,15 @@
 
   <action-record name="action-partner-record-set-default"
     model="com.axelor.apps.base.db.Partner">
-    <field name="currency" expr="eval: __user__.activeCompany?.currency" if="#{!isContact}"/>
+    <!-- <field name="currency" expr="eval: __user__.activeCompany?.currency" if="#{!isContact}"/> -->
+    <field name="currency"
+      expr="eval:__repo__(Currency).all().filter('self.code = ?','USD').fetchOne()"/>
     <field name="invoiceSendingFormatSelect" expr="#{'emailpaper'}" if="#{!isContact}"/>
     <field name="user" expr="#{__user__}"/>
     <field name="team" expr="#{__user__.activeTeam}"/>
+    <!-- <field name="language" expr="eval: __config__.app.getApp('base')?.getDefaultPartnerLanguage()"/> -->
     <field name="language"
-      expr="eval: __config__.app.getApp('base')?.getDefaultPartnerLanguage()"/>
+      expr="eval:__repo__(Language).all().filter('self.code = ?','en').fetchOne()"/>
     <field name="isCustomer" expr="true"
       if="_isCustomer || (__user__?.activeCompany?.defaultPartnerCategorySelect == 1 &amp;&amp; !_isSupplier &amp;&amp; !_isCarrier &amp;&amp; !_isSubcontractor)"/>
     <field name="isSupplier" expr="true"
