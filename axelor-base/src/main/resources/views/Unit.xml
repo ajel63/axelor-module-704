@@ -6,13 +6,14 @@
     <field name="name"/>
     <field name="labelToPrinting"/>
     <field name="unitTypeSelect"/>
+    <field name="qty"/>
   </grid>
   <form name="unit-form" title="Unit" model="com.axelor.apps.base.db.Unit">
     <panel name="mainPanel">
       <field name="name" onChange="action-unit-record-label-to-printing"/>
       <field name="labelToPrinting"/>
       <field name="unitTypeSelect"/>
-
+      <field name="qty"/>
     </panel>
   </form>
 

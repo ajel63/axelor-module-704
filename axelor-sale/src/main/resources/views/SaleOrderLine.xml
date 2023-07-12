@@ -203,8 +203,10 @@
             readonlyIf="$availabiltyRequest || ($isReadOnly !== false &amp;&amp; !$get('saleOrder.orderBeingEdited'))"
             validIf="$qtyValid != false"/>
           <field name="unit" colSpan="3"
+            onChange="action-sale-order-line-attrs-calculate-total-single-unit"
             readonlyIf="$isReadOnly !== false || deliveryState == 3 || $nonNegotiable"
             requiredIf="typeSelect == 0" canEdit="false" form-view="unit-form" grid-view="unit-grid"/>
+          <field name="totalSingleUnit" readonly="true"/>
           <field name="price" colSpan="3"
             readonlyIf="$isReadOnly !== false || deliveryState == 3 || $nonNegotiable"
             onChange="action-sale-order-line-method-onchange-price,action-sale-order-line-method-compute,action-sale-order-line-method-compute-analytic-distribution"
@@ -685,6 +687,7 @@
     <action name="action-sale-order-line-record-complementary-products-to-handle"/>
     <action name="action-sale-order-line-method-fill-max-discount"/>
     <action name="action-sale-order-line-method-translate-product-description-and-name"/>
+    <action name="action-sale-order-line-attrs-calculate-total-single-unit"/>
   </action-group>
 
   <action-group name="action-group-sale-saleorderline-qty-onchange">
@@ -702,6 +705,7 @@
     <action name="action-sale-order-line-record-update-requested-reserved-qty-from-qty"
       if="__config__.app.isApp('supplychain') &amp;&amp; __config__.app.getApp('supplychain')?.getManageStockReservation()"/>
     <action name="action-sale-order-line-record-complementary-products-to-handle"/>
+    <action name="action-sale-order-line-attrs-calculate-total-single-unit"/>
   </action-group>
 
   <action-group name="action-group-sale-saleorderline-tax-line-onchange">
@@ -1037,6 +1041,12 @@
       if="saleOrder"/>
     <attribute for="$partnerLanguage" name="value"
       expr="eval: saleOrder?.clientPartner?.language?.code?.toUpperCase()" if="saleOrder"/>
+  </action-attrs>
+
+  <action-attrs name="action-sale-order-line-attrs-calculate-total-single-unit">
+    <attribute for="totalSingleUnit" name="value" if="unit != null"
+      expr="eval: qty * unit.qty"/>
+    <attribute for="totalSingleUnit" name="value" if="unit == null" expr="eval: 0"/>
   </action-attrs>
 
   <!-- ACTION VIEW -->

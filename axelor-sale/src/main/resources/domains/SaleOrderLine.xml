@@ -96,6 +96,8 @@
 
     <string name="lineProductionComment" title="Line production commentary" large="true"/>
 
+    <decimal name="totalSingleUnit" title="Total Single Unit"/>
+
     <finder-method name="findAllBySaleOrder" using="saleOrder" all="true"/>
 
     <extra-code>

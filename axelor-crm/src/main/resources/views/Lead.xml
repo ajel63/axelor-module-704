@@ -512,7 +512,7 @@
     <view type="cards" name="event-cards"/>
     <view type="grid" name="list-event-grid"/>
     <view type="form" name="event-form"/>
-    <domain>self.lead.id = :_id</domain>
+    <domain>self.eventLead.id = :_id</domain>
   </action-view>
 
   <action-method name="action-show-leads-on-map-page">
