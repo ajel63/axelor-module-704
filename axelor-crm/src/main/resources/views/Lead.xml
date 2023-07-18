@@ -205,14 +205,24 @@
         </panel>
 
         <panel name="primaryAddress" title="Primary address" colSpan="12" hideIf="$readonly()">
-          <field name="primaryAddress" colSpan="12"/>
-          <field name="primaryPostalCode" colSpan="6"/>
-          <field name="primaryCity" colSpan="6" form-view="city-form" grid-view="city-grid"
-            onChange="action-attrs-lead-set-primary-state-country-postal-code" canNew="true"/>
-          <field name="primaryState" colSpan="6" form-view="region-form"
-            grid-view="region-grid" canNew="true"/>
           <field name="primaryCountry" colSpan="6" form-view="country-form"
             grid-view="country-grid"/>
+          <spacer colSpan="6"/>
+          <field name="primaryAddress" colSpan="6"/>
+          <spacer colSpan="6"/>
+          <field name="primaryAddressLine2"/>
+          <spacer colSpan="6"/>
+          <field name="primaryCity" colSpan="6" form-view="city-form" grid-view="city-grid"
+            onChange="action-attrs-lead-set-primary-state-country-postal-code" canNew="true"/>
+          <field name="state" title="State"/>
+          <field name="county"/>
+          <field name="postalCode" domain="self.city = :primaryCity"
+            onChange="action-lead-attrs-set-postal-code"/>
+          <field name="primaryState" colSpan="6" form-view="region-form" title="State"
+            hidden="true" grid-view="region-grid" canNew="true"/>
+          <field name="cityName" hidden="true"/>
+          <field name="primaryPostalCode" colSpan="6" hidden="true"/>
+
         </panel>
         <panel name="descriptionPanel" title="Description" colSpan="12">
           <field name="description" colSpan="12" showTitle="false" widget="html" height="200"/>
@@ -398,15 +408,17 @@
   </action-record>
 
   <action-attrs name="action-attrs-lead-set-primary-state-country-postal-code">
-    <attribute if="eval: primaryCity?.department?.region" name="value"
-      expr="eval: primaryCity.department.region" for="primaryState"/>
-    <attribute if="eval: primaryCity?.country" name="value"
-      expr="eval: primaryCity.country" for="primaryCountry"/>
-    <attribute name="readonly" expr="eval: primaryCity?.department?.region ? true: false"
+    <attribute name="value" expr="eval: primaryCity?.department?.region"
       for="primaryState"/>
-    <attribute name="readonly" expr="eval: primaryCity?.country ? true: false"
-      for="primaryCountry"/>
     <attribute name="value" for="primaryPostalCode" expr="eval: primaryCity?.zip"/>
+    <attribute name="value" for="county" expr="eval: primaryCity?.department?.name"/>
+    <attribute name="value" for="cityName" expr="eval: primaryCity?.name"/>
+    <attribute name="value" for="state" expr="eval: primaryCity?.department?.region?.name"/>
+    <attribute name="value" for="" expr="eval: primaryCity?.department?.name"/>
+  </action-attrs>
+
+  <action-attrs name="action-lead-attrs-set-postal-code">
+    <attribute name="value" for="primaryPostalCode" expr="eval: postalCode?.code"/>
   </action-attrs>
 
   <action-view name="action-lead-view-lose" model="com.axelor.apps.crm.db.Lead"

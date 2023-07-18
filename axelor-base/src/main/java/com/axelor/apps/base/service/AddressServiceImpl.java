@@ -276,23 +276,30 @@ public class AddressServiceImpl implements AddressService {
       return "";
     }
 
-    if (StringUtils.notBlank(address.getAddressL2())) {
-      addressString.append(address.getAddressL2()).append(System.lineSeparator());
+    if (address.getAddressL2() != null) {
+      addressString.append(address.getAddressL2().toUpperCase()).append("\n");
     }
-    if (StringUtils.notBlank(address.getAddressL3())) {
-      addressString.append(address.getAddressL3()).append(System.lineSeparator());
+    if (address.getAddressL4() != null) {
+      addressString.append(address.getAddressL4().toUpperCase()).append("\n");
     }
-    if (StringUtils.notBlank(address.getAddressL4())) {
-      addressString.append(address.getAddressL4()).append(System.lineSeparator());
+    if (address.getAddressL3() != null) {
+      addressString.append(address.getAddressL3().toUpperCase()).append("\n");
     }
-    if (StringUtils.notBlank(address.getAddressL5())) {
-      addressString.append(address.getAddressL5()).append(System.lineSeparator());
+    if (address.getCityName() != null) {
+      addressString.append(address.getCityName().toUpperCase()).append(", ");
     }
-    if (StringUtils.notBlank(address.getAddressL6())) {
-      addressString.append(address.getAddressL6());
+
+    if (address.getState() != null) {
+      addressString.append(address.getState().toUpperCase()).append(" ");
     }
+
+    if (address.getZip() != null) {
+      addressString.append(address.getZip());
+    }
+
     if (address.getAddressL7Country() != null) {
-      addressString.append(System.lineSeparator()).append(address.getAddressL7Country().getName());
+      addressString =
+          addressString.append("\n" + address.getAddressL7Country().getName().toUpperCase());
     }
 
     return addressString.toString();

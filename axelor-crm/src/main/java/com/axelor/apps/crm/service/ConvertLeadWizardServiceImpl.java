@@ -168,7 +168,12 @@ public class ConvertLeadWizardServiceImpl implements ConvertLeadWizardService {
           addressService.createAddress(
               null, null, addressL4, addressL5, addressL6, addressL7Country);
     }
-
+    address.setAddressL3(lead.getPrimaryAddressLine2());
+    address.setCityName(lead.getCityName());
+    address.setState(lead.getState());
+    address.setPostalCode(lead.getPostalCode());
+    address.setAddressL5(lead.getCounty());
+    address.setCity(lead.getPrimaryCity());
     return address;
   }
 
