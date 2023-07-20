@@ -26,6 +26,7 @@
     <field name="fiscalPosition.code" title="Fiscal position"/>
     <field name="registrationCode"/>
     <field name="mainAddress"/>
+    <field name="partnerStatus" />
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
       onClick="action-partner-view-schedule-event" if-module="axelor-crm"
@@ -58,6 +59,7 @@
     <field name="partnerCategory" grid-view="partner-category-grid"
       form-view="partner-category-form"/>
     <field name="user"/>
+    <field name="partnerStatus" />
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
       onClick="action-partner-view-schedule-event" if-module="axelor-crm"
@@ -92,6 +94,7 @@
     <field name="fiscalPosition.code" title="Fiscal position"/>
     <field name="registrationCode"/>
     <field name="mainAddress"/>
+    <field name="partnerStatus" />
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <field name="das2Activity" hidden="true" if="__config__.app.isApp('account')"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
@@ -250,6 +253,8 @@
         <field name="isCustomer" colSpan="2" widget="InlineCheckbox"
           hideIf="isContact || $readonly() || isEmployee"
           onChange="action-partner-group-check-can-change-customer,action-partner-record-invoices-copy-default-value,action-partner-account-attrs-hide-customer-account,action-partner-attrs-unset-prospect,action-partner-record-unset-factor"/>
+        <field name="partnerStatus" colSpan="2" title="Is Active" widget="boolean-switch"
+          onChange="action-partner-contact-prompt-on-inactive-contact,save"/>
         <field name="isSupplier" colSpan="2" widget="InlineCheckbox"
           hideIf="isContact || $readonly() || isEmployee"
           onChange="action-partner-group-check-can-change-supplier,action-partner-account-attrs-hide-supplier-account,action-partner-record-unset-factor"/>
@@ -829,6 +834,7 @@
     <field name="isSubcontractor"/>
     <field name="isFactor" if-module="axelor-account" if="__config__.app.isApp('account')"/>
     <field name="isCarrier"/>
+    <field name="partnerStatus" />
     <template><![CDATA[
 			<div>
 				<div class="span12"><strong>{{fullName}}</strong></div>
@@ -848,6 +854,8 @@
 			    <span>
 			    {{fixedPhone}}<br/>
 			    {{emailAddress.address}}<br/>
+			    <span  ng-if="partnerStatus"><strong><span x-translate>Status</span></strong> : <span style="background-color: #C9F3A2;">Active<br/></span></span>
+   			    <span  ng-if="!partnerStatus"><strong><span x-translate>Status</span></strong> : <span style="background-color: #FA9F9C;">InActive<br/></span></span>
 			    {{partnerCategory.name}}<br/>
 			    <h4 style="text-align: right;">
 					<span class="label label-default" style="background-color: #FC6355; margin: 5px 0 !important; display: inline-table; line-height: initial;" ng-show="record.isProspect" x-translate>Prospect</span>
@@ -1723,6 +1731,14 @@
     <field name="functionBusinessCard" expr="eval: jobTitleFunction.name"
       if="jobTitleFunction != null"/>
   </action-record>
+
+	<action-validate name="action-partner-contact-prompt-on-inactive-contact">
+		<alert  message="Are you sure you want to make this record inactive?" if="!partnerStatus" action="action-partner-contact-make-contact-inactive"/>
+	</action-validate>
+	
+	<action-attrs name="action-partner-contact-make-contact-inactive">
+    	<attribute name="value" for="partnerStatus" expr="eval: true"/>
+    </action-attrs>	
 
   <search-filters name="partner-filters" model="com.axelor.apps.base.db.Partner"
     title="Partner filters">
