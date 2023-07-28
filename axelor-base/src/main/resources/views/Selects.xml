@@ -595,6 +595,7 @@
   <selection name="company.timezone.select">
     <option value="Europe/Paris">Europe/Paris</option>
     <option value="America/New_York">America/New_York</option>
+    <option value="US/Arizona">US/Arizona</option>
   </selection>
 
   <selection name="base.import.configuration.status.select">

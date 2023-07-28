@@ -164,6 +164,30 @@
     <many-to-one name="taxNumber" title="Tax number"
       ref="com.axelor.apps.account.db.TaxNumber"/>
 
+    <!-- Z-Dental fields -->
+
+    <string name="woocommerceOrder" title="Woocommerce Order"/>
+    <string name="woocommerceOrderLink" title="Woocommerce Order Link"/>
+    <string name="soNum" title="So Num"/>
+    <string name="cfiWooCommerceOrderItemIdentity1"
+      title="Cfi WooCommerce OrderItem Identity1"/>
+    <string name="cfiWooCommerceOrderItemIdentity2"
+      title="Cfi WooCommerce OrderItem Identity2"/>
+    <string name="carrierName" title="Carrier Name"/>
+    <string name="taxRateName" title="Tax Rate Name"/>
+    <string name="salesman" title="Sales Man"/>
+    <string name="shippingTerms" title="Shipping Terms"/>
+    <string name="paymentTerms" title="Payment Terms"/>
+    <string name="fob" title="Fob"/>
+    <string name="quickBooksClassName" title="QuickBooks ClassName"/>
+    <string name="locationGroupName" title="Location Group Name"/>
+    <string name="carrierService" title="Carrier Service"/>
+    <boolean name="cfAetnaMember" title="Cf Aetna Member"/>
+    <boolean name="cfAetnaBulk" title="Cf Aetna Bulk"/>
+    <boolean name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>
+    <boolean name="taxCod" title="Tax Cod"/>
+
+
     <unique-constraint columns="saleOrderSeq,company"/>
 
     <finder-method name="findBySaleOrderSeqAndCompany" using="saleOrderSeq,company"/>

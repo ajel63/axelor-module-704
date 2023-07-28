@@ -26,7 +26,7 @@
     <field name="fiscalPosition.code" title="Fiscal position"/>
     <field name="registrationCode"/>
     <field name="mainAddress"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
       onClick="action-partner-view-schedule-event" if-module="axelor-crm"
@@ -59,7 +59,7 @@
     <field name="partnerCategory" grid-view="partner-category-grid"
       form-view="partner-category-form"/>
     <field name="user"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
       onClick="action-partner-view-schedule-event" if-module="axelor-crm"
@@ -94,7 +94,7 @@
     <field name="fiscalPosition.code" title="Fiscal position"/>
     <field name="registrationCode"/>
     <field name="mainAddress"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <field name="companyStr" if="__config__.app.getApp('base')?.getEnableMultiCompany()"/>
     <field name="das2Activity" hidden="true" if="__config__.app.isApp('account')"/>
     <button name="scheduleEventBtn" title="Schedule Event" icon="fa-group"
@@ -834,7 +834,7 @@
     <field name="isSubcontractor"/>
     <field name="isFactor" if-module="axelor-account" if="__config__.app.isApp('account')"/>
     <field name="isCarrier"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <template><![CDATA[
 			<div>
 				<div class="span12"><strong>{{fullName}}</strong></div>
@@ -1732,13 +1732,14 @@
       if="jobTitleFunction != null"/>
   </action-record>
 
-	<action-validate name="action-partner-contact-prompt-on-inactive-contact">
-		<alert  message="Are you sure you want to make this record inactive?" if="!partnerStatus" action="action-partner-contact-make-contact-inactive"/>
-	</action-validate>
-	
-	<action-attrs name="action-partner-contact-make-contact-inactive">
-    	<attribute name="value" for="partnerStatus" expr="eval: true"/>
-    </action-attrs>	
+  <action-validate name="action-partner-contact-prompt-on-inactive-contact">
+    <alert message="Are you sure you want to make this record inactive?" if="!partnerStatus"
+      action="action-partner-contact-make-contact-inactive"/>
+  </action-validate>
+
+  <action-attrs name="action-partner-contact-make-contact-inactive">
+    <attribute name="value" for="partnerStatus" expr="eval: true"/>
+  </action-attrs>
 
   <search-filters name="partner-filters" model="com.axelor.apps.base.db.Partner"
     title="Partner filters">

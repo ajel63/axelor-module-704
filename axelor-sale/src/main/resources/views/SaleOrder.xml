@@ -479,9 +479,33 @@
           field="saleOrderLineList" form-view="sale-order-line-form"
           grid-view="sale-order-line-grid" orderBy="sequence"
           onChange="action-sale-order-line-change-group" canMove="true" height="30"/>
-        <panel name="descriptionPanel" title="Comment to display" colSpan="12">
+        <panel name="descriptionPanel" title="Comment to display2" colSpan="12">
           <field name="description" showTitle="false" colSpan="12" widget="Html" x-lite="true"/>
         </panel>
+
+        <panel name="saleOrderFieldsPanel" title="SaleOrder Fields" colSpan="12">
+          <field name="woocommerceOrder" title="Woocommerce Order"/>
+          <field name="woocommerceOrderLink" title="Woocommerce Order Link"/>
+          <field name="soNum" title="So Num"/> 
+          <field name="cfiWooCommerceOrderItemIdentity1"
+            title="Cfi WooCommerce OrderItem Identity1"/>
+          <field name="cfiWooCommerceOrderItemIdentity2"
+            title="Cfi WooCommerce OrderItem Identity2"/>
+          <field name="carrierName" title="Carrier Name"/>
+          <field name="taxRateName" title="Tax Rate Name"/>
+          <field name="salesman" title="Sales Man"/>
+          <field name="shippingTerms" title="Shipping Terms"/>
+          <field name="paymentTerms" title="Payment Terms"/>
+          <field name="fob" title="Fob"/>
+          <field name="quickBooksClassName" title="QuickBooks ClassName"/>
+          <field name="locationGroupName" title="Location Group Name"/>
+          <field name="carrierService" title="Carrier Service"/>
+          <field name="cfAetnaMember" title="Cf Aetna Member"/>
+          <field name="cfAetnaBulk" title="Cf Aetna Bulk"/>
+          <field name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>
+          <field name="taxCod" title="Tax Cod"/>
+        </panel>
+
       </panel>
       <panel name="taxPanel" title="Tax">
         <panel-related name="saleOrderLineTaxListPanel" colSpan="12"

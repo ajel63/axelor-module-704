@@ -145,7 +145,6 @@ public class PurchaseOrderStockServiceImpl implements PurchaseOrderStockService 
 
       List<Long> stockMoveId =
           createStockMove(purchaseOrder, estimatedDeliveryDate, purchaseOrderLineList);
-
       if (stockMoveId != null && !stockMoveId.isEmpty()) {
 
         stockMoveIdList.addAll(stockMoveId);

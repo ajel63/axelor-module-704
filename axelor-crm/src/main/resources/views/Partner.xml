@@ -264,7 +264,7 @@
     <field name="partnerCategory" form-view="partner-category-form"
       grid-view="partner-category-grid"/>
     <field name="user"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <field if="__config__.app.getApp('base').getEnableMultiCompany()" name="companyStr"/>
     <field name="leadScoringSelect" widget="ImageSelect" x-labels="false"/>
     <button if="__config__.app.isApp('crm')" if-module="axelor-crm" name="scheduleEventBtn"
@@ -312,7 +312,7 @@
     <field name="isFactor"/>
     <field name="isCarrier"/>
     <field name="leadScoringSelect"/>
-    <field name="partnerStatus" />
+    <field name="partnerStatus"/>
     <template><![CDATA[
 			<div>
 				<div class="span12"><strong>{{fullName}}</strong></div>
