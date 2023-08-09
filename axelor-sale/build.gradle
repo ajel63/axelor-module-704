@@ -15,4 +15,5 @@ axelor {
 
 dependencies {
 	api project(":modules:axelor-crm")
+	implementation group: 'org.json', name: 'json', version: '20210307'
 }

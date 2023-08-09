@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="sale" package="com.axelor.apps.sale.db"/>
+
+  <entity name="StripePaymentLine">
+
+    <string name="stripeId" title="Stripe Id"/>
+    <string name="orderId" title="Order Id"/>
+    <string name="paymentId" title="Payment Id"/>
+    <string name="customerId" title="Customer Id"/>
+    <string name="customerName" title="Customer Name"/>
+    <string name="customerEmail" title="Customer Email"/>
+    <string name="cost" title="Cost"/>
+    <string name="status" title="Status"/>
+    <string name="card" title="Card"/>
+    <string name="stripeCreatedAt" title="Stripe CreatedAt"/>
+    <string name="stripeUpdatedAt" title="Stripe UpdatedAt"/>
+
+    <many-to-one ref="com.axelor.apps.sale.db.SaleOrder" name="saleOrder"
+      title="SaleOrder"/>
+
+  </entity>
+
+</domain-models>

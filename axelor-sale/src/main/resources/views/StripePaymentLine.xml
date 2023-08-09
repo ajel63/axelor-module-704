@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="stripe-payment-line-grid" title="Stripe Payment"
+    model="com.axelor.apps.sale.db.StripePaymentLine">
+    <field name="stripeId" title="Stripe Id"/>
+    <field name="orderId" title="Order Id"/>
+    <field name="paymentId" title="Payment Id"/>
+    <field name="customerId" title="Customer Id"/>
+    <field name="customerName" title="Customer Name"/>
+    <field name="customerEmail" title="Customer Email"/>
+    <field name="cost" title="Cost"/>
+    <field name="status" title="Status"/>
+    <field name="card" title="Card"/>
+    <field name="stripeCreatedAt" title="Stripe CreatedAt"/>
+    <field name="stripeUpdatedAt" title="Stripe UpdatedAt"/>
+  </grid>
+
+  <form name="stripe-payment-line-form" title="Stripe Payment"
+    model="com.axelor.apps.sale.db.StripePaymentLine" onNew="">
+    <panel name="packPanel">
+      <field name="stripeId" title="Stripe Id"/>
+      <field name="orderId" title="Order Id"/>
+      <field name="paymentId" title="Payment Id"/>
+      <field name="customerId" title="Customer Id"/>
+      <field name="customerName" title="Customer Name"/>
+      <field name="customerEmail" title="Customer Email"/>
+      <field name="cost" title="Cost"/>
+      <field name="status" title="Status"/>
+      <field name="card" title="Card"/>
+      <field name="stripeCreatedAt" title="Stripe CreatedAt"/>
+      <field name="stripeUpdatedAt" title="Stripe UpdatedAt"/>
+    </panel>
+  </form>
+
+
+</object-views>

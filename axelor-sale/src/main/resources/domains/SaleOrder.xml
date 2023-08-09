@@ -187,6 +187,9 @@
     <boolean name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>
     <boolean name="taxCod" title="Tax Cod"/>
 
+    <decimal name="amountToPay" title="Amount to Pay"/>
+    <one-to-many ref="com.axelor.apps.sale.db.StripePaymentLine" name="stripePayment"
+      title="Stripe Payment" mappedBy="saleOrder"/>
 
     <unique-constraint columns="saleOrderSeq,company"/>
 

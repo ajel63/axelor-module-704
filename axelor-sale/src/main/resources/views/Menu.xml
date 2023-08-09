@@ -237,6 +237,24 @@
     <view-param name="search-filters" value="tax-filters"/>
   </action-view>
 
+  <menuitem name="sale.conf.stripe.payment" parent="sc-root-sale-conf"
+    title="Stripe Payment" action="sale.conf.stripe.payment.view" order="800"/>
+
+  <action-view name="sale.conf.stripe.payment.view" title="Stripe Payment"
+    model="com.axelor.apps.sale.db.StripePaymentLine">
+    <view type="grid" name="stripe-payment-line-grid"/>
+    <view type="form" name="stripe-payment-line-form"/>
+  </action-view>
+
+  <menuitem name="sale.conf.stripe.payment.config" parent="sc-root-sale-conf"
+    title="Stripe Config" action="sale.conf.stripe.payment.config.view" order="800"/>
+
+  <action-view name="sale.conf.stripe.payment.config.view" title="Stripe Config"
+    model="com.axelor.apps.sale.db.StripePaymentConfig">
+    <view type="grid" name="stripe-payment-config-grid"/>
+    <view type="form" name="stripe-payment-config-form"/>
+  </action-view>
+
   <menuitem name="sale-conf-configurators" parent="sc-root-sale-conf" order="900"
     title="Configurators" if="__config__.app.getApp('sale')?.getEnableConfigurator()"/>
 

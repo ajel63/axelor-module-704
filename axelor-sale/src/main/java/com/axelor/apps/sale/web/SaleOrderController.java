@@ -41,10 +41,14 @@ import com.axelor.apps.report.engine.ReportSettings;
 import com.axelor.apps.sale.db.Pack;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
+import com.axelor.apps.sale.db.StripePaymentConfig;
+import com.axelor.apps.sale.db.StripePaymentLine;
 import com.axelor.apps.sale.db.repo.PackRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
 import com.axelor.apps.sale.exception.SaleExceptionMessage;
 import com.axelor.apps.sale.service.SaleOrderDomainService;
+import com.axelor.apps.sale.service.StripePaymentService;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
@@ -643,6 +647,53 @@ public class SaleOrderController {
         Beans.get(SaleOrderLineService.class).updateLinesAfterFiscalPositionChange(saleOrder);
       }
       response.setValue("saleOrderLineList", saleOrder.getSaleOrderLineList());
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void replaceUrlCharacter(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+      if (saleOrder.getWoocommerceOrderLink() != null) {
+        response.setValue(
+            "woocommerceOrderLink", saleOrder.getWoocommerceOrderLink().replace("&amp;", "&"));
+      }
+
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void getStripePaymentRecord(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+      List<StripePaymentLine> stripePaymentLineList =
+          Beans.get(StripePaymentService.class)
+              .getStripePaymentRecord(Beans.get(SaleOrderRepository.class).find(saleOrder.getId()));
+      response.setValue("stripePayment", stripePaymentLineList);
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void generatePaymentLink(ActionRequest request, ActionResponse response) {
+    try {
+      String paymentUrl = "";
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+      StripePaymentConfig stripePaymentConfig =
+          Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
+      paymentUrl = stripePaymentConfig.getBaseUrl();
+      // Payment URL : https://axelor-payment-code.vercel.app/checkout?order=24218&amount=200
+      paymentUrl =
+          paymentUrl
+              + "/"
+              + "checkout?order="
+              + saleOrder.getId()
+              + "&amount="
+              + saleOrder.getAmountToPay();
+
+      response.setValue("$paymentLink", paymentUrl);
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }

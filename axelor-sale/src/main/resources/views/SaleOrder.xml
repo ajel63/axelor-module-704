@@ -211,6 +211,33 @@
     </panel>
   </form>
 
+  <form name="sale-order-stripe-payment-wizard-form" model="com.axelor.apps.sale.db.SaleOrder"
+    onLoad="test" title="Payment">
+    <panel name="mainPanel">
+      <field name="$_id" title="Order ID" readonly="true"/>
+      <field name="amountToPay" colSpan="4" min="1"/>
+      <button name="cancelConfirmBtn" title="Process to Pay"
+        onClick="action-sale-order-validation-payment-amount,action-sale-order-method-generate-payment-link"
+        colSpan="4"/>
+      <spacer/>
+      <field name="$paymentLink" title="Payment Link" readonly="true" colSpan="12"/>
+
+      <field name="$paymentLink" readonly="true" title="Payment Link">
+        <viewer depends="$paymentLink"><![CDATA[
+		      <div>
+		        <span ng-show="record.$paymentLink != null" ><a href={{record.$paymentLink}} target="_blank">Process to Payment</a></span>
+		      </div>
+		    ]]></viewer>
+      </field>
+      <button onClick="action-sale-order-get-stripe-payment-record,save,close"
+        name="stripePaymentClose" title="Complete and Close"/>
+    </panel>
+  </form>
+
+  <action-attrs name="test">
+    <attribute name="value" for="$_id" expr="eval: id"/>
+  </action-attrs>
+
   <form name="sale-order-form-wizard" title="Sale order"
     model="com.axelor.apps.sale.db.SaleOrder"
     onNew="action-group-sale-saleorder-onnew,action-sale-order-method-create-order,action-sale-order-record-hide-discount"
@@ -485,8 +512,9 @@
 
         <panel name="saleOrderFieldsPanel" title="SaleOrder Fields" colSpan="12">
           <field name="woocommerceOrder" title="Woocommerce Order"/>
-          <field name="woocommerceOrderLink" title="Woocommerce Order Link"/>
-          <field name="soNum" title="So Num"/> 
+          <field name="woocommerceOrderLink" title="Woocommerce Order Link"
+            onChange="action-sale-order-method-replace-url-character"/>
+          <field name="soNum" title="So Num"/>
           <field name="cfiWooCommerceOrderItemIdentity1"
             title="Cfi WooCommerce OrderItem Identity1"/>
           <field name="cfiWooCommerceOrderItemIdentity2"
@@ -559,6 +587,14 @@
         <panel-dashlet name="saleOrderInvoicePanel"
           if="__config__.app.isApp('supplychain')" if-module="axelor-supplychain" title="Invoicing"
           showIf="statusSelect >= 3" action="action-view-show-invoices-from-sale-order" colSpan="12"/>
+
+        <panel name="stripePaymentPanel" title="Payments" colSpan="12">
+          <button onClick="save,action-sale-order-get-stripe-payment-record,save"
+            name="getPaymentRecordBtn" title="Get Payment Record"/>
+          <panel-related field="stripePayment" name="stripePaymentPanel"
+            grid-view="stripe-payment-line-grid" colSpan="12" title="Payments"
+            form-view="stripe-payment-line-form"/>
+        </panel>
         <panel name="invoiceCommentsPanel" title="Comment to display on invoice" colSpan="12">
           <field name="invoiceComments" widget="html" colSpan="12" showTitle="false"/>
         </panel>
@@ -645,6 +681,9 @@
       <panel-dashlet if="__config__.app.isApp('supplychain')"
         name="generatedPurchaseOrderPanel" title="Generated purchase orders"
         action="action-sale-order-view-show-generated-po" hideIf="statusSelect &lt;= 2"/>
+
+
+
     </panel-tabs>
     <panel name="attrsPanel">
       <field name="attrs" colSpan="12"/>
@@ -724,6 +763,8 @@
       <button name="computeBtn" title="Compute lines with pricing scale"
         onClick="action-sale-order-group-compute-pricing-scale-btn" showIf="statusSelect == 1"
         if="__config__.app.getApp('sale')?.getEnablePricingScale() &amp;&amp; __config__.app.getApp('sale')?.getIsEnableCalculationEntireQuotationUsingPricing()"/>
+      <button onClick="save,action-sale-order-view-stripe-payment" name="stripePaymentBtn"
+        showIf="statusSelect >= 3" title="Stripe Payment"/>
     </panel>
     <panel name="inTaxTotalPanel" readonly="true" hideIf="clientPartner == null" colSpan="4"
       sidebar="true">
@@ -1711,6 +1752,18 @@
     <context name="_xApplicationType" expr="eval: _model"/>
   </action-view>
 
+  <action-view name="action-sale-order-view-stripe-payment" title="Payment"
+    model="com.axelor.apps.sale.db.SaleOrder">
+    <view type="form" name="sale-order-stripe-payment-wizard-form"/>
+    <view-param name="popup" value="reload"/>
+    <view-param name="show-toolbar" value="false"/>
+    <view-param name="show-confirm" value="false"/>
+    <view-param name="popup-save" value="false"/>
+    <view-param name="forceEdit" value="true"/>
+    <context name="_showRecord" expr="eval: __this__.id"/>
+    <context name="_xApplicationType" expr="eval: _model"/>
+  </action-view>
+
   <action-condition name="action-sale-order-cancel-reason-check">
     <check error="A cancel reason must be selected" field="cancelReason"
       if="cancelReason == null || cancelReason == 0"/>
@@ -2261,5 +2314,21 @@
   <action-attrs name="action-sale-order-record-set-sale-order-creation-date">
     <attribute name="value" for="creationDate" expr="eval: __date__"/>
   </action-attrs>
+
+  <action-method name="action-sale-order-method-replace-url-character">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="replaceUrlCharacter"/>
+  </action-method>
+
+  <action-method name="action-sale-order-get-stripe-payment-record">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="getStripePaymentRecord"/>
+  </action-method>
+
+  <action-method name="action-sale-order-method-generate-payment-link">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="generatePaymentLink"/>
+  </action-method>
+
+  <action-validate name="action-sale-order-validation-payment-amount">
+    <error message="Please enter amount for payment" if="amountToPay == 0"/>
+  </action-validate>
 
 </object-views>
