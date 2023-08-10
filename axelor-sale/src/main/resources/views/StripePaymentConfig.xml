@@ -7,6 +7,7 @@
     model="com.axelor.apps.sale.db.StripePaymentConfig">
     <field name="baseUrl"/>
     <field name="apiKey"/>
+    <field name="retrivePaymentBaseUrl"/>
   </grid>
 
   <form name="stripe-payment-config-form" title="StripePayment Config"
@@ -14,6 +15,7 @@
     <panel name="mainPanel">
       <field name="baseUrl"/>
       <field name="apiKey"/>
+      <field name="retrivePaymentBaseUrl" required="true"/>
     </panel>
   </form>
 

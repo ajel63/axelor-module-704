@@ -9,6 +9,7 @@
 
     <string name="baseUrl" title="Base Url" required="true"/>
     <string name="apiKey" title="API Key"/>
+    <string name="retrivePaymentBaseUrl" title="Retrive Payment Base Url" />
 
   </entity>
 

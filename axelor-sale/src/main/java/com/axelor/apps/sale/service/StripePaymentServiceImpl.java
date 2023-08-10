@@ -45,7 +45,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
     String url = "";
     StripePaymentConfig stripePaymentConfig =
         Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
-    url = stripePaymentConfig.getBaseUrl();
+    url = stripePaymentConfig.getRetrivePaymentBaseUrl();
     url =
         url
             + "/api/payments/data/"
