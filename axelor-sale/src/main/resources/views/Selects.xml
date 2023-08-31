@@ -94,4 +94,13 @@
     <option value="800">Sale batch</option>
   </selection>
 
+  <selection name="shipment.track.status.select">
+    <option value="delivered">Delivered</option>
+    <option value="in-transit">In-transit</option>
+    <option value="pre-transit">Pre-transit</option>
+    <option value="returned">Returned</option>
+    <option value="unknown">Unknown</option>
+    <option value="failure">Failure</option>
+  </selection>
+
 </object-views>

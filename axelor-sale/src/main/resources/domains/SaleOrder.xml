@@ -191,6 +191,29 @@
     <one-to-many ref="com.axelor.apps.sale.db.StripePaymentLine" name="stripePayment"
       title="Stripe Payment" mappedBy="saleOrder"/>
 
+    <!-- Shipping details -->
+
+    <string name="shipFrom" title="Ship From"/>
+    <many-to-one ref="com.axelor.apps.base.db.Country" name="country" title="Country"/>
+    <string name="city" title="City"/>
+    <string name="postalCode" title="postal Code"/>
+
+    <decimal name="weight" title="Weight"/>
+    <decimal name="weightOl" title="OL"/>
+    <decimal name="weightOz" title="OZ"/>
+    <many-to-one name="shippService" ref="com.axelor.apps.sale.db.ShippService"
+      title="Carrier"/>
+    <many-to-one name="shippPackage" ref="com.axelor.apps.sale.db.ShippPackage"
+      title="Shipping Package"/>
+    <decimal name="sizeL" title="L"/>
+    <decimal name="sizeW" title="W"/>
+    <decimal name="sizeH" title="H"/>
+    <string name="confirmation" title="Confirmation"/>
+    <string name="insurance" title="Insurance"/>
+
+    <one-to-many ref="com.axelor.apps.sale.db.ShipmentLine" name="shipment"
+      title="Shipments" mappedBy="saleOrder"/>
+
     <unique-constraint columns="saleOrderSeq,company"/>
 
     <finder-method name="findBySaleOrderSeqAndCompany" using="saleOrderSeq,company"/>

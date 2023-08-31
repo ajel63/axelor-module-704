@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="shipment-grid" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
+    <field name="customer"/>
+    <field name="trackStatus"/>
+    <field name="rate"/>
+    <field name="carrierService"/>
+    <field name="trackingNumber"/>
+    <field name="shippDate"/>
+    <field name="saleOrder"/>
+  </grid>
+
+  <form name="shipment-form" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
+    <panel name="servicePanel">
+      <field name="customer"/>
+      <field name="trackStatus"/>
+      <field name="rate"/>
+      <field name="carrierService"/>
+      <field name="shippDate"/>
+      <field name="trackingNumber"/>
+    </panel>
+  </form>
+
+</object-views>

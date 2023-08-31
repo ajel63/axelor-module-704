@@ -263,6 +263,8 @@
         onClick="save,action-sale-order-view-reports-wizard"/>
       <button name="sendByEmailBtn" title="Send email" icon="fa-envelope"
         onClick="action-send-by-email-with-template"/>
+      <button name="shippingLabelBtn" title="Print Label" icon="fa-print"
+        onClick="save,action-sale-order-method-print-shippinf-label"/>
     </toolbar>
     <menubar>
       <menu name="saleOrderToolsMenu" title="Tools">
@@ -682,6 +684,33 @@
         name="generatedPurchaseOrderPanel" title="Generated purchase orders"
         action="action-sale-order-view-show-generated-po" hideIf="statusSelect &lt;= 2"/>
 
+      <panel name="shippPanel" title="Shipping">
+
+        <field name="weight" colSpan="3"/>
+        <field name="weightOl" colSpan="3" hidden="true"/>
+        <field name="weightOz" colSpan="3" hidden="true"/>
+        <spacer colSpan="3"/>
+
+        <field name="sizeL" colSpan="3"/>
+        <field name="sizeW" colSpan="3"/>
+        <field name="sizeH" colSpan="3"/>
+        <spacer colSpan="3"/>
+
+        <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
+          grid-view="shipp-service-grid" form-view="shipp-service-form"/>
+        <field name="shippPackage" title="Shipping Package" colSpan="3" canEdit="true"
+          canNew="true" canSelect="true" grid-view="shipp-package-grid"
+          form-view="shipp-package-form"/>
+        <spacer colSpan="3"/>
+        <spacer colSpan="3"/>
+
+        <field name="confirmation"/>
+        <field name="insurance"/>
+
+        <panel-related field="shipment" name="shipment" title="Shipment"
+          grid-view="shipment-grid" form-view="shipment-form" colSpan="12"/>
+
+      </panel>
 
 
     </panel-tabs>
@@ -1542,6 +1571,7 @@
       if="__config__.app.isApp('supplychain') &amp;&amp; timetableList != null"/>
     <action name="save" if="saleOrderLineList.find{it->it.typeSelect == 2} != null"/>
     <action name="action-sale-order-attrs-incoterm-required"/>
+    <action name="action-sale-order-method-calculate-total-weight"/>
   </action-group>
 
   <action-group name="action-sale-order-group-client-partner-change">
@@ -2330,5 +2360,13 @@
   <action-validate name="action-sale-order-validation-payment-amount">
     <error message="Please enter amount for payment" if="amountToPay == 0"/>
   </action-validate>
+
+  <action-method name="action-sale-order-method-print-shippinf-label">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="printShippingLabel"/>
+  </action-method>
+
+  <action-method name="action-sale-order-method-calculate-total-weight">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="calculateTotalWeight"/>
+  </action-method>
 
 </object-views>

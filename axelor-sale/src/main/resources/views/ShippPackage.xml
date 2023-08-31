@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="shipp-package-grid" title="Shipp Package"
+    model="com.axelor.apps.sale.db.ShippPackage">
+    <field name="code"/>
+    <field name="name"/>
+  </grid>
+
+  <form name="shipp-package-form" title="Shipp Package"
+    model="com.axelor.apps.sale.db.ShippPackage">
+    <panel name="servicePanel">
+      <field name="code" colSpan="6" required="true"/>
+      <field name="name" colSpan="6" required="true"/>
+    </panel>
+  </form>
+
+</object-views>

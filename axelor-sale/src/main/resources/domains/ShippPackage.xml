@@ -5,11 +5,10 @@
 
   <module name="sale" package="com.axelor.apps.sale.db"/>
 
-  <entity name="StripePaymentConfig">
+  <entity name="ShippPackage">
 
-    <string name="baseUrl" title="Base Url" required="true"/>
-    <string name="apiKey" title="API Key"/>
-    <string name="retrivePaymentBaseUrl" title="Retrive Payment Base Url"/>
+    <string name="code" title="Code" unique="true" required="true"/>
+    <string name="name" title="Name" required="true"/>
 
   </entity>
 

@@ -18,6 +18,7 @@
  */
 package com.axelor.apps.sale.web;
 
+import com.axelor.apps.ReportFactory;
 import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.PaymentMode;
 import com.axelor.apps.base.AxelorException;
@@ -697,5 +698,33 @@ public class SaleOrderController {
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }
+  }
+
+  public void printShippingLabel(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+
+      String fileLink =
+          ReportFactory.createReport("ShippingLabel.rptdesign", "ShippingLabel" + "-${date}")
+              .addParam("id", saleOrder.getId())
+              .generate()
+              .getFileLink();
+
+      //    System.err.println(fileLink); debug
+      response.setView(ActionView.define("Shipping Label").add("html", fileLink).map());
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void calculateTotalWeight(ActionRequest request, ActionResponse response) {
+    SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+    BigDecimal grossMass = new BigDecimal(0);
+
+    for (SaleOrderLine saleOrderLine : saleOrder.getSaleOrderLineList()) {
+      grossMass =
+          grossMass.add(saleOrderLine.getProduct().getGrossMass().multiply(saleOrderLine.getQty()));
+    }
+    response.setValue("weight", grossMass);
   }
 }
