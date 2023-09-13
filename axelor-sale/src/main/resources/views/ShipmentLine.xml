@@ -8,19 +8,24 @@
     <field name="trackStatus"/>
     <field name="rate"/>
     <field name="carrierService"/>
+    <field name="carrierServiceType"/>
     <field name="trackingNumber"/>
     <field name="shippDate"/>
     <field name="saleOrder"/>
+    <button onClick="save" name="printBtn" title="Print" icon="fa-print"/>
   </grid>
 
   <form name="shipment-form" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
     <panel name="servicePanel">
       <field name="customer"/>
       <field name="trackStatus"/>
-      <field name="rate"/>
       <field name="carrierService"/>
+      <field name="carrierServiceType"/>
+      <field name="rate"/>
       <field name="shippDate"/>
       <field name="trackingNumber"/>
+      <field name="trackingLink"/>
+
     </panel>
   </form>
 

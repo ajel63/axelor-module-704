@@ -43,6 +43,8 @@ import com.axelor.apps.sale.service.PartnerSaleService;
 import com.axelor.apps.sale.service.PartnerSaleServiceImpl;
 import com.axelor.apps.sale.service.ProductCategorySaleService;
 import com.axelor.apps.sale.service.ProductCategoryServiceSaleImpl;
+import com.axelor.apps.sale.service.PurchaseLableService;
+import com.axelor.apps.sale.service.PurchaseLableServiceImpl;
 import com.axelor.apps.sale.service.SaleOrderDomainService;
 import com.axelor.apps.sale.service.SaleOrderDomainServiceImpl;
 import com.axelor.apps.sale.service.SaleOrderLineSaleRepository;
@@ -120,5 +122,6 @@ public class SaleModule extends AxelorModule {
     bind(SaleOrderMergingViewService.class).to(SaleOrderMergingViewServiceImpl.class);
     bind(SaleOrderMergingService.class).to(SaleOrderMergingServiceImpl.class);
     bind(StripePaymentService.class).to(StripePaymentServiceImpl.class);
+    bind(PurchaseLableService.class).to(PurchaseLableServiceImpl.class);
   }
 }

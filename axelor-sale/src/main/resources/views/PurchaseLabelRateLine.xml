@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="shipment-purchase-label-rate-line-grid" title="Purchase Label Rate" canNew="true"
+    editable="true" canEdit="true" model="com.axelor.apps.sale.db.PurchaseLabelRateLine">
+    <field name="carrier" readonly="true"/>
+    <field name="carrierService" readonly="true"/>
+    <field name="rate" readonly="true" title="Rate($)"/>
+    <field name="isServiceSelected"/>
+  </grid>
+
+  <form name="shipment-purchase-label-rate-line-form" title="Purchase Label Rate"
+    model="com.axelor.apps.sale.db.PurchaseLabelRateLine">
+    <panel name="packPanel" readonly="true">
+      <field name="carrier"/>
+      <field name="carrierService"/>
+      <field name="rate" title="Rate($)">
+        <viewer>
+      	 <![CDATA[
+            <span>${{$fmt('rate')}}</span>
+         ]]>
+        </viewer>
+      </field>
+      <field name="isServiceSelected"/>
+    </panel>
+  </form>
+
+
+</object-views>

@@ -11,11 +11,13 @@
     <string name="trackStatus" title="Track Status" selection="shipment.track.status.select"/>
     <decimal name="rate" title="Rate"/>
     <many-to-one name="carrierService" ref="com.axelor.apps.sale.db.ShippService"
-      title="Carrier Service"/>
+      title="Carrier"/>
     <date name="shippDate" title="Ship Date"/>
     <string name="trackingNumber" title="Tracking Number"/>
     <many-to-one ref="com.axelor.apps.sale.db.SaleOrder" name="saleOrder"
       title="Sale Order"/>
+    <string name="carrierServiceType" title="Carrier Service"/>
+    <string name="trackingLink" title="Tracking Link"/>
 
   </entity>
 

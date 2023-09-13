@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="shipment-purchase-label-grid" title="PurchaseLabel"
+    model="com.axelor.apps.sale.db.PurchaseLabel">
+    <field name="billInfo"/>
+    <field name="referenceField1"/>
+    <field name="referenceField2"/>
+    <field name="carrier"/>
+    <field name="shipPackage"/>
+    <field name="phoneNumber"/>
+    <field name="emailAddress"/>
+  </grid>
+
+  <form name="shipment-purchase-label-form" title="Purchase Label"
+    onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel">
+    <panel name="packPanel">
+      <field name="billInfo" colSpan="4"/>
+      <spacer colSpan="8"/>
+      <field name="referenceField1" colSpan="4"/>
+      <spacer colSpan="8"/>
+      <field name="referenceField2" colSpan="4"/>
+      <spacer colSpan="8"/>
+      <field name="carrier" colSpan="4"/>
+      <field name="shipPackage" colSpan="4"/>
+      <spacer colSpan="4"/>
+      <field name="labelFileType" colSpan="4"/>
+      <spacer colSpan="8"/>
+      <field name="phoneNumber" colSpan="4"/>
+      <spacer colSpan="8"/>
+      <field name="emailAddress" colSpan="4"/>
+    </panel>
+
+    <panel>
+      <button onClick="save,action-purchase-lable-methos-get-shipment-rates,save"
+        name="getshippingRateBtn" title="Get Shipment Rates"/>
+    </panel>
+
+    <panel-related field="purchaseLabelRateLine" name="purchaseLabelRateLinePanel"
+      colSpan="12" grid-view="shipment-purchase-label-rate-line-grid" canEdit="true"
+      form-view="shipment-purchase-label-rate-line-form"/>
+
+    <panel>
+      <button onClick="save" name="confirmBtn" prompt="Confirm Service selection?"
+        title="Confirm Shipping Service"/>
+    </panel>
+  </form>
+
+  <action-method name="action-purchase-lable-methos-get-shipment-rates">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController"
+      method="getPurchaseLableRates"/>
+  </action-method>
+
+  <action-group name="action-purchase-lable-group-on-new">
+    <action name="action-purchase-lable-attrs-set-attributes"/>
+    <action name="action-purchase-lable-method-set-attributes"/>
+  </action-group>
+
+  <action-attrs name="action-purchase-lable-attrs-set-attributes">
+    <attribute name="value" for="referenceField1" expr="eval: _parent?.saleOrderSeq"/>
+  </action-attrs>
+
+  <action-method name="action-purchase-lable-method-set-attributes">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController" method="setAttributes"/>
+  </action-method>
+
+</object-views>

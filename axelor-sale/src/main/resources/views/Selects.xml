@@ -103,4 +103,8 @@
     <option value="failure">Failure</option>
   </selection>
 
+  <selection name="purchase.label.File.type.select">
+    <option value="pdf46">PDF 4*6</option>
+  </selection>
+
 </object-views>

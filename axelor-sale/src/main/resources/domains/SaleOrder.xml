@@ -201,6 +201,8 @@
     <decimal name="weight" title="Weight"/>
     <decimal name="weightOl" title="OL"/>
     <decimal name="weightOz" title="OZ"/>
+    <many-to-one name="purchaseLable" ref="com.axelor.apps.sale.db.PurchaseLabel"
+      title="Purchase Lable"/>
     <many-to-one name="shippService" ref="com.axelor.apps.sale.db.ShippService"
       title="Carrier"/>
     <many-to-one name="shippPackage" ref="com.axelor.apps.sale.db.ShippPackage"

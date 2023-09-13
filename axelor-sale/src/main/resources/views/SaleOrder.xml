@@ -691,10 +691,12 @@
         <field name="weightOz" colSpan="3" hidden="true"/>
         <spacer colSpan="3"/>
 
-        <field name="sizeL" colSpan="3"/>
-        <field name="sizeW" colSpan="3"/>
-        <field name="sizeH" colSpan="3"/>
-        <spacer colSpan="3"/>
+        <field name="sizeL" colSpan="2"/>
+        <field name="sizeW" colSpan="2"/>
+        <field name="sizeH" colSpan="2"/>
+        <button onClick="save" name="purchaseLabel" title="Purchase Label" colSpan="3"/>
+        <field name="purchaseLable" colSpan="3" canEdit="true" canNew="true" canSelect="false"
+          title="Create Purchase Label"/>
 
         <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
           grid-view="shipp-service-grid" form-view="shipp-service-form"/>
@@ -704,7 +706,7 @@
         <spacer colSpan="3"/>
         <spacer colSpan="3"/>
 
-        <field name="confirmation"/>
+        <field name="confirmation" title="BOL Number"/>
         <field name="insurance"/>
 
         <panel-related field="shipment" name="shipment" title="Shipment"

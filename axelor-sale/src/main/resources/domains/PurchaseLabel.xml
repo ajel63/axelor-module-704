@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="sale" package="com.axelor.apps.sale.db"/>
+
+  <entity name="PurchaseLabel">
+
+    <string name="billInfo" title="Bill Info"/>
+    <string name="referenceField1" title="Reference Field 1" required="true"
+      namecolumn="true"/>
+    <string name="referenceField2" title="Reference Field 2"/>
+    <many-to-one name="carrier" ref="com.axelor.apps.sale.db.ShippService"
+      title="Carrier"/>
+    <many-to-one name="shipPackage" ref="com.axelor.apps.sale.db.ShippPackage"
+      title="Packageing"/>
+    <string name="labelFileType" title="Label File Type"
+      selection="purchase.label.File.type.select"/>
+    <string name="phoneNumber" title="Phone"/>
+    <string name="emailAddress" title="Email"/>
+
+    <one-to-many ref="com.axelor.apps.sale.db.PurchaseLabelRateLine"
+      name="purchaseLabelRateLine" title="Shipments" mappedBy="purchaseLable"/>
+
+  </entity>
+
+</domain-models>
