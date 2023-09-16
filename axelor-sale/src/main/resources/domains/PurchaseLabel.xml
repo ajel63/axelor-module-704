@@ -19,6 +19,10 @@
       selection="purchase.label.File.type.select"/>
     <string name="phoneNumber" title="Phone"/>
     <string name="emailAddress" title="Email"/>
+    <boolean name="isShippingConfirm" title="Is Shipping Confirm"/>
+
+    <string name="trackingNumber" title="Tracking Number"/>
+    <string name="lableUrl" large="true" title="URL"/>
 
     <one-to-many ref="com.axelor.apps.sale.db.PurchaseLabelRateLine"
       name="purchaseLabelRateLine" title="Shipments" mappedBy="purchaseLable"/>

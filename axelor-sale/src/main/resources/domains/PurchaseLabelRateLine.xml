@@ -9,6 +9,7 @@
 
     <string name="carrier" title="Carrier"/>
     <string name="carrierService" title="Carrier Service"/>
+    <string name="carrierServiceToken" title="Carrier Service Token"/>
     <decimal name="rate" title="Rate"/>
     <boolean name="isServiceSelected" title="Select Service"/>
 

@@ -160,6 +160,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     httpRequest.setHeader("X-Api-Key", "justtestkey");
 
     try {
+
       StringEntity params =
           new StringEntity(
               "{\"city\":\""
@@ -195,22 +196,17 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       if (entity != null) {
         String result = EntityUtils.toString(entity);
         JSONObject jsonObj = new JSONObject(result);
-        System.err.println(jsonObj);
         if (jsonObj.has("type")) {
           if (jsonObj.get("type").equals("success")) {
             JSONObject shippingRatesObj = (JSONObject) jsonObj.get("shippingRates");
-            System.err.println("shippingRates: " + shippingRatesObj);
 
             JSONObject ratesObj = (JSONObject) shippingRatesObj.get("rates");
-            System.err.println("rates: " + ratesObj);
-            System.err.println("Lenght: " + ratesObj.length());
 
             Iterator<String> keysIterator = ratesObj.keys();
 
             while (keysIterator.hasNext()) {
               String serviceKey = keysIterator.next();
 
-              System.err.println("Service :" + serviceKey);
               JSONArray serviceTypeArray = (JSONArray) ratesObj.get(serviceKey);
 
               for (int i = 0; i < serviceTypeArray.length(); i++) {
@@ -218,8 +214,13 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                 JSONObject serviceTypeObj = serviceTypeArray.getJSONObject(i);
                 purchaseLabelRateLine.setCarrier(
                     (String) serviceTypeObj.get("provider").toString());
+
+                JSONObject servicelevelObj = (JSONObject) serviceTypeObj.get("servicelevel");
                 purchaseLabelRateLine.setCarrierService(
-                    (String) serviceTypeObj.get("servicelevel_name").toString());
+                    (String) servicelevelObj.get("name").toString());
+                purchaseLabelRateLine.setCarrierServiceToken(
+                    (String) servicelevelObj.get("token").toString());
+
                 String amountStr = (String) serviceTypeObj.get("amount").toString();
                 purchaseLabelRateLine.setRate(new BigDecimal(amountStr));
 

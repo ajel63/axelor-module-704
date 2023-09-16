@@ -62,7 +62,6 @@ public class PurchaseLableController {
 
   public void setAttributes(ActionRequest request, ActionResponse response) {
     Context context = request.getContext();
-    PurchaseLabel purchaseLabel = context.asType(PurchaseLabel.class);
 
     Partner partner = null;
     if (context.get("_parent") != null
@@ -78,9 +77,28 @@ public class PurchaseLableController {
       if (partner.getEmailAddress() != null && partner.getEmailAddress().getAddress() != null) {
         emailAddress = partner.getEmailAddress().getAddress();
       }
-      System.err.println("djnvk");
       response.setValue("phoneNumber", partner.getFixedPhone());
       response.setValue("emailAddress", emailAddress);
+    }
+  }
+
+  public void confirmShippingService(ActionRequest request, ActionResponse response) {
+    Context context = request.getContext();
+    PurchaseLabel purchaseLabel = context.asType(PurchaseLabel.class);
+
+    int serviceCount = 0;
+    for (PurchaseLabelRateLine purchaseLabelRateLine : purchaseLabel.getPurchaseLabelRateLine()) {
+      if (purchaseLabelRateLine.getIsServiceSelected()) {
+        serviceCount = serviceCount + 1;
+      }
+    }
+
+    if (serviceCount == 0) {
+      response.setAlert("Please Select the shipping service.");
+    }
+
+    if (serviceCount > 1) {
+      response.setAlert("Please Select only one shippig service.");
     }
   }
 }

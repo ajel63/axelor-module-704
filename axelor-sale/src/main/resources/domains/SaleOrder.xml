@@ -212,6 +212,7 @@
     <decimal name="sizeH" title="H"/>
     <string name="confirmation" title="Confirmation"/>
     <string name="insurance" title="Insurance"/>
+    <boolean name="isPurchaseLabelConfirm"/>
 
     <one-to-many ref="com.axelor.apps.sale.db.ShipmentLine" name="shipment"
       title="Shipments" mappedBy="saleOrder"/>
