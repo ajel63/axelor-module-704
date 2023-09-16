@@ -695,8 +695,10 @@
         <field name="sizeW" colSpan="2"/>
         <field name="sizeH" colSpan="2"/>
         <field name="purchaseLable" colSpan="3" canEdit="true" canNew="true" canSelect="false"
-          title="Create Purchase Label" onChange="action-sale-order-attrs-set-purchase-label-confirm-status,save"/>
-        <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm" hidden="true"/>
+          title="Create Purchase Label"
+          onChange="action-sale-order-attrs-set-purchase-label-confirm-status,save"/>
+        <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"
+          hidden="true"/>
 
         <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
           grid-view="shipp-service-grid" form-view="shipp-service-form"/>
@@ -2370,9 +2372,10 @@
   <action-method name="action-sale-order-method-calculate-total-weight">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="calculateTotalWeight"/>
   </action-method>
-  
+
   <action-attrs name="action-sale-order-attrs-set-purchase-label-confirm-status">
-  	<attribute name="value" for="isPurchaseLabelConfirm" expr="eval: purchaseLable?.isShippingConfirm"/>
+    <attribute name="value" for="isPurchaseLabelConfirm"
+      expr="eval: purchaseLable?.isShippingConfirm"/>
   </action-attrs>
 
 </object-views>
