@@ -7,7 +7,6 @@
     model="com.axelor.apps.sale.db.ShippService">
     <field name="code"/>
     <field name="name"/>
-    <field name="trackingNumber"/>
   </grid>
 
   <form name="shipp-service-form" title="ShippService"
@@ -15,7 +14,6 @@
     <panel name="servicePanel">
       <field name="code" colSpan="3" required="true"/>
       <field name="name" colSpan="3" required="true"/>
-      <field name="trackingNumber"/>
     </panel>
   </form>
 

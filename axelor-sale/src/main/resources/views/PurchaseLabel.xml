@@ -35,7 +35,7 @@
 
     <panel>
       <button onClick="save,action-purchase-lable-methos-get-shipment-rates,save"
-        name="getshippingRateBtn" title="Get Shipment Rates"/>
+        readonlyIf="isShippingConfirm" name="getshippingRateBtn" title="Get Shipment Rates"/>
     </panel>
 
     <panel-related field="purchaseLabelRateLine" name="purchaseLabelRateLinePanel"
@@ -43,17 +43,23 @@
       form-view="shipment-purchase-label-rate-line-form"/>
 
     <panel>
-      <button onClick="save,action-purchase-lable-method-confirm-shipping-service"
-        name="confirmBtn" prompt="Confirm Service selection?" title="Confirm Shipping Service"/>
+      <button onClick="save,action-purchase-lable-group-confirm-shipping-service"
+        readonlyIf="isShippingConfirm" name="confirmBtn" prompt="Confirm Service selection?"
+        title="Confirm Shipping Service"/>
       <field name="isShippingConfirm"/>
     </panel>
 
     <panel>
-      <field name="trackingNumber" colSpan="6"/>
+      <field name="trackingNumber" colSpan="6" readonly="true"/>
       <spacer colSpan="6"/>
-      <field name="lableUrl"/>
+      <field name="lableUrl" colSpan="12" readonly="true">
+        <viewer depends="lableUrl"><![CDATA[
+		      <div>
+		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
+		      </div>
+		    ]]></viewer>
+      </field>
     </panel>
-
   </form>
 
   <action-method name="action-purchase-lable-methos-get-shipment-rates">
@@ -66,6 +72,12 @@
     <action name="action-purchase-lable-method-set-attributes"/>
   </action-group>
 
+  <action-group name="action-purchase-lable-group-confirm-shipping-service">
+    <action name="action-purchase-lable-method-confirm-shipping-service-validate"/>
+    <action name="action-purchase-lable-method-confirm-shipping-service"/>
+    <action name="action-purchase-lable-method-set-selected-carrier-service"/>
+  </action-group>
+
   <action-attrs name="action-purchase-lable-attrs-set-attributes">
     <attribute name="value" for="referenceField1" expr="eval: _parent?.saleOrderSeq"/>
     <attribute name="value" for="referenceField2" expr="eval: _parent?.externalReference"/>
@@ -75,9 +87,18 @@
     <call class="com.axelor.apps.sale.web.PurchaseLableController" method="setAttributes"/>
   </action-method>
 
+  <action-method name="action-purchase-lable-method-confirm-shipping-service-validate">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController"
+      method="confirmShippingServiceValidate"/>
+  </action-method>
+
   <action-method name="action-purchase-lable-method-confirm-shipping-service">
     <call class="com.axelor.apps.sale.web.PurchaseLableController"
       method="confirmShippingService"/>
+  </action-method>
+
+  <action-method name="action-purchase-lable-method-set-selected-carrier-service">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController" method="setSelectedCarrier"/>
   </action-method>
 
 </object-views>

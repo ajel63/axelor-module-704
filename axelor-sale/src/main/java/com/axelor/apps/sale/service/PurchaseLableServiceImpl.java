@@ -24,15 +24,19 @@ import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.StripePaymentConfig;
 import com.axelor.apps.sale.db.StripePaymentLine;
+import com.axelor.apps.sale.db.repo.ShippServiceRepository;
 import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
 import com.axelor.inject.Beans;
 import com.google.inject.persist.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -158,7 +162,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
     httpRequest.setHeader("X-Api-Key", "justtestkey");
-
+    httpRequest.addHeader("Content-Type", "application/json");
     try {
 
       StringEntity params =
@@ -188,7 +192,6 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                   + "\",\"height\":\""
                   + saleOrder.getSizeH()
                   + "\"}");
-      httpRequest.addHeader("Content-Type", "application/json");
       httpRequest.setEntity(params);
 
       CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
@@ -242,5 +245,153 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     }
 
     return purchaseLabelRateLineList;
+  }
+
+  @Override
+  public Map<String, String> confirmShippingService(
+      PurchaseLabel purchaseLabel, SaleOrder saleOrder) throws AxelorException {
+
+    Map<String, String> map = new HashMap<>();
+    if (!(saleOrder.getWeight().compareTo(new BigDecimal(0)) == 1)) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add weight in shipping tab.");
+    }
+
+    if (!(saleOrder.getSizeL().compareTo(new BigDecimal(0)) == 1)
+        || !(saleOrder.getSizeW().compareTo(new BigDecimal(0)) == 1)
+        || !(saleOrder.getSizeH().compareTo(new BigDecimal(0)) == 1)) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please add size of L, W and H values in shipping tab.");
+    }
+
+    if (saleOrder.getDeliveryAddress() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add Delivery address on Sale Order");
+    }
+
+    Address address = saleOrder.getDeliveryAddress();
+    if (address.getPostalCode() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please add postal code on Delivery address of Sale Order");
+    }
+    String pincode = address.getPostalCode().getCode();
+    String city = address.getCityName();
+    String state = address.getState();
+    String addressStr = address.getAddressL4();
+
+    if (pincode == null
+        || pincode == ""
+        || city == null
+        || city == ""
+        || state == null
+        || state == ""
+        || addressStr == null
+        || addressStr == "") {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please add Address line, city, state and pincode on address");
+    }
+
+    String customerName = saleOrder.getClientPartner().getName();
+    Long custumerId = saleOrder.getClientPartner().getId();
+    String company = saleOrder.getCompany().getName();
+    Long orderId = saleOrder.getId();
+
+    String carrier = "";
+    String carrierService = "";
+    String carrierServiceToken = "";
+
+    for (PurchaseLabelRateLine purchaseLabelRateLine : purchaseLabel.getPurchaseLabelRateLine()) {
+      if (purchaseLabelRateLine.getIsServiceSelected()) {
+        carrier = purchaseLabelRateLine.getCarrier();
+        carrierService = purchaseLabelRateLine.getCarrierService();
+        carrierServiceToken = purchaseLabelRateLine.getCarrierServiceToken();
+      }
+    }
+
+    if (carrier == ""
+        || carrier == null
+        || carrierService == ""
+        || carrierService == null
+        || carrierServiceToken == ""
+        || carrierServiceToken == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Carrier, Carrier Service or Carrier Service token not found in request.");
+    }
+
+    String url = "https://axelor-api.zdental.com/api/shipping/order";
+    CloseableHttpClient httpClient = HttpClients.createDefault();
+    HttpPost httpRequest = new HttpPost(url);
+    httpRequest.setHeader("X-Api-Key", "justtestkey");
+
+    try {
+      String str =
+          "{\"weight\":\"34\",\"length\":\"6\",\"width\":\"10\",\"height\":\"8\",\"city\":\"San Francisco\",\"customer\":\"45098\",\"name\":\"Mr.Hippo\",\"company\":\"ZDental\",\"address\":\"215 Clayton St.\",\"zipCode\":\"94117\",\"state\":\"CA\",\"phone\":\"614-400-2732\",\"mail\":\"morana@aetna.com\",\"orderId\":24597,\"carrier\":\"usps\",\"servicelevel_token\":\"usps_ground_advantage\",\"serviceName\":\"GroundAdvantage\"}";
+      StringEntity params = new StringEntity(str);
+      httpRequest.addHeader("Content-Type", "application/json");
+      httpRequest.setHeader("X-Api-Key", "justtestkey");
+      httpRequest.setEntity(params);
+
+      CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
+      HttpEntity entity = httpRresponse.getEntity();
+      if (entity != null) {
+        String result = EntityUtils.toString(entity);
+        JSONObject jsonObj = new JSONObject(result);
+        if (jsonObj.has("type")) {
+          if (jsonObj.get("type").equals("success")) {
+            JSONObject shippingOrderObj = (JSONObject) jsonObj.get("shippingOrder");
+            JSONObject shipOrderObj = (JSONObject) shippingOrderObj.get("shippingOrder");
+            JSONObject shippoOrderObj = (JSONObject) shippingOrderObj.get("shippoOrder");
+
+            String trackingNumber = (String) shipOrderObj.get("trackingNumber").toString();
+            String labelUrl = (String) shippoOrderObj.get("label_url").toString();
+
+            if (trackingNumber == ""
+                || trackingNumber == null
+                || labelUrl == ""
+                || labelUrl == null) {
+              String errMessage = shippoOrderObj.get("message").toString();
+              throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errMessage);
+            }
+
+            map.put("trackingNumber", trackingNumber);
+            map.put("labelUrl", labelUrl);
+
+          } else {
+            if (jsonObj.has("type")) {
+              if (jsonObj.get("type").equals("error")) {
+                String errorMessage = jsonObj.get("message").toString();
+                throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errorMessage);
+              }
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
+    }
+    return map;
+  }
+
+  @Transactional
+  @Override
+  public ShippService setSelectedCarrier(PurchaseLabel purchaseLabel) {
+    ShippService shippService = null;
+    for (PurchaseLabelRateLine purchaseLabelRateLine : purchaseLabel.getPurchaseLabelRateLine()) {
+      if (purchaseLabelRateLine.getIsServiceSelected()) {
+        shippService =
+            Beans.get(ShippServiceRepository.class).findByName(purchaseLabelRateLine.getCarrier());
+        if (shippService == null) {
+          shippService = new ShippService();
+          shippService.setName(purchaseLabelRateLine.getCarrier());
+          shippService.setCode(purchaseLabelRateLine.getCarrier());
+          shippService = Beans.get(ShippServiceRepository.class).save(shippService);
+        }
+      }
+    }
+    return shippService;
   }
 }

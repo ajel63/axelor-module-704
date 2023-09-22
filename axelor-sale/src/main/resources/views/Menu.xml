@@ -255,6 +255,15 @@
     <view type="form" name="stripe-payment-config-form"/>
   </action-view>
 
+  <menuitem name="sale.conf.shipment.api.config" parent="sc-root-sale-conf"
+    title="Ship Api Config" action="sale.conf.shipment.api.config.view" order="801"/>
+
+  <action-view name="sale.conf.shipment.api.config.view" title="Ship Api Config"
+    model="com.axelor.apps.sale.db.ShipmentApiConfig">
+    <view type="grid" name="shipment-api-config-grid"/>
+    <view type="form" name="shipment-api-config-form"/>
+  </action-view>
+
   <menuitem name="sale-conf-configurators" parent="sc-root-sale-conf" order="900"
     title="Configurators" if="__config__.app.getApp('sale')?.getEnableConfigurator()"/>
 

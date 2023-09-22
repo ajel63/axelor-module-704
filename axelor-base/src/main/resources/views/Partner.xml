@@ -528,8 +528,8 @@
         <field name="salePartnerPriceList" canEdit="false" domain="self.typeSelect = 1"
           colSpan="3" form-view="sale-partner-price-list-form" grid-view="partner-price-list-grid"/>
         <field name="stripeId" colSpan="3"/>
-        <field name="chargeBackPurchaseSelect" colSpan="3" if-module="axelor-business-project"
-          title="Change to Commission" if="__config__.app.isApp('business-project')"/>
+        <field name="changeToCommissions" colSpan="3"/>
+        <field name="chargeBackPurchaseSelect" colSpan="3" hidden="true"/>
         <field name="chargeBackPurchase" colSpan="3" showIf="chargeBackPurchaseSelect == 3"
           if-module="axelor-business-project" if="__config__.app.isApp('business-project')"/>
         <panel name="clientPortalAccessPanel" title="Client portal access"

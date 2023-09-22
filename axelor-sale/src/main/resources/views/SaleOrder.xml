@@ -695,17 +695,17 @@
         <field name="sizeW" colSpan="2"/>
         <field name="sizeH" colSpan="2"/>
         <field name="purchaseLable" colSpan="3" canEdit="true" canNew="true" canSelect="false"
-          title="Create Purchase Label"
+          readonlyIf="isPurchaseLabelConfirm" title="Create Purchase Label"
           onChange="action-sale-order-attrs-set-purchase-label-confirm-status,save"/>
         <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"
-          hidden="true"/>
+          hidden="false"/>
 
         <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
           grid-view="shipp-service-grid" form-view="shipp-service-form"/>
         <field name="shippPackage" title="Shipping Package" colSpan="3" canEdit="true"
           canNew="true" canSelect="true" grid-view="shipp-package-grid"
           form-view="shipp-package-form"/>
-        <spacer colSpan="3"/>
+        <field name="trackingNumber" colSpan="3"/>
         <spacer colSpan="3"/>
 
         <field name="confirmation" title="BOL Number"/>

@@ -24,6 +24,7 @@ import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.repo.PurchaseLabelRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.service.PurchaseLableService;
@@ -82,7 +83,7 @@ public class PurchaseLableController {
     }
   }
 
-  public void confirmShippingService(ActionRequest request, ActionResponse response) {
+  public void confirmShippingServiceValidate(ActionRequest request, ActionResponse response) {
     Context context = request.getContext();
     PurchaseLabel purchaseLabel = context.asType(PurchaseLabel.class);
 
@@ -94,11 +95,46 @@ public class PurchaseLableController {
     }
 
     if (serviceCount == 0) {
-      response.setAlert("Please Select the shipping service.");
+      response.setError("Please Select the shipping service.");
     }
 
     if (serviceCount > 1) {
-      response.setAlert("Please Select only one shippig service.");
+      response.setError("Please Select only one shippig service.");
     }
+  }
+
+  public void confirmShippingService(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    Context context = request.getContext();
+    PurchaseLabel purchaseLabel = request.getContext().asType(PurchaseLabel.class);
+
+    SaleOrder saleOrder = null;
+    if (context.get("_parent") != null) {
+
+      Map<String, Object> _parent = (Map<String, Object>) context.get("_parent");
+
+      String id = _parent.get("id").toString();
+      saleOrder = Beans.get(SaleOrderRepository.class).find(Long.parseLong(id));
+    }
+
+    Map<String, String> map =
+        Beans.get(PurchaseLableService.class)
+            .confirmShippingService(
+                Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()), saleOrder);
+    if (map.size() > 0) {
+      response.setValue("trackingNumber", map.get("trackingNumber"));
+      response.setValue("lableUrl", map.get("labelUrl"));
+      response.setValue("isShippingConfirm", true);
+    }
+  }
+
+  public void setSelectedCarrier(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    PurchaseLabel purchaseLabel = request.getContext().asType(PurchaseLabel.class);
+    ShippService shiSservice =
+        Beans.get(PurchaseLableService.class)
+            .setSelectedCarrier(
+                Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()));
+    response.setValue("carrier", shiSservice);
   }
 }

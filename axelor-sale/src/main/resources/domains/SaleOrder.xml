@@ -207,6 +207,7 @@
       title="Carrier"/>
     <many-to-one name="shippPackage" ref="com.axelor.apps.sale.db.ShippPackage"
       title="Shipping Package"/>
+    <string name="trackingNumber"/>
     <decimal name="sizeL" title="L"/>
     <decimal name="sizeW" title="W"/>
     <decimal name="sizeH" title="H"/>

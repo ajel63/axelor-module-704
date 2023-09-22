@@ -137,6 +137,7 @@
       title="ImPrint Info" index="false"/>
     <string name="stripeId" title="Stripe Id"/>
     <boolean name="partnerStatus" title="Partner Status" default="true"/>
+    <string name="changeToCommissions" title="Commissions"/>
 
     <!-- -Json fields -->
     <string name="partnerAttrs" title="Fields" json="true"/>
