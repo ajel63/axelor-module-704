@@ -694,11 +694,13 @@
         <field name="sizeL" colSpan="2"/>
         <field name="sizeW" colSpan="2"/>
         <field name="sizeH" colSpan="2"/>
-        <field name="purchaseLable" colSpan="3" canEdit="true" canNew="true" canSelect="false"
+        <field name="purchaseLable" colSpan="2" canEdit="true" canNew="true" canSelect="false"
           readonlyIf="isPurchaseLabelConfirm" title="Create Purchase Label"
           onChange="action-sale-order-attrs-set-purchase-label-confirm-status,save"/>
         <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"
           hidden="false"/>
+        <button onClick="save" name="confirmBtn" prompt="Are you sure you want to cancel Shipping lable?"
+        title="Cancel Shipping Lable" colSpan="2"/>  
 
         <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
           grid-view="shipp-service-grid" form-view="shipp-service-form"/>

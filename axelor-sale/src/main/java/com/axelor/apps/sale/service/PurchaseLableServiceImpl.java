@@ -18,93 +18,37 @@
  */
 package com.axelor.apps.sale.service;
 
-import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.base.db.Address;
-import com.axelor.apps.base.db.repo.TraceBackRepository;
-import com.axelor.apps.sale.db.PurchaseLabel;
-import com.axelor.apps.sale.db.PurchaseLabelRateLine;
-import com.axelor.apps.sale.db.SaleOrder;
-import com.axelor.apps.sale.db.ShippService;
-import com.axelor.apps.sale.db.StripePaymentConfig;
-import com.axelor.apps.sale.db.StripePaymentLine;
-import com.axelor.apps.sale.db.repo.ShippServiceRepository;
-import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
-import com.axelor.inject.Beans;
-import com.google.inject.persist.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.db.Address;
+import com.axelor.apps.base.db.repo.TraceBackRepository;
+import com.axelor.apps.sale.db.PurchaseLabel;
+import com.axelor.apps.sale.db.PurchaseLabelRateLine;
+import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.apps.sale.db.ShipmentApiConfig;
+import com.axelor.apps.sale.db.ShippService;
+import com.axelor.apps.sale.db.repo.ShipmentApiConfigRepository;
+import com.axelor.apps.sale.db.repo.ShippServiceRepository;
+import com.axelor.inject.Beans;
+import com.google.inject.persist.Transactional;
+
 public class PurchaseLableServiceImpl implements PurchaseLableService {
-
-  @Transactional
-  public List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder) {
-    List<StripePaymentLine> stripePaymentLineList = new ArrayList<StripePaymentLine>();
-
-    String url = "";
-    StripePaymentConfig stripePaymentConfig =
-        Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
-    url = stripePaymentConfig.getRetrivePaymentBaseUrl();
-    url =
-        url
-            + "/api/payments/data/"
-            + saleOrder.getId(); // "https://axelor-api.zdental.com/api/payments/data/24218"
-
-    CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-    HttpGet httpRequest = new HttpGet(url);
-    httpRequest.setHeader("X-Api-Key", "justtestkey");
-
-    try {
-      CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
-      HttpEntity entity = httpRresponse.getEntity();
-      if (entity != null) {
-        String result = EntityUtils.toString(entity);
-        JSONObject jsonObj = new JSONObject(result);
-        if (jsonObj.has("type")) {
-          if (jsonObj.get("type").equals("success")) {
-            JSONArray paymentArray = jsonObj.getJSONArray("payment");
-
-            for (int i = 0; i < paymentArray.length(); i++) {
-              StripePaymentLine stripePaymentLine = new StripePaymentLine();
-              JSONObject paymentObject = paymentArray.getJSONObject(i);
-              stripePaymentLine.setStripeId((String) paymentObject.get("id").toString());
-              stripePaymentLine.setOrderId(paymentObject.get("order_id").toString());
-              stripePaymentLine.setPaymentId(paymentObject.get("payment_id").toString());
-              stripePaymentLine.setCustomerId(paymentObject.get("customer_id").toString());
-              stripePaymentLine.setCustomerName(paymentObject.get("customer_name").toString());
-              stripePaymentLine.setCustomerEmail(paymentObject.get("customer_email").toString());
-              stripePaymentLine.setCost(paymentObject.get("cost").toString());
-              stripePaymentLine.setStatus(paymentObject.get("status").toString());
-              stripePaymentLine.setCard(paymentObject.get("card").toString());
-              stripePaymentLine.setStripeCreatedAt(paymentObject.get("created_at").toString());
-              stripePaymentLine.setStripeUpdatedAt(paymentObject.get("updated_at").toString());
-
-              stripePaymentLineList.add(stripePaymentLine);
-            }
-          }
-        } else {
-        }
-      }
-    } catch (Exception e) {
-      System.err.println(e);
-    }
-
-    return stripePaymentLineList;
-  }
 
   @Transactional
   @Override
@@ -157,11 +101,25 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String company = saleOrder.getCompany().getName();
 
     List<PurchaseLabelRateLine> purchaseLabelRateLineList = new ArrayList<PurchaseLabelRateLine>();
-    String url = "https://axelor-api.zdental.com/api/shipping/cost";
+    
+    String url = "";
+    String token = "";
+    ShipmentApiConfig shipmentApiConfig =
+        Beans.get(ShipmentApiConfigRepository.class).all().fetchOne();
+    url = shipmentApiConfig.getBaseUrl();
+    token = shipmentApiConfig.getApiKey();
+    
+    if(url == null || url == "" || token == null || token =="") {
+    	throw new AxelorException(
+    	          TraceBackRepository.CATEGORY_NO_VALUE,
+    	          "Please configure Shipment API: base Urls and API key.");
+    }
+    
+    url = url + "/shipping/cost";
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
-    httpRequest.setHeader("X-Api-Key", "justtestkey");
+    httpRequest.setHeader("X-Api-Key", token);
     httpRequest.addHeader("Content-Type", "application/json");
     try {
 
@@ -322,26 +280,39 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Carrier, Carrier Service or Carrier Service token not found in request.");
     }
 
-    String url = "https://axelor-api.zdental.com/api/shipping/order";
+    String url = "";
+    String token = "";
+    ShipmentApiConfig shipmentApiConfig =
+        Beans.get(ShipmentApiConfigRepository.class).all().fetchOne();
+    url = shipmentApiConfig.getBaseUrl();
+    token = shipmentApiConfig.getApiKey();
+    
+    if(url == null || url == "" || token == null || token =="") {
+    	throw new AxelorException(
+    	          TraceBackRepository.CATEGORY_NO_VALUE,
+    	          "Please configure Shipment API: base Urls and API key.");
+    }
+    
+    url = url + "/shipping/order";
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
-    httpRequest.setHeader("X-Api-Key", "justtestkey");
-
+    
     try {
       String str =
-          "{\"weight\":\"34\",\"length\":\"6\",\"width\":\"10\",\"height\":\"8\",\"city\":\"San Francisco\",\"customer\":\"45098\",\"name\":\"Mr.Hippo\",\"company\":\"ZDental\",\"address\":\"215 Clayton St.\",\"zipCode\":\"94117\",\"state\":\"CA\",\"phone\":\"614-400-2732\",\"mail\":\"morana@aetna.com\",\"orderId\":24597,\"carrier\":\"usps\",\"servicelevel_token\":\"usps_ground_advantage\",\"serviceName\":\"GroundAdvantage\"}";
+          "{\"weight\":\""+saleOrder.getWeight()+"\",\"length\":\""+saleOrder.getSizeL()+"\",\"width\":\""+saleOrder.getSizeW()+"\",\"height\":\""+saleOrder.getSizeH()+"\",\"city\":\""+city+"\",\"customer\":\""+custumerId+"\",\"name\":\""+customerName+"\",\"company\":\""+company+"\",\"address\":\""+addressStr+"\",\"zipCode\":\""+pincode+"\",\"state\":\""+state+"\",\"phone\":\""+purchaseLabel.getPhoneNumber()+"\",\"mail\":\""+purchaseLabel.getEmailAddress()+"\",\"orderId\":"+orderId+",\"carrier\":\""+carrier.toLowerCase()+"\",\"servicelevel_token\":\""+carrierServiceToken+"\",\"serviceName\":\""+carrierService+"\"}";
+      
       StringEntity params = new StringEntity(str);
       httpRequest.addHeader("Content-Type", "application/json");
-      httpRequest.setHeader("X-Api-Key", "justtestkey");
+      httpRequest.setHeader("X-Api-Key", token);
       httpRequest.setEntity(params);
-
       CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
       HttpEntity entity = httpRresponse.getEntity();
       if (entity != null) {
         String result = EntityUtils.toString(entity);
+        System.err.println(result);
         JSONObject jsonObj = new JSONObject(result);
         if (jsonObj.has("type")) {
-          if (jsonObj.get("type").equals("success")) {
+        	if (jsonObj.get("type").equals("success")) {
             JSONObject shippingOrderObj = (JSONObject) jsonObj.get("shippingOrder");
             JSONObject shipOrderObj = (JSONObject) shippingOrderObj.get("shippingOrder");
             JSONObject shippoOrderObj = (JSONObject) shippingOrderObj.get("shippoOrder");
@@ -359,7 +330,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
 
             map.put("trackingNumber", trackingNumber);
             map.put("labelUrl", labelUrl);
-
+            
           } else {
             if (jsonObj.has("type")) {
               if (jsonObj.get("type").equals("error")) {

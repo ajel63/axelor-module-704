@@ -46,7 +46,10 @@
       <button onClick="save,action-purchase-lable-group-confirm-shipping-service"
         readonlyIf="isShippingConfirm" name="confirmBtn" prompt="Confirm Service selection?"
         title="Confirm Shipping Service"/>
-      <field name="isShippingConfirm"/>
+
+      <button onClick="save" name="confirmBtn" prompt="Are you sure you want to cancel Shipping lable?"
+        title="Cancel Shipping Lable" colSpan="3"/>
+      <field name="isShippingConfirm" colSpan="3"/>
     </panel>
 
     <panel>
