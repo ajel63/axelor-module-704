@@ -18,23 +18,6 @@
  */
 package com.axelor.apps.sale.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
@@ -47,6 +30,21 @@ import com.axelor.apps.sale.db.repo.ShipmentApiConfigRepository;
 import com.axelor.apps.sale.db.repo.ShippServiceRepository;
 import com.axelor.inject.Beans;
 import com.google.inject.persist.Transactional;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class PurchaseLableServiceImpl implements PurchaseLableService {
 
@@ -101,20 +99,20 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String company = saleOrder.getCompany().getName();
 
     List<PurchaseLabelRateLine> purchaseLabelRateLineList = new ArrayList<PurchaseLabelRateLine>();
-    
+
     String url = "";
     String token = "";
     ShipmentApiConfig shipmentApiConfig =
         Beans.get(ShipmentApiConfigRepository.class).all().fetchOne();
     url = shipmentApiConfig.getBaseUrl();
     token = shipmentApiConfig.getApiKey();
-    
-    if(url == null || url == "" || token == null || token =="") {
-    	throw new AxelorException(
-    	          TraceBackRepository.CATEGORY_NO_VALUE,
-    	          "Please configure Shipment API: base Urls and API key.");
+
+    if (url == null || url == "" || token == null || token == "") {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please configure Shipment API: base Urls and API key.");
     }
-    
+
     url = url + "/shipping/cost";
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -286,21 +284,55 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
         Beans.get(ShipmentApiConfigRepository.class).all().fetchOne();
     url = shipmentApiConfig.getBaseUrl();
     token = shipmentApiConfig.getApiKey();
-    
-    if(url == null || url == "" || token == null || token =="") {
-    	throw new AxelorException(
-    	          TraceBackRepository.CATEGORY_NO_VALUE,
-    	          "Please configure Shipment API: base Urls and API key.");
+
+    if (url == null || url == "" || token == null || token == "") {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please configure Shipment API: base Urls and API key.");
     }
-    
+
     url = url + "/shipping/order";
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
-    
+
     try {
       String str =
-          "{\"weight\":\""+saleOrder.getWeight()+"\",\"length\":\""+saleOrder.getSizeL()+"\",\"width\":\""+saleOrder.getSizeW()+"\",\"height\":\""+saleOrder.getSizeH()+"\",\"city\":\""+city+"\",\"customer\":\""+custumerId+"\",\"name\":\""+customerName+"\",\"company\":\""+company+"\",\"address\":\""+addressStr+"\",\"zipCode\":\""+pincode+"\",\"state\":\""+state+"\",\"phone\":\""+purchaseLabel.getPhoneNumber()+"\",\"mail\":\""+purchaseLabel.getEmailAddress()+"\",\"orderId\":"+orderId+",\"carrier\":\""+carrier.toLowerCase()+"\",\"servicelevel_token\":\""+carrierServiceToken+"\",\"serviceName\":\""+carrierService+"\"}";
-      
+          "{\"weight\":\""
+              + saleOrder.getWeight()
+              + "\",\"length\":\""
+              + saleOrder.getSizeL()
+              + "\",\"width\":\""
+              + saleOrder.getSizeW()
+              + "\",\"height\":\""
+              + saleOrder.getSizeH()
+              + "\",\"city\":\""
+              + city
+              + "\",\"customer\":\""
+              + custumerId
+              + "\",\"name\":\""
+              + customerName
+              + "\",\"company\":\""
+              + company
+              + "\",\"address\":\""
+              + addressStr
+              + "\",\"zipCode\":\""
+              + pincode
+              + "\",\"state\":\""
+              + state
+              + "\",\"phone\":\""
+              + purchaseLabel.getPhoneNumber()
+              + "\",\"mail\":\""
+              + purchaseLabel.getEmailAddress()
+              + "\",\"orderId\":"
+              + orderId
+              + ",\"carrier\":\""
+              + carrier.toLowerCase()
+              + "\",\"servicelevel_token\":\""
+              + carrierServiceToken
+              + "\",\"serviceName\":\""
+              + carrierService
+              + "\"}";
+
       StringEntity params = new StringEntity(str);
       httpRequest.addHeader("Content-Type", "application/json");
       httpRequest.setHeader("X-Api-Key", token);
@@ -309,15 +341,14 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       HttpEntity entity = httpRresponse.getEntity();
       if (entity != null) {
         String result = EntityUtils.toString(entity);
-        System.err.println(result);
         JSONObject jsonObj = new JSONObject(result);
         if (jsonObj.has("type")) {
-        	if (jsonObj.get("type").equals("success")) {
-            JSONObject shippingOrderObj = (JSONObject) jsonObj.get("shippingOrder");
-            JSONObject shipOrderObj = (JSONObject) shippingOrderObj.get("shippingOrder");
-            JSONObject shippoOrderObj = (JSONObject) shippingOrderObj.get("shippoOrder");
+          if (jsonObj.get("type").equals("success")) {
+            JSONObject dataObj = (JSONObject) jsonObj.get("data");
+            JSONObject shippingOrderObj = (JSONObject) dataObj.get("shippingOrder");
+            JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
 
-            String trackingNumber = (String) shipOrderObj.get("trackingNumber").toString();
+            String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
             String labelUrl = (String) shippoOrderObj.get("label_url").toString();
 
             if (trackingNumber == ""
@@ -330,7 +361,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
 
             map.put("trackingNumber", trackingNumber);
             map.put("labelUrl", labelUrl);
-            
+
           } else {
             if (jsonObj.has("type")) {
               if (jsonObj.get("type").equals("error")) {
