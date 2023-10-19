@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="sale-z-dental-report-grid" title="Sale Report"
+    model="com.axelor.apps.sale.db.SaleReport">
+    <field name="reportType"/>
+    <field name="fromDate"/>
+    <field name="toDate"/>
+  </grid>
+
+  <form name="sale-z-dental-report-form" title="Sale Report"
+    model="com.axelor.apps.sale.db.SaleReport">
+    <panel name="mainPanel">
+      <field name="reportType"/>
+      <spacer colSpan="6"/>
+      <field name="fromDate"/>
+      <field name="toDate"/>
+      <button onClick="action-sale-report-method-print-sale-report" name="printBtn"
+        title="Print"/>
+    </panel>
+  </form>
+
+  <action-method name="action-sale-report-method-print-sale-report">
+    <call class="com.axelor.apps.sale.web.SaleReportController" method="printReport"/>
+  </action-method>
+
+</object-views>

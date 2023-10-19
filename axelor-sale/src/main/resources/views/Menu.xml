@@ -145,6 +145,23 @@
   <menuitem name="sc-root-sale-report" parent="sc-root-sale" title="Reportings"
     order="1300" icon="fa-bar-chart"/>
 
+
+  <menuitem name="sc-root-sale-z-dental-report" parent="sc-root-sale-report"
+    title="ZDental Report" action="sc.root.sale.z.dental.report.dashboard.view" order="100"/>
+
+  <action-view name="sc.root.sale.z.dental.report.dashboard.view" title="ZDental Report">
+    <view type="dashboard" name="sale.dashboard.z.dental.reports.view"/>
+  </action-view>
+
+  <menuitem name="sc-root-sale-z-dental-report-generate" parent="sc-root-sale-report"
+    title="ZDental sale Report" action="sc.root.sale.z.dental.report.generate.view" order="99"/>
+
+  <action-view name="sc.root.sale.z.dental.report.generate.view"
+    title="ZDental sale Report" model="com.axelor.apps.sale.db.SaleReport">
+    <view type="grid" name="sale-z-dental-report-grid"/>
+    <view type="form" name="sale-z-dental-report-form"/>
+  </action-view>
+
   <menuitem name="sc-root-sale-maps" parent="sc-root-sale-report" title="Maps" order="500"/>
 
   <menuitem name="sale-maps-partner-customers" parent="sc-root-sale-maps" title="Customers"

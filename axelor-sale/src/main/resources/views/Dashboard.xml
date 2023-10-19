@@ -270,4 +270,16 @@
   </action-view>
 
 
+  <!-- Z- Dental Reports -->
+
+  <dashboard name="sale.dashboard.z.dental.reports.view" title="ZDental Report">
+    <dashlet action="dashlet.sales.turnover.z.dental" height="350" colSpan="12"/>
+  </dashboard>
+
+  <action-view title="Sale turnover" model="com.axelor.apps.sale.db.SaleOrder"
+    name="dashlet.sales.turnover.z.dental">
+    <view type="chart" name="chart.sale.turnover.ytd.vs.previous.years.by.month2"/>
+    <context name="todayDate" expr="eval:__config__.date"/>
+  </action-view>
+
 </object-views>

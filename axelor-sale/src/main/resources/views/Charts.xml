@@ -882,4 +882,35 @@
     <series key="turnOver" type="bar" title="Turnover" aggregate="sum" groupBy="family"/>
     <config name="xFormat" value="MM-YYYY"/>
   </chart>
+
+  <chart onInit="action.sale.chart.set.dates.this.last.year"
+    name="chart.sale.turnover.ytd.vs.previous.years.by.month2" title="Sales turnover">
+    <dataset type="sql">
+      SELECT
+      SUM(_line.ex_tax_total) AS _turn_over,
+
+      DATE_PART('year',
+      self.confirmation_date_time) AS _year
+      FROM
+      sale_sale_order AS self
+      JOIN
+      sale_sale_order_line AS
+      _line
+      ON _line.sale_order = self.id
+      JOIN
+      auth_user AS _user
+      ON _user.id = :__user__
+      WHERE
+      self.status_select in (3,4)
+
+      GROUP BY
+      _year
+      ORDER BY
+      _year
+    </dataset>
+    <category key="_year" type="number" title="Year"/>
+    <series key="_turn_over" type="bar" title="TurnOver"/>
+    <config name="xFormat" value="MM-YYYY"/>
+  </chart>
+
 </object-views>

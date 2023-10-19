@@ -107,4 +107,8 @@
     <option value="pdf46">PDF 4*6</option>
   </selection>
 
+  <selection name="sale.z.dental.report.type.select">
+    <option value="SaleByMonth">Sale By Month</option>
+  </selection>
+
 </object-views>
