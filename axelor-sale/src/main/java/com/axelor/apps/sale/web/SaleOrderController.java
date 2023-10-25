@@ -18,6 +18,20 @@
  */
 package com.axelor.apps.sale.web;
 
+import java.lang.invoke.MethodHandles;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.axelor.apps.ReportFactory;
 import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.PaymentMode;
@@ -40,6 +54,8 @@ import com.axelor.apps.base.service.exception.HandleExceptionResponse;
 import com.axelor.apps.base.service.exception.TraceBackService;
 import com.axelor.apps.report.engine.ReportSettings;
 import com.axelor.apps.sale.db.Pack;
+import com.axelor.apps.sale.db.PurchaseLabel;
+import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.StripePaymentConfig;
@@ -70,17 +86,6 @@ import com.axelor.utils.db.Wizard;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
-import java.lang.invoke.MethodHandles;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
-import javax.annotation.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Singleton
 public class SaleOrderController {
@@ -703,10 +708,27 @@ public class SaleOrderController {
   public void printShippingLabel(ActionRequest request, ActionResponse response) {
     try {
       SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+      
+      PurchaseLabel label = saleOrder.getPurchaseLable();
+      
+      String carrier = "NONE";
+      String shipService = "NONE";
+      
+      if(label != null && label.getIsShippingConfirm()) {
+    	  for(PurchaseLabelRateLine rateLine : label.getPurchaseLabelRateLine()) {
+    		  if(rateLine.getIsServiceSelected()) {
+    			  carrier = rateLine.getCarrier();
+    			  shipService = rateLine.getCarrierService();
+    		  }
+    	  }
+      }
+    	  
 
       String fileLink =
           ReportFactory.createReport("ShippingLabel.rptdesign", "ShippingLabel" + "-${date}")
               .addParam("id", saleOrder.getId())
+              .addParam("carrier", carrier)
+              .addParam("shipService", shipService)
               .generate()
               .getFileLink();
 

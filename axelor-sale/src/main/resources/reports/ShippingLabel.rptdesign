@@ -181,6 +181,34 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                 <property name="category">Unformatted</property>
             </structure>
         </scalar-parameter>
+        <scalar-parameter name="carrier" id="5046">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">test</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="shipService" id="5047">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">test</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
     </parameters>
     <data-sources>
         <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source1" id="4708">
@@ -299,6 +327,12 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                     <text-property name="displayName">prodtotal</text-property>
                     <text-property name="heading">prodtotal</text-property>
                 </structure>
+                <structure>
+                    <property name="columnName">paymentterms</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">paymentterms</text-property>
+                    <text-property name="heading">paymentterms</text-property>
+                </structure>
             </list-property>
             <list-property name="parameters">
                 <structure>
@@ -388,6 +422,11 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                         <property name="position">15</property>
                         <property name="name">prodtotal</property>
                         <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">paymentterms</property>
+                        <property name="dataType">string</property>
                     </structure>
                 </list-property>
             </structure>
@@ -498,13 +537,20 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">paymentterms</property>
+                    <property name="nativeName">paymentterms</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select SaleOrder.id as Id,
 SaleOrder.creation_date as creationDate,
 SaleOrder.sale_order_seq as Sque,
 SaleOrder.main_invoicing_address_str as mainInvoicingAddressStr,
 SaleOrder.delivery_address_str as deliveryAddressStr,
-SaleOrder.in_tax_total as InTaxTotal,
+SaleOrder.ex_tax_total as InTaxTotal,
 SaleOrder.external_reference as poNmber,
 ClientPartner.name as customerName,
 SalespersonUser.name as salePerson,
@@ -513,7 +559,8 @@ ShippPackage.name as ShippPackage,
 SaleOrderLine.product_name as ProdName,
 SaleOrderLine.price as ProdPrice,
 SaleOrderLine.qty as Qty,
-SaleOrderLine.in_tax_total as ProdTotal
+SaleOrderLine.in_tax_total as ProdTotal,
+PaymentCondition.name as PaymentTerms
 
 from sale_sale_order as SaleOrder
 left outer join base_partner as ClientPartner on (SaleOrder.client_partner = ClientPartner.id)
@@ -521,6 +568,7 @@ left outer join auth_user as SalespersonUser on (SaleOrder.salesperson_user = Sa
 left outer join sale_shipp_service as ShipService on (SaleOrder.shipp_service = ShipService.id)
 left outer join sale_shipp_package as ShippPackage on (SaleOrder.shipp_package = ShippPackage.id)
 left outer join sale_sale_order_line as SaleOrderLine on (SaleOrder.id = SaleOrderLine.sale_order)
+left outer join account_payment_condition as PaymentCondition on (SaleOrder.payment_condition = PaymentCondition.id)
  
 
 where SaleOrder.id = ?
@@ -1132,7 +1180,74 @@ Chandler, AZ  85225]]></text-property>
                         <property name="resultSetColumn">salepersonname</property>
                     </data>
                 </cell>
-                <cell id="4959"/>
+                <cell id="4959">
+                    <data id="5048">
+                        <property name="backgroundAttachment">scroll</property>
+                        <property name="backgroundPositionX">0%</property>
+                        <property name="backgroundPositionY">0%</property>
+                        <property name="backgroundRepeat">repeat</property>
+                        <property name="fontFamily">sans-serif</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="fontWeight">normal</property>
+                        <property name="fontStyle">normal</property>
+                        <property name="fontVariant">normal</property>
+                        <property name="color">black</property>
+                        <property name="textLineThrough">none</property>
+                        <property name="textOverline">none</property>
+                        <property name="textUnderline">none</property>
+                        <property name="borderBottomColor">black</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">black</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderLeftWidth">medium</property>
+                        <property name="borderRightColor">black</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderRightWidth">medium</property>
+                        <property name="borderTopColor">black</property>
+                        <property name="borderTopStyle">none</property>
+                        <property name="borderTopWidth">medium</property>
+                        <property name="marginTop">0pt</property>
+                        <property name="marginLeft">0pt</property>
+                        <property name="marginBottom">0pt</property>
+                        <property name="marginRight">0pt</property>
+                        <property name="paddingTop">1pt</property>
+                        <property name="paddingLeft">1pt</property>
+                        <property name="paddingBottom">1pt</property>
+                        <property name="paddingRight">1pt</property>
+                        <property name="textAlign">center</property>
+                        <property name="letterSpacing">normal</property>
+                        <property name="lineHeight">normal</property>
+                        <property name="orphans">2</property>
+                        <property name="textTransform">none</property>
+                        <property name="whiteSpace">normal</property>
+                        <property name="widows">2</property>
+                        <property name="wordSpacing">normal</property>
+                        <property name="display">block</property>
+                        <property name="pageBreakAfter">auto</property>
+                        <property name="pageBreakBefore">auto</property>
+                        <property name="pageBreakInside">auto</property>
+                        <property name="showIfBlank">false</property>
+                        <property name="canShrink">false</property>
+                        <property name="overflow">hidden</property>
+                        <property name="dataSet">SaleOrder</property>
+                        <list-property name="boundDataColumns">
+                            <structure>
+                                <property name="name">paymentterms</property>
+                                <text-property name="displayName">paymentterms</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["paymentterms"]</expression>
+                                <property name="dataType">string</property>
+                            </structure>
+                            <structure>
+                                <property name="name">PaymentTerm</property>
+                                <expression name="expression" type="javascript">row["paymentterms"]</expression>
+                                <property name="dataType">string</property>
+                                <property name="allowExport">true</property>
+                            </structure>
+                        </list-property>
+                        <property name="resultSetColumn">PaymentTerm</property>
+                    </data>
+                </cell>
                 <cell id="4960"/>
                 <cell id="4961">
                     <data id="5036">
@@ -1147,7 +1262,7 @@ Chandler, AZ  85225]]></text-property>
                             </structure>
                             <structure>
                                 <property name="name">service</property>
-                                <expression name="expression" type="javascript">row["shipservice"]</expression>
+                                <expression name="expression" type="javascript">params["carrier"].value</expression>
                                 <property name="dataType">string</property>
                                 <property name="allowExport">true</property>
                             </structure>
@@ -1168,7 +1283,7 @@ Chandler, AZ  85225]]></text-property>
                             </structure>
                             <structure>
                                 <property name="name">package</property>
-                                <expression name="expression" type="javascript">row["shipppackage"]</expression>
+                                <expression name="expression" type="javascript">params["shipService"].value</expression>
                                 <property name="dataType">string</property>
                                 <property name="allowExport">true</property>
                             </structure>
