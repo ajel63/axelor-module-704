@@ -57,6 +57,6 @@ public class SaleReportController {
             .generate()
             .getFileLink();
 
-    response.setView(ActionView.define("Salary Report").add("html", fileLink).map());
+    response.setView(ActionView.define("Sale Report").add("html", fileLink).map());
   }
 }

@@ -110,6 +110,7 @@
   <selection name="sale.z.dental.report.type.select">
     <option value="SaleByMonth">Product Sale By Dates</option>
     <option value="CustomerPurchaseHistory">Customer Purchase History</option>
+    <option value="SaleBySalesPerson">Sale By Sales Person</option>
   </selection>
 
 </object-views>
