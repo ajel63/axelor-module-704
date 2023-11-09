@@ -111,6 +111,7 @@
     <option value="SaleByMonth">Product Sale By Dates</option>
     <option value="CustomerPurchaseHistory">Customer Purchase History</option>
     <option value="SaleBySalesPerson">Sale By Sales Person</option>
+    <option value="SalesOrderSummary">Sales Order Summary</option> 
   </selection>
 
 </object-views>
