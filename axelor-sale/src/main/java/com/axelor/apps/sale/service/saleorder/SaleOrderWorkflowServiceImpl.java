@@ -39,6 +39,7 @@ import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.exception.BlockedSaleOrderException;
 import com.axelor.apps.sale.exception.SaleExceptionMessage;
 import com.axelor.apps.sale.report.IReport;
+import com.axelor.apps.sale.service.WoocomService;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.db.JPA;
 import com.axelor.i18n.I18n;
@@ -236,6 +237,13 @@ public class SaleOrderWorkflowServiceImpl implements SaleOrderWorkflowService {
     saleOrder.setOrderBeingEdited(false);
 
     saleOrderRepo.save(saleOrder);
+    try {
+      if (saleOrder.getWoocommerceOrder() != null && saleOrder.getWoocommerceOrder() != "") {
+        String status = Beans.get(WoocomService.class).updateStatusOnWoocom(saleOrder);
+      }
+    } catch (Exception e) {
+
+    }
   }
 
   @Override

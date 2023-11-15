@@ -18,20 +18,6 @@
  */
 package com.axelor.apps.sale.web;
 
-import java.lang.invoke.MethodHandles;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.axelor.apps.ReportFactory;
 import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.PaymentMode;
@@ -66,6 +52,7 @@ import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
 import com.axelor.apps.sale.exception.SaleExceptionMessage;
 import com.axelor.apps.sale.service.SaleOrderDomainService;
 import com.axelor.apps.sale.service.StripePaymentService;
+import com.axelor.apps.sale.service.WoocomService;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderComputeService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderCreateService;
@@ -86,6 +73,17 @@ import com.axelor.utils.db.Wizard;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
+import java.lang.invoke.MethodHandles;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 public class SaleOrderController {
@@ -690,7 +688,8 @@ public class SaleOrderController {
       StripePaymentConfig stripePaymentConfig =
           Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
       paymentUrl = stripePaymentConfig.getBaseUrl();
-      // Payment URL : https://axelor-payment-code.vercel.app/checkout?order=24218&amount=200
+      // Payment URL :
+      // https://axelor-payment-code.vercel.app/checkout?order=24218&amount=200
       paymentUrl =
           paymentUrl
               + "/"
@@ -708,21 +707,20 @@ public class SaleOrderController {
   public void printShippingLabel(ActionRequest request, ActionResponse response) {
     try {
       SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
-      
+
       PurchaseLabel label = saleOrder.getPurchaseLable();
-      
+
       String carrier = "NONE";
       String shipService = "NONE";
-      
-      if(label != null && label.getIsShippingConfirm()) {
-    	  for(PurchaseLabelRateLine rateLine : label.getPurchaseLabelRateLine()) {
-    		  if(rateLine.getIsServiceSelected()) {
-    			  carrier = rateLine.getCarrier();
-    			  shipService = rateLine.getCarrierService();
-    		  }
-    	  }
+
+      if (label != null && label.getIsShippingConfirm()) {
+        for (PurchaseLabelRateLine rateLine : label.getPurchaseLabelRateLine()) {
+          if (rateLine.getIsServiceSelected()) {
+            carrier = rateLine.getCarrier();
+            shipService = rateLine.getCarrierService();
+          }
+        }
       }
-    	  
 
       String fileLink =
           ReportFactory.createReport("ShippingLabel.rptdesign", "ShippingLabel" + "-${date}")
@@ -732,7 +730,7 @@ public class SaleOrderController {
               .generate()
               .getFileLink();
 
-      //    System.err.println(fileLink); debug
+      // System.err.println(fileLink); debug
       response.setView(ActionView.define("Shipping Label").add("html", fileLink).map());
     } catch (Exception e) {
       TraceBackService.trace(response, e);
@@ -748,5 +746,22 @@ public class SaleOrderController {
           grossMass.add(saleOrderLine.getProduct().getGrossMass().multiply(saleOrderLine.getQty()));
     }
     response.setValue("weight", grossMass);
+  }
+
+  public void finalizeStatusUpdateOnWoocom(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+    if (saleOrder.getWoocommerceOrder() == null || saleOrder.getWoocommerceOrder() == "") {
+      response.setAlert(
+          "Woocommerce Order Id is not define, Order status does not update on woocommerce.");
+      return;
+    }
+    String status = "";
+    status = Beans.get(WoocomService.class).updateStatusOnWoocom(saleOrder);
+    if (status == "") {
+      response.setError(
+          "Status does not update in Woocommerce system due to invalid order ID please update menually.");
+    }
+    //		response.setNotify(status);
   }
 }

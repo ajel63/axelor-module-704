@@ -206,7 +206,7 @@
         onChange="action-attrs-sale-other-reason"/>
       <field name="cancelReasonStr" colOffset="4" colSpan="4" hidden="true"/>
       <button name="cancelConfirmBtn" title="Confirm cancellation"
-        onClick="action-sale-order-cancel-reason-check,action-sale-order-method-confirm-cancel"
+        onClick="action-sale-order-cancel-reason-check,action-sale-order-method-confirm-cancel,action-sale-order-method-status-update-on-woocom"
         colOffset="4" colSpan="4"/>
     </panel>
   </form>
@@ -736,7 +736,8 @@
         name="completeManuallySaleOrderBtn" title="Complete manually sale order"
         showIf="statusSelect == 3"
         prompt="Warning, a completed order can't be changed anymore, do you want to continue?"
-        colSpan="12" onClick="save,action-sale-order-method-complete-sale-order"/>
+        colSpan="12"
+        onClick="save,action-sale-order-method-complete-sale-order,action-sale-order-method-status-update-on-woocom"/>
       <button if="__config__.app.getApp('sale')?.getManageSaleOrderVersion()"
         name="newVersionBtn" title="New version" showIf="statusSelect == 2" colSpan="12"
         onClick="save,action-sale-record-newVersion,save"/>
@@ -788,7 +789,7 @@
         if="__config__.app.isApp('supplychain') &amp;&amp; __config__.app.getApp('supplychain')?.allowCompleteManuallySaleOrder"
         name="backToOrderConfirmBtn" title="Back to confirmed order" showIf="statusSelect == 4"
         if-module="axelor-supplychain"
-        onClick="save,action-sale-order-method-set-status-to-confirmed"/>
+        onClick="save,action-sale-order-method-set-status-to-confirmed,action-sale-order-method-status-update-on-woocom"/>
       <field name="message" hidden="true" type="string"/>
       <field name="amountInvoiced" hidden="true"/>
       <button if="__config__.app.getApp('sale')?.getEnableConfigurator()"
@@ -1562,6 +1563,7 @@
     <action name="action-sale-order-method-confirm"/>
     <action name="action-sale-order-method-notify-stock-move-created"
       if="__config__.app.isApp('supplychain') &amp;&amp; __config__.app.getApp('supplychain')?.customerStockMoveGenerationAuto "/>
+    <action name="action-sale-order-method-status-update-on-woocom"/>
   </action-group>
 
   <action-group name="action-sale-order-line-change-group">
@@ -1618,6 +1620,7 @@
     <action name="save"/>
     <action name="action-sale-order-validate-quotation"/>
     <action name="action-sale-order-method-finalize-quotation"/>
+    <action name="action-sale-order-method-status-update-on-woocom"/>
   </action-group>
 
   <action-validate name="action-sale-order-validate-quotation">
@@ -1692,6 +1695,11 @@
 
   <action-method name="action-sale-order-method-finalize-quotation">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="finalizeQuotation"/>
+  </action-method>
+
+  <action-method name="action-sale-order-method-status-update-on-woocom">
+    <call class="com.axelor.apps.sale.web.SaleOrderController"
+      method="finalizeStatusUpdateOnWoocom"/>
   </action-method>
 
   <action-method name="action-sale-order-method-complete-sale-order">
