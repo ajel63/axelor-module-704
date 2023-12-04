@@ -143,9 +143,9 @@
   </action-view>
 
   <menuitem title="Deleted Order" name="sc-root-sale-deleted-order" parent="sc-root-sale"
-    order="1105" action="sc.hist.sale.orders"/>
+    order="1105" action="sc.deleted.sale.orders"/>
 
-  <action-view name="sc.hist.sale.orders" title="Deleted"
+  <action-view name="sc.deleted.sale.orders" title="Deleted"
     model="com.axelor.apps.sale.db.SaleOrder">
     <view type="cards" name="sale-order-cards"/>
     <view type="grid" name="sale-order-grid"/>
