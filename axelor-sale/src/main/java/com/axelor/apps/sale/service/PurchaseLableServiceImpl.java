@@ -77,6 +77,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           TraceBackRepository.CATEGORY_NO_VALUE,
           "Please add postal code on Delivery address of Sale Order");
     }
+
     String pincode = address.getPostalCode().getCode();
     String city = address.getCityName();
     String state = address.getState();
@@ -99,11 +100,15 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String company = saleOrder.getCompany().getName();
 
     List<PurchaseLabelRateLine> purchaseLabelRateLineList = new ArrayList<PurchaseLabelRateLine>();
-
     String url = "";
     String token = "";
     ShipmentApiConfig shipmentApiConfig =
         Beans.get(ShipmentApiConfigRepository.class).all().fetchOne();
+    if (shipmentApiConfig == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please configure Shipment API: base Urls and API key.");
+    }
     url = shipmentApiConfig.getBaseUrl();
     token = shipmentApiConfig.getApiKey();
 
@@ -395,5 +400,15 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       }
     }
     return shippService;
+  }
+
+  @Override
+  public BigDecimal getSelectedCarrierPrice(PurchaseLabel purchaseLabel) {
+    for (PurchaseLabelRateLine purchaseLabelRateLine : purchaseLabel.getPurchaseLabelRateLine()) {
+      if (purchaseLabelRateLine.getIsServiceSelected()) {
+        return purchaseLabelRateLine.getRate();
+      }
+    }
+    return new BigDecimal(0);
   }
 }

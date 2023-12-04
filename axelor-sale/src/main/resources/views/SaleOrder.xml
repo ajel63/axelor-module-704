@@ -265,6 +265,9 @@
         onClick="action-send-by-email-with-template"/>
       <button name="shippingLabelBtn" title="Print Label" icon="fa-print"
         onClick="save,action-sale-order-method-print-shippinf-label"/>
+      <button name="deleteBtn" title="Delete" icon="fa-delete"
+        prompt="Are you sure you want to cancle and delete sale order?"
+        onClick="save,action-sale-order-attrs-validate-cancle-and-delete-sale-order,action-sale-order-attrs-cancle-and-delete-sale-order,save,close"/>
     </toolbar>
     <menubar>
       <menu name="saleOrderToolsMenu" title="Tools">
@@ -428,7 +431,7 @@
           colSpan="3"/>
         <field name="clientPartner" required="true" hideIf="company == null"
           readonlyIf="statusSelect > 1"
-          onChange="action-sale-order-group-client-partner-change,action-sale-order-record-compute-end-of-validity-date"
+          onChange="action-sale-order-group-client-partner-change,action-sale-order-record-compute-end-of-validity-date,action-sale-order-attrs-set-address-from-company"
           onSelect="action-sale-order-method-set-client-partner-domain" form-view="partner-form"
           grid-view="partner-grid" colSpan="3"/>
         <field name="contactPartner" colSpan="3" hideIf="company == null"
@@ -473,7 +476,7 @@
         <panel name="mainInvoicingAddressPanel" stacked="true">
           <field name="mainInvoicingAddress"
             hideIf="$readonly() || (statusSelect > 1 &amp;&amp; !orderBeingEdited)" canNew="true"
-            canEdit="false" onChange="action-sale-order-method-address-str"
+            canEdit="true" onChange="action-sale-order-method-address-str"
             onSelect="action-sale-order-attrs-domain-main-invoicing-address"
             form-view="address-form" grid-view="address-grid"/>
           <field name="mainInvoicingAddressStr"
@@ -484,7 +487,7 @@
         <panel name="deliveryAddressPanel" stacked="true">
           <field name="deliveryAddress"
             hideIf="$readonly() || (statusSelect > 1 &amp;&amp; !orderBeingEdited)" canNew="true"
-            canEdit="false"
+            canEdit="true"
             onChange="action-sale-order-method-address-str,action-sale-order-attrs-set-is-ispm-required"
             onSelect="action-sale-order-attrs-domain-delivery-address" form-view="address-form"
             grid-view="address-grid"/>
@@ -513,6 +516,9 @@
         </panel>
 
         <panel name="saleOrderFieldsPanel" title="SaleOrder Fields" colSpan="12">
+          <field name="woocommerceDomain"/>
+          <field name="phoneNumber"/>
+          <field name="emailAddress"/>
           <field name="woocommerceOrder" title="Woocommerce Order"/>
           <field name="woocommerceOrderLink" title="Woocommerce Order Link"
             onChange="action-sale-order-method-replace-url-character"/>
@@ -696,7 +702,7 @@
         <field name="sizeH" colSpan="2"/>
         <field name="purchaseLable" colSpan="2" canEdit="true" canNew="true" canSelect="false"
           readonlyIf="isPurchaseLabelConfirm" title="Create Purchase Label"
-          onChange="action-sale-order-attrs-set-purchase-label-confirm-status"/>
+          onChange="action-sale-order-attrs-set-purchase-label-confirm-status,action-sale-order-attrs-set-shipping-cost,action-sale-order-attrs-calculate-total-shipping-cost"/>
         <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"
           hidden="false"/>
         <button onClick="save" name="confirmBtn"
@@ -808,7 +814,7 @@
       <separator/>
       <field name="inTaxTotal" showTitle="false" colSpan="12" css="order-subtotal">
         <viewer
-          depends="exTaxTotal,currency.symbol,taxTotal,statusSelect,amountInvoiced,advanceTotal"><![CDATA[
+          depends="exTaxTotal,currency.symbol,taxTotal,statusSelect,amountInvoiced,advanceTotal,totalShippingCost"><![CDATA[
 
 	                  <dl class="dl-horizontal">
 	                      <dt x-translate>Total W.T.</dt>
@@ -817,6 +823,8 @@
 	                      <dd>{{$fmt('taxTotal') | currency: record.currency.symbol}}</dd>
 	                      <dt class="order-subtotal-total" x-translate>Total A.T.I.</dt>
 	                      <dd class="order-subtotal-total">{{$fmt('inTaxTotal') | currency: record.currency.symbol}}</dd>
+						  <dt class="" x-translate>Shipping Cost</dt>
+	                      <dd class="">{{$fmt('totalShippingCost') | currency: record.currency.symbol}}</dd>
 	                      <dt ng-show="record.statusSelect >= 3" x-translate>Amount invoiced W.T.</dt>
 	                      <dd ng-show="record.statusSelect >= 3">{{$fmt('amountInvoiced') | currency: record.currency.symbol}}</dd>
 	                      <dt ng-show="record.statusSelect >= 2" x-translate>Advance payment A.T.I. total</dt>
@@ -826,6 +834,13 @@
 	              ]]></viewer>
       </field>
     </panel>
+    <panel name="shippingCostPanel" title="Shipping Cost" hideIf="clientPartner == null"
+      sidebar="true" itemSpan="6" canCollapse="true" collapseIf="true">
+      <field name="shippingCost" onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
+      <field name="extraShippingCost" onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
+      <field name="totalShippingCost"/>
+    </panel>
+
     <panel name="salesFollowUpPanel" title="Sales follow-up" hideIf="clientPartner == null"
       sidebar="true" itemSpan="6" canCollapse="true" collapseIf="true">
       <field name="salespersonUser" canNew="false" canView="false" canEdit="false"
@@ -833,6 +848,7 @@
       <field if="__config__.app.getApp('base')?.getTeamManagement()" name="team"
         canEdit="false" onSelect="action-sale-order-domain-on-team" form-view="team-form"
         grid-view="team-grid"/>
+      <field name="isDeleted" readonly="true"/>
     </panel>
     <panel name="characteristicsPanel" title="Characteristics" hideIf="clientPartner == null"
       sidebar="true" itemSpan="6" canCollapse="true" collapseIf="true">
@@ -929,6 +945,12 @@
     <panel name="internalNotePanel" title="Internal Note" colSpan="12" sidebar="true">
       <field name="internalNote" showTitle="false" colSpan="12" widget="Html" x-lite="true"/>
     </panel>
+
+    <panel name="shippingFromAddressPanel" title="Shipping From Address" colSpan="12"
+      sidebar="true" hideIf="clientPartner == null">
+      <field name="shippingFromAddress" showTitle="false" colSpan="12" x-lite="true"/>
+    </panel>
+
     <panel-mail name="mailPanel">
       <mail-messages limit="4"/>
       <mail-followers/>
@@ -2387,6 +2409,30 @@
   <action-attrs name="action-sale-order-attrs-set-purchase-label-confirm-status">
     <attribute name="value" for="isPurchaseLabelConfirm"
       expr="eval: purchaseLable?.isShippingConfirm"/>
+  </action-attrs>
+
+  <action-attrs name="action-sale-order-attrs-set-address-from-company">
+    <attribute name="value" for="shippingFromAddress"
+      expr="eval: company?.address?.fullName"/>
+  </action-attrs>
+
+  <action-validate
+    name="action-sale-order-attrs-validate-cancle-and-delete-sale-order">
+    <error message="Confirmed or Completed sale order can not be deleted."
+      if="statusSelect == 3 || statusSelect == 4"/>
+  </action-validate>
+
+  <action-attrs name="action-sale-order-attrs-cancle-and-delete-sale-order">
+    <attribute name="value" for="statusSelect" expr="eval: 5"/>
+    <attribute name="value" for="isDeleted" expr="eval: true"/>
+  </action-attrs>
+  
+  <action-attrs name="action-sale-order-attrs-set-shipping-cost">
+    <attribute name="value" for="shippingCost" expr="eval: purchaseLable?.selectedRate"/>
+  </action-attrs>
+  
+  <action-attrs name="action-sale-order-attrs-calculate-total-shipping-cost">
+    <attribute name="value" for="totalShippingCost" expr="eval: shippingCost + extraShippingCost"/>
   </action-attrs>
 
 </object-views>

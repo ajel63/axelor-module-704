@@ -23,6 +23,7 @@
 
     <string name="trackingNumber" title="Tracking Number"/>
     <string name="lableUrl" large="true" title="URL"/>
+    <decimal name="selectedRate" title="Selected Rate"/>
 
     <one-to-many ref="com.axelor.apps.sale.db.PurchaseLabelRateLine"
       name="purchaseLabelRateLine" title="Shipments" mappedBy="purchaseLable"/>

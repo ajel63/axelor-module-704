@@ -187,7 +187,17 @@
     <boolean name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>
     <boolean name="taxCod" title="Tax Cod"/>
 
+    <string name="phoneNumber" title="Phone"/>
+    <string name="emailAddress" title="Email"/>
+    <string name="woocommerceDomain" title="Woocommerce Domain"/>
+    <boolean name="isDeleted" title="Is Deleted"/>
+
     <decimal name="amountToPay" title="Amount to Pay"/>
+    <decimal name="shippingCost" title="Shipping Cost"/>
+    <decimal name="extraShippingCost" title="Extra Shipping Cost"/>
+    <decimal name="totalShippingCost" title="Total Shipping Cost"/>
+    <string name="shippingFromAddress" title="Shipping From address" large="true"
+      multiline="true"/>
     <one-to-many ref="com.axelor.apps.sale.db.StripePaymentLine" name="stripePayment"
       title="Stripe Payment" mappedBy="saleOrder"/>
 

@@ -23,6 +23,7 @@ import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.ShippService;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -34,4 +35,6 @@ public interface PurchaseLableService {
       PurchaseLabel purchaseLabel, SaleOrder saleOrder) throws AxelorException;
 
   public ShippService setSelectedCarrier(PurchaseLabel purchaseLabel);
+
+  public BigDecimal getSelectedCarrierPrice(PurchaseLabel purchaseLabel);
 }

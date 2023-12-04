@@ -274,28 +274,10 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                     <text-property name="heading">intaxtotal</text-property>
                 </structure>
                 <structure>
-                    <property name="columnName">taxtotal</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">taxtotal</text-property>
-                    <text-property name="heading">taxtotal</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">shippingcost</property>
-                    <property name="analysis">measure</property>
-                    <text-property name="displayName">shippingcost</text-property>
-                    <text-property name="heading">shippingcost</text-property>
-                </structure>
-                <structure>
                     <property name="columnName">ponmber</property>
                     <property name="analysis">dimension</property>
                     <text-property name="displayName">ponmber</text-property>
                     <text-property name="heading">ponmber</text-property>
-                </structure>
-                <structure>
-                    <property name="columnName">shippingfromaddress</property>
-                    <property name="analysis">dimension</property>
-                    <text-property name="displayName">shippingfromaddress</text-property>
-                    <text-property name="heading">shippingfromaddress</text-property>
                 </structure>
                 <structure>
                     <property name="columnName">customername</property>
@@ -410,76 +392,61 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                     </structure>
                     <structure>
                         <property name="position">7</property>
-                        <property name="name">taxtotal</property>
-                        <property name="dataType">decimal</property>
-                    </structure>
-                    <structure>
-                        <property name="position">8</property>
-                        <property name="name">shippingcost</property>
-                        <property name="dataType">decimal</property>
-                    </structure>
-                    <structure>
-                        <property name="position">9</property>
                         <property name="name">ponmber</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">10</property>
-                        <property name="name">shippingfromaddress</property>
-                        <property name="dataType">string</property>
-                    </structure>
-                    <structure>
-                        <property name="position">11</property>
+                        <property name="position">8</property>
                         <property name="name">customername</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">12</property>
+                        <property name="position">9</property>
                         <property name="name">saleperson</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">13</property>
+                        <property name="position">10</property>
                         <property name="name">shipservice</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">14</property>
+                        <property name="position">11</property>
                         <property name="name">shipppackage</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">15</property>
+                        <property name="position">12</property>
                         <property name="name">prodname</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">16</property>
+                        <property name="position">13</property>
                         <property name="name">prodprice</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
-                        <property name="position">17</property>
+                        <property name="position">14</property>
                         <property name="name">qty</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
-                        <property name="position">18</property>
+                        <property name="position">15</property>
                         <property name="name">prodtotal</property>
                         <property name="dataType">decimal</property>
                     </structure>
                     <structure>
-                        <property name="position">19</property>
+                        <property name="position">16</property>
                         <property name="name">paymentterms</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">20</property>
+                        <property name="position">17</property>
                         <property name="name">companyname</property>
                         <property name="dataType">string</property>
                     </structure>
                     <structure>
-                        <property name="position">21</property>
+                        <property name="position">18</property>
                         <property name="name">addressstr</property>
                         <property name="dataType">string</property>
                     </structure>
@@ -531,104 +498,83 @@ reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty(
                 </structure>
                 <structure>
                     <property name="position">7</property>
-                    <property name="name">taxtotal</property>
-                    <property name="nativeName">taxtotal</property>
-                    <property name="dataType">decimal</property>
-                    <property name="nativeDataType">2</property>
-                </structure>
-                <structure>
-                    <property name="position">8</property>
-                    <property name="name">shippingcost</property>
-                    <property name="nativeName">shippingcost</property>
-                    <property name="dataType">decimal</property>
-                    <property name="nativeDataType">2</property>
-                </structure>
-                <structure>
-                    <property name="position">9</property>
                     <property name="name">ponmber</property>
                     <property name="nativeName">ponmber</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">10</property>
-                    <property name="name">shippingfromaddress</property>
-                    <property name="nativeName">shippingfromaddress</property>
-                    <property name="dataType">string</property>
-                    <property name="nativeDataType">12</property>
-                </structure>
-                <structure>
-                    <property name="position">11</property>
+                    <property name="position">8</property>
                     <property name="name">customername</property>
                     <property name="nativeName">customername</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">12</property>
+                    <property name="position">9</property>
                     <property name="name">saleperson</property>
                     <property name="nativeName">saleperson</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">13</property>
+                    <property name="position">10</property>
                     <property name="name">shipservice</property>
                     <property name="nativeName">shipservice</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">14</property>
+                    <property name="position">11</property>
                     <property name="name">shipppackage</property>
                     <property name="nativeName">shipppackage</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">15</property>
+                    <property name="position">12</property>
                     <property name="name">prodname</property>
                     <property name="nativeName">prodname</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">16</property>
+                    <property name="position">13</property>
                     <property name="name">prodprice</property>
                     <property name="nativeName">prodprice</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">17</property>
+                    <property name="position">14</property>
                     <property name="name">qty</property>
                     <property name="nativeName">qty</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">18</property>
+                    <property name="position">15</property>
                     <property name="name">prodtotal</property>
                     <property name="nativeName">prodtotal</property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
                 <structure>
-                    <property name="position">19</property>
+                    <property name="position">16</property>
                     <property name="name">paymentterms</property>
                     <property name="nativeName">paymentterms</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">20</property>
+                    <property name="position">17</property>
                     <property name="name">companyname</property>
                     <property name="nativeName">companyname</property>
                     <property name="dataType">string</property>
                     <property name="nativeDataType">12</property>
                 </structure>
                 <structure>
-                    <property name="position">21</property>
+                    <property name="position">18</property>
                     <property name="name">addressstr</property>
                     <property name="nativeName">addressstr</property>
                     <property name="dataType">string</property>
@@ -641,10 +587,7 @@ SaleOrder.sale_order_seq as Sque,
 SaleOrder.main_invoicing_address_str as mainInvoicingAddressStr,
 SaleOrder.delivery_address_str as deliveryAddressStr,
 SaleOrder.ex_tax_total as InTaxTotal,
-SaleOrder.tax_total as TaxTotal,
-SaleOrder.total_shipping_cost as ShippingCost,
 SaleOrder.external_reference as poNmber,
-SaleOrder.shipping_from_address as ShippingFromAddress,
 ClientPartner.name as customerName,
 SalespersonUser.name as salePerson,
 ShipService.name as ShipService,
@@ -743,12 +686,6 @@ where SaleOrder.id = ?
                 <property name="pattern">MM/dd/yyyy</property>
             </structure>
         </style>
-        <style name="Curracy" id="5088">
-            <structure name="numberFormat">
-                <property name="category">Currency</property>
-                <property name="pattern">$ ###0.00{RoundingMode=HALF_UP}</property>
-            </structure>
-        </style>
     </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -763,14 +700,6 @@ where SaleOrder.id = ?
     </page-setup>
     <body>
         <grid id="4863">
-            <list-property name="boundDataColumns">
-                <structure>
-                    <property name="name">ShippingFromAddress</property>
-                    <expression name="expression" type="javascript">row["ShippingFromAddress"]</expression>
-                    <property name="dataType">string</property>
-                    <property name="allowExport">true</property>
-                </structure>
-            </list-property>
             <column id="4864"/>
             <column id="4865"/>
             <column id="4866"/>
@@ -949,7 +878,7 @@ where SaleOrder.id = ?
                         <property name="contentType">html</property>
                         <text-property name="content"><![CDATA[<VALUE-OF>row["companyname"]</VALUE-OF>]]></text-property>
                     </text>
-                    <data id="5089">
+                    <text id="5050">
                         <property name="backgroundAttachment">scroll</property>
                         <property name="backgroundPositionX">0%</property>
                         <property name="backgroundPositionY">0%</property>
@@ -983,6 +912,7 @@ where SaleOrder.id = ?
                         <property name="paddingLeft">1pt</property>
                         <property name="paddingBottom">1pt</property>
                         <property name="paddingRight">1pt</property>
+                        <property name="textIndent">0em</property>
                         <property name="letterSpacing">normal</property>
                         <property name="lineHeight">normal</property>
                         <property name="orphans">2</property>
@@ -1000,20 +930,15 @@ where SaleOrder.id = ?
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
                             <structure>
-                                <property name="name">shippingfromaddress</property>
-                                <text-property name="displayName">shippingfromaddress</text-property>
-                                <expression name="expression" type="javascript">dataSetRow["shippingfromaddress"]</expression>
+                                <property name="name">addressstr</property>
+                                <text-property name="displayName">addressstr</text-property>
+                                <expression name="expression" type="javascript">dataSetRow["addressstr"]</expression>
                                 <property name="dataType">string</property>
-                            </structure>
-                            <structure>
-                                <property name="name">ShippAddress</property>
-                                <expression name="expression" type="javascript">row["shippingfromaddress"]</expression>
-                                <property name="dataType">string</property>
-                                <property name="allowExport">true</property>
                             </structure>
                         </list-property>
-                        <property name="resultSetColumn">ShippAddress</property>
-                    </data>
+                        <property name="contentType">html</property>
+                        <text-property name="content"><![CDATA[<VALUE-OF>row["addressstr"]</VALUE-OF>]]></text-property>
+                    </text>
                 </cell>
                 <cell id="4873"/>
                 <cell id="4874">
@@ -1453,7 +1378,7 @@ where SaleOrder.id = ?
                         <property name="fontSize">10pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
-                        <text-property name="text">FOB Origin</text-property>
+                        <text-property name="text">FOB Print</text-property>
                     </label>
                 </cell>
                 <cell id="4954">
@@ -1480,7 +1405,7 @@ where SaleOrder.id = ?
                         <property name="fontSize">10pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
-                        <text-property name="text">Date Scheduled</text-property>
+                        <text-property name="text">Date shedual</text-property>
                     </label>
                 </cell>
             </row>
@@ -1711,36 +1636,6 @@ where SaleOrder.id = ?
                     <property name="dataType">decimal</property>
                     <property name="allowExport">true</property>
                 </structure>
-                <structure>
-                    <property name="name">Tax Toal</property>
-                    <expression name="expression" type="javascript">row["taxtotal"]</expression>
-                    <property name="dataType">decimal</property>
-                    <property name="allowExport">true</property>
-                </structure>
-                <structure>
-                    <property name="name">taxtotal</property>
-                    <text-property name="displayName">taxtotal</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["taxtotal"]</expression>
-                    <property name="dataType">decimal</property>
-                </structure>
-                <structure>
-                    <property name="name">shippingcost</property>
-                    <text-property name="displayName">shippingcost</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["shippingcost"]</expression>
-                    <property name="dataType">decimal</property>
-                </structure>
-                <structure>
-                    <property name="name">Shipp Cost</property>
-                    <expression name="expression" type="javascript">row["shippingcost"]</expression>
-                    <property name="dataType">decimal</property>
-                    <property name="allowExport">true</property>
-                </structure>
-                <structure>
-                    <property name="name">AllTotal</property>
-                    <expression name="expression" type="javascript">row["total"]+row["Tax Toal"]+row["shippingcost"]</expression>
-                    <property name="dataType">decimal</property>
-                    <property name="allowExport">true</property>
-                </structure>
             </list-property>
             <column id="5017"/>
             <column id="5018"/>
@@ -1865,397 +1760,17 @@ where SaleOrder.id = ?
                     <cell id="5011"/>
                     <cell id="5013"/>
                     <cell id="5014"/>
-                    <cell id="5015">
-                        <property name="colSpan">2</property>
-                        <property name="rowSpan">1</property>
-                        <grid id="5051">
-                            <property name="marginTop">5pt</property>
-                            <column id="5052">
-                                <property name="width">2.9514084507042253cm</property>
-                            </column>
-                            <column id="5053">
-                                <property name="width">0.8943661971830985cm</property>
-                            </column>
-                            <column id="5054">
-                                <property name="width">2.593661971830986cm</property>
-                            </column>
-                            <row id="5055">
-                                <property name="borderTopStyle">solid</property>
-                                <property name="borderTopWidth">thin</property>
-                                <cell id="5056">
-                                    <label id="5075">
-                                        <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">bold</property>
-                                        <property name="color">#000000</property>
-                                        <property name="marginTop">5pt</property>
-                                        <property name="textAlign">center</property>
-                                        <text-property name="text">Sub Total</text-property>
-                                    </label>
-                                </cell>
-                                <cell id="5057"/>
-                                <cell id="5058">
-                                    <data id="5045">
-                                        <property name="style">Curracy</property>
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">normal</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">black</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">5pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <property name="resultSetColumn">total</property>
-                                    </data>
-                                </cell>
-                            </row>
-                            <row id="5059">
-                                <cell id="5060">
-                                    <label id="5078">
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#FDF9F9</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">bold</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">#000000</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">0pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <text-property name="text">Tax</text-property>
-                                    </label>
-                                </cell>
-                                <cell id="5061"/>
-                                <cell id="5062">
-                                    <data id="5085">
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#FDF9F9</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">normal</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">black</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">0pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <structure name="numberFormat">
-                                            <property name="category">Currency</property>
-                                            <property name="pattern">$ ###0.00{RoundingMode=HALF_UP}</property>
-                                        </structure>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <property name="resultSetColumn">Tax Toal</property>
-                                    </data>
-                                </cell>
-                            </row>
-                            <row id="5063">
-                                <cell id="5064">
-                                    <label id="5080">
-                                        <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">bold</property>
-                                        <property name="textAlign">center</property>
-                                        <text-property name="text">Shipping Cost</text-property>
-                                    </label>
-                                </cell>
-                                <cell id="5065"/>
-                                <cell id="5066">
-                                    <data id="5086">
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">normal</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">black</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">0pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <structure name="numberFormat">
-                                            <property name="category">Currency</property>
-                                            <property name="pattern">$ ###0.00{RoundingMode=HALF_UP}</property>
-                                        </structure>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <property name="resultSetColumn">Shipp Cost</property>
-                                    </data>
-                                </cell>
-                            </row>
-                            <row id="5067">
-                                <cell id="5068">
-                                    <label id="5076">
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#FDF9F9</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">bold</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">#000000</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">0pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <text-property name="text">Total</text-property>
-                                    </label>
-                                </cell>
-                                <cell id="5069"/>
-                                <cell id="5070">
-                                    <data id="5087">
-                                        <property name="backgroundAttachment">scroll</property>
-                                        <property name="backgroundColor">#FDF9F9</property>
-                                        <property name="backgroundPositionX">0%</property>
-                                        <property name="backgroundPositionY">0%</property>
-                                        <property name="backgroundRepeat">repeat</property>
-                                        <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
-                                        <property name="fontWeight">normal</property>
-                                        <property name="fontStyle">normal</property>
-                                        <property name="fontVariant">normal</property>
-                                        <property name="color">black</property>
-                                        <property name="textLineThrough">none</property>
-                                        <property name="textOverline">none</property>
-                                        <property name="textUnderline">none</property>
-                                        <property name="borderBottomColor">black</property>
-                                        <property name="borderBottomStyle">none</property>
-                                        <property name="borderBottomWidth">medium</property>
-                                        <property name="borderLeftColor">black</property>
-                                        <property name="borderLeftStyle">none</property>
-                                        <property name="borderLeftWidth">medium</property>
-                                        <property name="borderRightColor">black</property>
-                                        <property name="borderRightStyle">none</property>
-                                        <property name="borderRightWidth">medium</property>
-                                        <property name="borderTopColor">black</property>
-                                        <property name="borderTopStyle">none</property>
-                                        <property name="borderTopWidth">medium</property>
-                                        <property name="marginTop">0pt</property>
-                                        <property name="marginLeft">0pt</property>
-                                        <property name="marginBottom">0pt</property>
-                                        <property name="marginRight">0pt</property>
-                                        <property name="paddingTop">1pt</property>
-                                        <property name="paddingLeft">1pt</property>
-                                        <property name="paddingBottom">1pt</property>
-                                        <property name="paddingRight">1pt</property>
-                                        <structure name="numberFormat">
-                                            <property name="category">Currency</property>
-                                            <property name="pattern">$ ###0.00{RoundingMode=HALF_UP}</property>
-                                        </structure>
-                                        <property name="textAlign">center</property>
-                                        <property name="letterSpacing">normal</property>
-                                        <property name="lineHeight">normal</property>
-                                        <property name="orphans">2</property>
-                                        <property name="textTransform">none</property>
-                                        <property name="whiteSpace">normal</property>
-                                        <property name="widows">2</property>
-                                        <property name="wordSpacing">normal</property>
-                                        <property name="display">block</property>
-                                        <property name="pageBreakAfter">auto</property>
-                                        <property name="pageBreakBefore">auto</property>
-                                        <property name="pageBreakInside">auto</property>
-                                        <property name="showIfBlank">false</property>
-                                        <property name="canShrink">false</property>
-                                        <property name="overflow">hidden</property>
-                                        <property name="resultSetColumn">AllTotal</property>
-                                    </data>
-                                </cell>
-                            </row>
-                            <row id="5071">
-                                <cell id="5072"/>
-                                <cell id="5073"/>
-                                <cell id="5074"/>
-                            </row>
-                        </grid>
+                    <cell id="5015"/>
+                    <cell id="5016">
+                        <data id="5045">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="borderTopStyle">solid</property>
+                            <property name="borderTopWidth">thin</property>
+                            <property name="marginTop">10pt</property>
+                            <property name="textAlign">center</property>
+                            <property name="resultSetColumn">total</property>
+                        </data>
                     </cell>
                 </row>
             </footer>

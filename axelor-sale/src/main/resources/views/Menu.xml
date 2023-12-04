@@ -142,6 +142,24 @@
     <context name="status" expr="eval: [1,2,3,4,5]"/>
   </action-view>
 
+  <menuitem title="Deleted Order" name="sc-root-sale-deleted-order" parent="sc-root-sale"
+    order="1105" action="sc.hist.sale.orders"/>
+
+  <action-view name="sc.hist.sale.orders" title="Deleted"
+    model="com.axelor.apps.sale.db.SaleOrder">
+    <view type="cards" name="sale-order-cards"/>
+    <view type="grid" name="sale-order-grid"/>
+    <view type="calendar" name="sale-order-calendar"/>
+    <view type="form" name="sale-order-form"/>
+    <view-param name="search-filters" value="sale-order-filters"/>
+    <domain>self.isDeleted = true</domain>
+    <context name="_internalUser" expr="eval: __user__.id"/>
+    <context name="_myActiveTeam"
+      expr="call:com.axelor.apps.base.service.user.UserService:getUserActiveTeam()"/>
+    <context name="_template" expr="eval:false"/>
+    <context name="status" expr="eval: [1,2,3,4,5]"/>
+  </action-view>
+
   <menuitem name="sc-root-sale-report" parent="sc-root-sale" title="Reportings"
     order="1300" icon="fa-bar-chart"/>
 

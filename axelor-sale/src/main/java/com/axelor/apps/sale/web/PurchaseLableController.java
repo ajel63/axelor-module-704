@@ -33,6 +33,7 @@ import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
 import com.google.inject.Singleton;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -135,6 +136,11 @@ public class PurchaseLableController {
         Beans.get(PurchaseLableService.class)
             .setSelectedCarrier(
                 Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()));
+    BigDecimal selectedRate =
+        Beans.get(PurchaseLableService.class)
+            .getSelectedCarrierPrice(
+                Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()));
     response.setValue("carrier", shiSservice);
+    response.setValue("selectedRate", selectedRate);
   }
 }
