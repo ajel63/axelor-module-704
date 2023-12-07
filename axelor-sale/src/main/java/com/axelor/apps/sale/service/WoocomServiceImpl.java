@@ -82,9 +82,9 @@ public class WoocomServiceImpl implements WoocomService {
     httpRequest.addHeader("Content-Type", "application/json");
 
     try {
-      StringEntity params = new StringEntity("{\"status\":\"" + woocommerceStatus + "\"}");
+      StringEntity params = new StringEntity("{\"status\":\"" + woocommerceStatus +  "\",\"domain\":\"" + saleOrder.getSizeH() + "\"}"); 
       httpRequest.setEntity(params);
-
+      
       CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
       HttpEntity entity = httpRresponse.getEntity();
       if (entity != null) {
