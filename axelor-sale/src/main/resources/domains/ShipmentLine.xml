@@ -18,6 +18,7 @@
       title="Sale Order"/>
     <string name="carrierServiceType" title="Carrier Service"/>
     <string name="trackingLink" title="Tracking Link"/>
+    <string name="lableUrl" large="true" title="URL"/>
 
   </entity>
 

@@ -24,6 +24,7 @@ import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
+import com.axelor.apps.sale.db.ShipmentLine;
 import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.repo.PurchaseLabelRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
@@ -142,5 +143,28 @@ public class PurchaseLableController {
                 Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()));
     response.setValue("carrier", shiSservice);
     response.setValue("selectedRate", selectedRate);
+  }
+  
+  public void openPrintingLable(ActionRequest request, ActionResponse response)
+	      throws AxelorException {
+	  ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
+	  
+
+      String os = System.getProperty("os.name").toLowerCase();
+
+      try {
+          if (os.contains("win")) {
+              // For Windows
+              Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + shipmentLine.getLableUrl());
+          } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+              // For Unix/Linux/Mac
+              Runtime.getRuntime().exec("xdg-open " + shipmentLine.getLableUrl());
+          } else {
+              System.out.println("Unsupported operating system: " + os);
+          }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
+  
   }
 }

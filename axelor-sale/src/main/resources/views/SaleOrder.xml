@@ -836,8 +836,10 @@
     </panel>
     <panel name="shippingCostPanel" title="Shipping Cost" hideIf="clientPartner == null"
       sidebar="true" itemSpan="6" canCollapse="true" collapseIf="true">
-      <field name="shippingCost" onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
-      <field name="extraShippingCost" onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
+      <field name="shippingCost"
+        onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
+      <field name="extraShippingCost"
+        onChange="action-sale-order-attrs-calculate-total-shipping-cost"/>
       <field name="totalShippingCost"/>
     </panel>
 
@@ -2426,13 +2428,14 @@
     <attribute name="value" for="statusSelect" expr="eval: 5"/>
     <attribute name="value" for="isDeleted" expr="eval: true"/>
   </action-attrs>
-  
+
   <action-attrs name="action-sale-order-attrs-set-shipping-cost">
     <attribute name="value" for="shippingCost" expr="eval: purchaseLable?.selectedRate"/>
   </action-attrs>
-  
+
   <action-attrs name="action-sale-order-attrs-calculate-total-shipping-cost">
-    <attribute name="value" for="totalShippingCost" expr="eval: shippingCost + extraShippingCost"/>
+    <attribute name="value" for="totalShippingCost"
+      expr="eval: shippingCost + extraShippingCost"/>
   </action-attrs>
 
 </object-views>
