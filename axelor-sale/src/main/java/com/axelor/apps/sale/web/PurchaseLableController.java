@@ -144,27 +144,26 @@ public class PurchaseLableController {
     response.setValue("carrier", shiSservice);
     response.setValue("selectedRate", selectedRate);
   }
-  
+
   public void openPrintingLable(ActionRequest request, ActionResponse response)
-	      throws AxelorException {
-	  ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
-	  
+      throws AxelorException {
+    ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
 
-      String os = System.getProperty("os.name").toLowerCase();
+    String os = System.getProperty("os.name").toLowerCase();
 
-      try {
-          if (os.contains("win")) {
-              // For Windows
-              Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + shipmentLine.getLableUrl());
-          } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
-              // For Unix/Linux/Mac
-              Runtime.getRuntime().exec("xdg-open " + shipmentLine.getLableUrl());
-          } else {
-              System.out.println("Unsupported operating system: " + os);
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
+    try {
+      if (os.contains("win")) {
+        // For Windows
+        Runtime.getRuntime()
+            .exec("rundll32 url.dll,FileProtocolHandler " + shipmentLine.getLableUrl());
+      } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+        // For Unix/Linux/Mac
+        Runtime.getRuntime().exec("xdg-open " + shipmentLine.getLableUrl());
+      } else {
+        System.out.println("Unsupported operating system: " + os);
       }
-  
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

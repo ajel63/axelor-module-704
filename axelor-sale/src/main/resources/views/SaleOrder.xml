@@ -598,7 +598,9 @@
 
         <panel name="stripePaymentPanel" title="Payments" colSpan="12">
           <button onClick="save,action-sale-order-get-stripe-payment-record,save"
-            name="getPaymentRecordBtn" title="Get Payment Record"/>
+            name="getPaymentRecordBtn" title="Get Payment Record" colSpan="4"/>
+          <field name="stripePaidAmount" colSpan="4"/>
+          <field name="stripeRefundedAmount" colSpan="4"/>  
           <panel-related field="stripePayment" name="stripePaymentPanel"
             grid-view="stripe-payment-line-grid" colSpan="12" title="Payments"
             form-view="stripe-payment-line-form"/>

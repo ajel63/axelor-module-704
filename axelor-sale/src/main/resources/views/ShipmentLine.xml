@@ -12,7 +12,8 @@
     <field name="trackingNumber"/>
     <field name="shippDate"/>
     <field name="saleOrder"/>
-    <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn" title="Print" icon="fa-print"/>
+    <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn"
+      title="Print" icon="fa-print"/>
   </grid>
 
   <form name="shipment-form" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
@@ -29,8 +30,8 @@
     </panel>
   </form>
 
-<action-method name="action-shipment-line-method-open-print-lable">
-	<call class="com.axelor.apps.sale.web.PurchaseLableController" method="openPrintingLable"/>
-</action-method>
+  <action-method name="action-shipment-line-method-open-print-lable">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController" method="openPrintingLable"/>
+  </action-method>
 
 </object-views>

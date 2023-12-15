@@ -200,6 +200,8 @@
       multiline="true"/>
     <one-to-many ref="com.axelor.apps.sale.db.StripePaymentLine" name="stripePayment"
       title="Stripe Payment" mappedBy="saleOrder"/>
+    <decimal name="stripePaidAmount" title="Stripe Paid Amount"/>
+    <decimal name="stripeRefundedAmount" title="Stripe Refunded Amount"/>
 
     <!-- Shipping details -->
 
