@@ -18,10 +18,11 @@
  */
 package com.axelor.apps.sale.service;
 
+import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.StripePaymentLine;
 import java.util.List;
 
 public interface StripePaymentService {
-  List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder);
+  List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder) throws AxelorException;
 }

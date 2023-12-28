@@ -22,6 +22,7 @@ import com.axelor.apps.account.db.FiscalPosition;
 import com.axelor.apps.account.db.TaxEquiv;
 import com.axelor.apps.account.db.TaxLine;
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.Currency;
 import com.axelor.apps.base.db.PriceList;
 import com.axelor.apps.base.db.PriceListLine;
@@ -29,6 +30,7 @@ import com.axelor.apps.base.db.Pricing;
 import com.axelor.apps.base.db.Product;
 import com.axelor.apps.base.db.Unit;
 import com.axelor.apps.base.db.repo.PriceListLineRepository;
+import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.base.service.CurrencyService;
 import com.axelor.apps.base.service.PriceListService;
 import com.axelor.apps.base.service.ProductCategoryService;
@@ -45,33 +47,52 @@ import com.axelor.apps.sale.db.ComplementaryProduct;
 import com.axelor.apps.sale.db.ComplementaryProductSelected;
 import com.axelor.apps.sale.db.Pack;
 import com.axelor.apps.sale.db.PackLine;
+import com.axelor.apps.sale.db.PurchaseLabel;
+import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
+import com.axelor.apps.sale.db.ShipmentApiConfig;
+import com.axelor.apps.sale.db.StripePaymentConfig;
 import com.axelor.apps.sale.db.repo.ComplementaryProductRepository;
 import com.axelor.apps.sale.db.repo.PackLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.db.repo.ShipmentApiConfigRepository;
+import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.pricing.SaleOrderLinePricingObserver;
 import com.axelor.apps.sale.translation.ITranslation;
 import com.axelor.common.ObjectUtils;
 import com.axelor.db.EntityHelper;
 import com.axelor.i18n.I18n;
+import com.axelor.inject.Beans;
 import com.axelor.meta.loader.ModuleManager;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
+
 import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1084,4 +1105,58 @@ public class SaleOrderLineServiceImpl implements SaleOrderLineService {
     }
     return saleOrderLineList;
   }
+
+	@Transactional 
+	@Override
+	public String createRefund(SaleOrderLine saleOrderLine) throws AxelorException {
+		String orderId = saleOrderLine.getOrderId();
+		String productId = saleOrderLine.getProductId();
+		String paymentId = saleOrderLine.getPaymentId();
+		String qty = saleOrderLine.getRefundQty().toString();
+		String price = saleOrderLine.getRefundPrice().toString();
+		
+		  String url = "";
+		    StripePaymentConfig stripePaymentConfig =
+		        Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
+		    
+		    if(stripePaymentConfig.getRetrivePaymentBaseUrl() == "" || stripePaymentConfig.getRetrivePaymentBaseUrl() == null) {
+		    	throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe payment URL.");
+		    }
+		    
+		    url = stripePaymentConfig.getRetrivePaymentBaseUrl();
+		    url = "https://axelor-api.zdental.com/api/payments/refunds";
+
+		    CloseableHttpClient httpClient = HttpClients.createDefault();
+		    HttpPost httpRequest = new HttpPost(url);
+		    httpRequest.setHeader("X-Api-Key", stripePaymentConfig.getApiKey());
+		    httpRequest.addHeader("Content-Type", "application/json");
+		    try {
+
+		      StringEntity params =
+		          new StringEntity("{\"payment_id\":\""+paymentId+"\",\"price\":"+price+",\"quantity\":"+qty+",\"product_id\":"+productId+",\"order_id\":"+orderId+"}");
+		      httpRequest.setEntity(params);
+
+		      CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
+		      HttpEntity entity = httpRresponse.getEntity();
+		      if (entity != null) {
+		        String result = EntityUtils.toString(entity);
+		        JSONObject jsonObj = new JSONObject(result);
+		        if (jsonObj.has("type")) {
+		          if (jsonObj.get("type").equals("success")) {
+		        	  return "Return Completed!";
+		          } else {
+		            if (jsonObj.has("type")) {
+		              if (jsonObj.get("type").equals("error")) {
+		                String errorMessage = jsonObj.get("message").toString();
+		                throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errorMessage);
+		              }
+		            }
+		          }
+		        }
+		      }
+		    } catch (Exception e) {
+		      throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
+		    }
+		    return "Return request Faild.";
+		  }
 }

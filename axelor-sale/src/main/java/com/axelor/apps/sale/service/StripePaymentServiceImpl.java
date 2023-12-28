@@ -18,6 +18,8 @@
  */
 package com.axelor.apps.sale.service;
 
+import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.StripePaymentConfig;
 import com.axelor.apps.sale.db.StripePaymentLine;
@@ -39,12 +41,17 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
   @Transactional
   @Override
-  public List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder) {
+  public List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder) throws AxelorException {
     List<StripePaymentLine> stripePaymentLineList = new ArrayList<StripePaymentLine>();
 
     String url = "";
     StripePaymentConfig stripePaymentConfig =
         Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
+    
+    if(stripePaymentConfig.getRetrivePaymentBaseUrl() == "" || stripePaymentConfig.getRetrivePaymentBaseUrl() == null) {
+    	throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe payment URL.");
+    }
+    
     url = stripePaymentConfig.getRetrivePaymentBaseUrl();
     url =
         url
@@ -87,7 +94,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         }
       }
     } catch (Exception e) {
-      System.err.println(e);
+    	throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
     }
 
     return stripePaymentLineList;

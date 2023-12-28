@@ -98,6 +98,17 @@
 
     <decimal name="totalSingleUnit" title="Total Single Unit"/>
 
+    <!-- refund -->
+
+    <string name="paymentId" title="Payment Id"/>
+    <string name="productId" title="Product ID"/>
+    <string name="orderId" title="Order ID"/>
+    <decimal name="refundQty" title="Refund Qty"/>
+    <decimal name="refundPrice" title="Refund Price"/>
+
+    <decimal name="totalRefundAmount" title="Total Refund Amount"/>
+    <decimal name="totalRefunQty" title="TotalRefun Qty"/>
+
     <finder-method name="findAllBySaleOrder" using="saleOrder" all="true"/>
 
     <extra-code>

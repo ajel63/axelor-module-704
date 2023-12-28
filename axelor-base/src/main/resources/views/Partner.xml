@@ -244,6 +244,9 @@
             <![CDATA[<span class='label label-warning'>There is already a partner with this name.</span>]]></static>
           <field name="fullName" hidden="true"/>
         </panel>
+        <panel colSpan="12">
+        <field name="simpleFullName" title="Full Name" readonly="true"/>
+        </panel>
         <field name="isProspect" colSpan="2" widget="InlineCheckbox"
           hideIf="isContact || $readonly()"
           onChange="action-partner-group-unset-customer,action-partner-record-unset-factor"/>

@@ -600,7 +600,7 @@
           <button onClick="save,action-sale-order-get-stripe-payment-record,save"
             name="getPaymentRecordBtn" title="Get Payment Record" colSpan="4"/>
           <field name="stripePaidAmount" colSpan="4"/>
-          <field name="stripeRefundedAmount" colSpan="4"/>  
+          <field name="stripeRefundedAmount" colSpan="4"/>
           <panel-related field="stripePayment" name="stripePaymentPanel"
             grid-view="stripe-payment-line-grid" colSpan="12" title="Payments"
             form-view="stripe-payment-line-form"/>
@@ -702,7 +702,7 @@
         <field name="sizeL" colSpan="2"/>
         <field name="sizeW" colSpan="2"/>
         <field name="sizeH" colSpan="2"/>
-        <field name="purchaseLable" colSpan="2" canEdit="true" canNew="true" canSelect="false"
+        <field name="purchaseLable" colSpan="2" canEdit="true" canNew="true" canSelect="true"
           readonlyIf="isPurchaseLabelConfirm" title="Create Purchase Label"
           onChange="action-sale-order-attrs-set-purchase-label-confirm-status,action-sale-order-attrs-set-shipping-cost,action-sale-order-attrs-calculate-total-shipping-cost"/>
         <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"

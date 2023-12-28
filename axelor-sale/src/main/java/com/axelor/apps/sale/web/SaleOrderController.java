@@ -675,12 +675,12 @@ public class SaleOrderController {
       List<StripePaymentLine> stripePaymentLineList =
           Beans.get(StripePaymentService.class)
               .getStripePaymentRecord(Beans.get(SaleOrderRepository.class).find(saleOrder.getId()));
-      
+
       BigDecimal totalPaidAmount = new BigDecimal(0);
-      for(StripePaymentLine stripePaymentLine : stripePaymentLineList) {
-    	  totalPaidAmount = totalPaidAmount.add(new BigDecimal(stripePaymentLine.getCost()));
+      for (StripePaymentLine stripePaymentLine : stripePaymentLineList) {
+        totalPaidAmount = totalPaidAmount.add(new BigDecimal(stripePaymentLine.getCost()));
       }
-      
+
       response.setValue("stripePayment", stripePaymentLineList);
       response.setValue("stripePaidAmount", totalPaidAmount);
     } catch (Exception e) {

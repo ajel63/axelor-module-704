@@ -18,6 +18,10 @@
  */
 package com.axelor.apps.sale.web;
 
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Optional;
+
 import com.axelor.apps.account.db.TaxLine;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Partner;
@@ -33,7 +37,9 @@ import com.axelor.apps.base.service.tax.FiscalPositionService;
 import com.axelor.apps.base.service.tax.TaxService;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
+import com.axelor.apps.sale.db.StripePaymentLine;
 import com.axelor.apps.sale.db.repo.SaleOrderLineRepository;
+import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.exception.SaleExceptionMessage;
 import com.axelor.apps.sale.service.app.AppSaleService;
 import com.axelor.apps.sale.service.saleorder.SaleOrderLineService;
@@ -47,9 +53,6 @@ import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
 import com.google.inject.Singleton;
-import java.math.BigDecimal;
-import java.util.Map;
-import java.util.Optional;
 
 @Singleton
 public class SaleOrderLineController {
@@ -457,4 +460,42 @@ public class SaleOrderLineController {
       TraceBackService.trace(response, e);
     }
   }
+  
+  public void setRefundAttribute(ActionRequest request, ActionResponse response) throws AxelorException {
+      Context context = request.getContext();
+      SaleOrderLine saleOrderLine = context.asType(SaleOrderLine.class);
+
+      SaleOrder saleOrder = null;
+      if (context.get("_parent") != null) {
+
+        Map<String, Object> _parent = (Map<String, Object>) context.get("_parent");
+        System.err.println("sdsds");
+        
+        String id = "";
+        if(_parent.containsKey("id")) {
+        	id = _parent.get("id").toString();	
+            saleOrder = Beans.get(SaleOrderRepository.class).find(Long.parseLong(id));
+            response.setValue("orderId", id);
+            
+            for(StripePaymentLine stripePaymentLine : saleOrder.getStripePayment()) {
+            	response.setValue("paymentId", stripePaymentLine.getPaymentId());
+            }
+        }
+        
+        if(saleOrderLine.getProduct() != null) {
+        	response.setValue("productId", saleOrderLine.getProduct().getCode());
+        	 response.setValue("refundQty", saleOrderLine.getQty());
+             response.setValue("refundPrice", saleOrderLine.getPrice());
+        }
+      }
+        
+  }
+  
+  public void createRefund(ActionRequest request, ActionResponse response) throws AxelorException {
+	      Context context = request.getContext();
+	      SaleOrderLine saleOrderLine = context.asType(SaleOrderLine.class);
+	      
+	      Beans.get(SaleOrderLineService.class).createRefund(Beans.get(SaleOrderLineRepository.class).find(saleOrderLine.getId()));
+	      
+	  }
 }

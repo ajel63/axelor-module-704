@@ -85,13 +85,9 @@ public class WoocomServiceImpl implements WoocomService {
       StringEntity params = null;
       if (saleOrder.getWoocommerceDomain() == null
           || saleOrder.getWoocommerceDomain().trim() == "") {
-    	  params =
-    	            new StringEntity(
-    	                "{\"status\":\""
-    	                    + woocommerceStatus
-    	                    + "\",\"domain\":\""
-    	                    + "myzsonic.com"
-    	                    + "\"}");
+        params =
+            new StringEntity(
+                "{\"status\":\"" + woocommerceStatus + "\",\"domain\":\"" + "myzsonic.com" + "\"}");
       } else {
         params =
             new StringEntity(
