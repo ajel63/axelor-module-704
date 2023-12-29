@@ -245,7 +245,7 @@
           <field name="fullName" hidden="true"/>
         </panel>
         <panel colSpan="12">
-        <field name="simpleFullName" title="Full Name" readonly="true"/>
+          <field name="simpleFullName" title="Full Name" readonly="true"/>
         </panel>
         <field name="isProspect" colSpan="2" widget="InlineCheckbox"
           hideIf="isContact || $readonly()"

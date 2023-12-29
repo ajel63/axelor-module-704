@@ -600,10 +600,16 @@
           <button onClick="save,action-sale-order-get-stripe-payment-record,save"
             name="getPaymentRecordBtn" title="Get Payment Record" colSpan="4"/>
           <field name="stripePaidAmount" colSpan="4"/>
-          <field name="stripeRefundedAmount" colSpan="4"/>
           <panel-related field="stripePayment" name="stripePaymentPanel"
             grid-view="stripe-payment-line-grid" colSpan="12" title="Payments"
             form-view="stripe-payment-line-form"/>
+
+          <button onClick="save,action-sale-order-get-stripe-refund-record,save"
+            name="getRefundRecordBtn" title="Get Refund Record" colSpan="4"/>
+          <field name="stripeRefundedAmount" colSpan="4"/>
+          <panel-related field="stripeRefund" name="stripeRefundPanel"
+            grid-view="stripe-refund-line-grid" colSpan="12" title="Refund"
+            form-view="stripe-refund-line-form"/>
         </panel>
         <panel name="invoiceCommentsPanel" title="Comment to display on invoice" colSpan="12">
           <field name="invoiceComments" widget="html" colSpan="12" showTitle="false"/>
@@ -2392,6 +2398,10 @@
 
   <action-method name="action-sale-order-get-stripe-payment-record">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="getStripePaymentRecord"/>
+  </action-method>
+
+  <action-method name="action-sale-order-get-stripe-refund-record">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="getStripeRefundRecord"/>
   </action-method>
 
   <action-method name="action-sale-order-method-generate-payment-link">

@@ -8,6 +8,7 @@
     <field name="baseUrl"/>
     <field name="apiKey"/>
     <field name="retrivePaymentBaseUrl"/>
+    <field name="refundBaseUrl"/>
   </grid>
 
   <form name="stripe-payment-config-form" title="StripePayment Config"
@@ -16,6 +17,7 @@
       <field name="baseUrl"/>
       <field name="apiKey"/>
       <field name="retrivePaymentBaseUrl" required="true"/>
+      <field name="refundBaseUrl"/>
     </panel>
   </form>
 

@@ -408,16 +408,17 @@
         <field name="totalRefundAmount" readonly="true"/>
         <field name="totalRefunQty" readonly="true"/>
 
-		<field name="orderId"/>
+        <field name="orderId"/>
         <field name="productId"/>
-		<field name="paymentId"/>
-		<spacer/>
+        <field name="paymentId"/>
+        <spacer/>
         <field name="refundQty"/>
         <field name="refundPrice"/>
-        
-        
+
+
         <spacer/>
-        <button onClick="save,action-sale-order-line-create-refund" name="createRefundBtn" title="Create Refund"/>
+        <button onClick="save,action-sale-order-line-create-refund" name="createRefundBtn"
+          title="Create Refund"/>
       </panel>
 
     </panel-tabs>
@@ -946,13 +947,13 @@
     <call class="com.axelor.apps.sale.web.SaleOrderLineController"
       method="translateProductDescriptionAndName"/>
   </action-method>
-  
-  <action-method name="action-sale-order-line-method-set-refund-attribute"> 
-  	<call class="com.axelor.apps.sale.web.SaleOrderLineController" method="setRefundAttribute"/>
+
+  <action-method name="action-sale-order-line-method-set-refund-attribute">
+    <call class="com.axelor.apps.sale.web.SaleOrderLineController" method="setRefundAttribute"/>
   </action-method>
-  
+
   <action-method name="action-sale-order-line-create-refund">
-  	<call class="com.axelor.apps.sale.web.SaleOrderLineController" method="createRefund"/>
+    <call class="com.axelor.apps.sale.web.SaleOrderLineController" method="createRefund"/>
   </action-method>
 
   <!-- ACTION ATTRS -->

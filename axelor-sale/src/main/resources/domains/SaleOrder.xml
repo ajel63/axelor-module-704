@@ -230,6 +230,9 @@
     <one-to-many ref="com.axelor.apps.sale.db.ShipmentLine" name="shipment"
       title="Shipments" mappedBy="saleOrder"/>
 
+    <one-to-many ref="com.axelor.apps.sale.db.StripeRefundLine" name="stripeRefund"
+      title="Stripe Refund" mappedBy="saleOrder"/>
+
     <unique-constraint columns="saleOrderSeq,company"/>
 
     <finder-method name="findBySaleOrderSeqAndCompany" using="saleOrderSeq,company"/>

@@ -15,7 +15,7 @@
   </grid>
 
   <form name="shipment-purchase-label-form" title="Purchase Label" canDelete="false"
-    onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel" >
+    onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel">
     <panel name="packPanel">
       <field name="billInfo" colSpan="4"/>
       <spacer colSpan="8"/>
@@ -43,9 +43,9 @@
       form-view="shipment-purchase-label-rate-line-form"/>
 
     <panel>
-      <button onClick="save,action-purchase-lable-group-confirm-shipping-service,save,close" colSpan="3"
-        readonlyIf="isShippingConfirm" name="confirmBtn" prompt="Confirm Service selection?"
-        title="Confirm Shipping Service"/>
+      <button onClick="save,action-purchase-lable-group-confirm-shipping-service,save,close"
+        colSpan="3" readonlyIf="isShippingConfirm" name="confirmBtn"
+        prompt="Confirm Service selection?" title="Confirm Shipping Service"/>
 
       <button onClick="save,close" name="confirmBtn"
         prompt="Are you sure you want to cancel Shipping lable?" title="Cancel Shipping Lable"

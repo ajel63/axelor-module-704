@@ -46,6 +46,7 @@ import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleOrderLine;
 import com.axelor.apps.sale.db.StripePaymentConfig;
 import com.axelor.apps.sale.db.StripePaymentLine;
+import com.axelor.apps.sale.db.StripeRefundLine;
 import com.axelor.apps.sale.db.repo.PackRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
@@ -683,6 +684,24 @@ public class SaleOrderController {
 
       response.setValue("stripePayment", stripePaymentLineList);
       response.setValue("stripePaidAmount", totalPaidAmount);
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void getStripeRefundRecord(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+      List<StripeRefundLine> stripeRefundLineList =
+          Beans.get(StripePaymentService.class)
+              .getStripeRefundRecord(Beans.get(SaleOrderRepository.class).find(saleOrder.getId()));
+
+      BigDecimal totalPaidAmount = new BigDecimal(0);
+      for (StripeRefundLine stripePaymentLine : stripeRefundLineList) {
+        totalPaidAmount = totalPaidAmount.add(new BigDecimal(stripePaymentLine.getTotalRefund()));
+      }
+      response.setValue("stripeRefund", stripeRefundLineList);
+      response.setValue("stripeRefundedAmount", totalPaidAmount);
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }

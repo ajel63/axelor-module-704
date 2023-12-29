@@ -23,6 +23,7 @@ import com.axelor.apps.base.db.repo.TraceBackRepository;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.StripePaymentConfig;
 import com.axelor.apps.sale.db.StripePaymentLine;
+import com.axelor.apps.sale.db.StripeRefundLine;
 import com.axelor.apps.sale.db.repo.StripePaymentConfigRepository;
 import com.axelor.inject.Beans;
 import com.google.inject.persist.Transactional;
@@ -41,18 +42,29 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
   @Transactional
   @Override
-  public List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder) throws AxelorException {
+  public List<StripePaymentLine> getStripePaymentRecord(SaleOrder saleOrder)
+      throws AxelorException {
     List<StripePaymentLine> stripePaymentLineList = new ArrayList<StripePaymentLine>();
 
     String url = "";
     StripePaymentConfig stripePaymentConfig =
         Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
-    
-    if(stripePaymentConfig.getRetrivePaymentBaseUrl() == "" || stripePaymentConfig.getRetrivePaymentBaseUrl() == null) {
-    	throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe payment URL.");
+
+    if (stripePaymentConfig.getRetrivePaymentBaseUrl() == ""
+        || stripePaymentConfig.getRetrivePaymentBaseUrl() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe payment URL.");
     }
-    
+
     url = stripePaymentConfig.getRetrivePaymentBaseUrl();
+    if (url == "" || url == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe Payment URL.");
+    }
+    if (stripePaymentConfig.getApiKey() == "" || stripePaymentConfig.getApiKey() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe API key.");
+    }
     url =
         url
             + "/api/payments/data/"
@@ -60,7 +72,7 @@ public class StripePaymentServiceImpl implements StripePaymentService {
 
     CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     HttpGet httpRequest = new HttpGet(url);
-    httpRequest.setHeader("X-Api-Key", "justtestkey");
+    httpRequest.setHeader("X-Api-Key", stripePaymentConfig.getApiKey());
 
     try {
       CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
@@ -94,9 +106,78 @@ public class StripePaymentServiceImpl implements StripePaymentService {
         }
       }
     } catch (Exception e) {
-    	throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
+      throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
     }
 
+    return stripePaymentLineList;
+  }
+
+  @Transactional
+  @Override
+  public List<StripeRefundLine> getStripeRefundRecord(SaleOrder saleOrder) throws AxelorException {
+    List<StripeRefundLine> stripePaymentLineList = new ArrayList<StripeRefundLine>();
+
+    String url = "";
+    StripePaymentConfig stripePaymentConfig =
+        Beans.get(StripePaymentConfigRepository.class).all().fetchOne();
+
+    if (stripePaymentConfig.getRetrivePaymentBaseUrl() == ""
+        || stripePaymentConfig.getRetrivePaymentBaseUrl() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please add stripe configuration and add stripe Refund URL.");
+    }
+
+    url = stripePaymentConfig.getRefundBaseUrl();
+    if (url == "" || url == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe Refund URL.");
+    }
+    if (stripePaymentConfig.getApiKey() == "" || stripePaymentConfig.getApiKey() == null) {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please configure stripe API key.");
+    }
+    url =
+        url
+            + "/api/payments/refunds/"
+            + saleOrder.getId(); // "https://axelor-api.zdental.com/api/payments/refunds/25747"
+
+    CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    HttpGet httpRequest = new HttpGet(url);
+    httpRequest.setHeader("X-Api-Key", stripePaymentConfig.getApiKey());
+
+    try {
+      CloseableHttpResponse httpRresponse = httpClient.execute(httpRequest);
+      HttpEntity entity = httpRresponse.getEntity();
+      if (entity != null) {
+        String result = EntityUtils.toString(entity);
+        JSONObject jsonObj = new JSONObject(result);
+        if (jsonObj.has("type")) {
+          if (jsonObj.get("type").equals("success")) {
+            JSONArray refundArray = jsonObj.getJSONArray("refunds");
+
+            for (int i = 0; i < refundArray.length(); i++) {
+              StripeRefundLine stripeRefundLine = new StripeRefundLine();
+              JSONObject refundObject = refundArray.getJSONObject(i);
+              stripeRefundLine.setStripeId((String) refundObject.get("stripe_id").toString());
+              stripeRefundLine.setRefundId((String) refundObject.get("refund_id").toString());
+              stripeRefundLine.setProductName((String) refundObject.get("product_name").toString());
+              stripeRefundLine.setOrderId((String) refundObject.get("order_id").toString());
+              stripeRefundLine.setProductId((String) refundObject.get("product_id").toString());
+              stripeRefundLine.setQuantity((String) refundObject.get("quantity").toString());
+              stripeRefundLine.setTotalRefund((String) refundObject.get("total_refund").toString());
+              stripeRefundLine.setCreatedAt((String) refundObject.get("created_at").toString());
+              stripeRefundLine.setUpdatedAt((String) refundObject.get("updated_at").toString());
+
+              stripePaymentLineList.add(stripeRefundLine);
+            }
+          }
+        } else {
+        }
+      }
+    } catch (Exception e) {
+      throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
+    }
     return stripePaymentLineList;
   }
 }

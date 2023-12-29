@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="stripe-refund-line-grid" title="Stripe Refund"
+    model="com.axelor.apps.sale.db.StripeRefundLine">
+    <field name="stripeId"/>
+    <field name="refundId"/>
+    <field name="orderId"/>
+    <field name="productId"/>
+    <field name="productName"/>
+    <field name="quantity"/>
+    <field name="totalRefund"/>
+    <field name="createdAt"/>
+    <field name="updatedAt"/>
+  </grid>
+
+  <form name="stripe-refund-line-form" title="Stripe Refund"
+    model="com.axelor.apps.sale.db.StripeRefundLine" onNew="">
+    <panel name="mainPanel">
+      <field name="stripeId"/>
+      <field name="refundId"/>
+      <field name="orderId"/>
+      <field name="productId"/>
+      <field name="productName"/>
+      <field name="quantity"/>
+      <field name="totalRefund"/>
+      <field name="createdAt"/>
+      <field name="updatedAt"/>
+    </panel>
+  </form>
+
+</object-views>

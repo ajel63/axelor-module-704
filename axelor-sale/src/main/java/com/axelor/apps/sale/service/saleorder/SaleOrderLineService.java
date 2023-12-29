@@ -333,7 +333,6 @@ public interface SaleOrderLineService {
    */
   public boolean hasPricingLine(SaleOrderLine saleOrderLine, SaleOrder saleOrder)
       throws AxelorException;
-  
-  public String createRefund(SaleOrderLine saleOrderLine) throws AxelorException;
-  
+
+  public Map<String, String> createRefund(SaleOrderLine saleOrderLine) throws AxelorException;
 }
