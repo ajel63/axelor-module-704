@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.7.0.v201706222054</property>
+    <property name="units">cm</property>
+    <method name="beforeFactory"><![CDATA[if(params["HeaderHeight"].value != 0 ) {
+reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty("headerHeight",params["HeaderHeight"].value+"cm");
+}
+if(params["FooterHeight"].value != 0) {
+reportContext.getDesignHandle().findMasterPage("Simple MasterPage").setProperty("footerHeight",params["FooterHeight"].value+"cm");
+}]]></method>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <parameters>
+        <scalar-parameter name="ids" id="4707">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="concealValue">false</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <oda-data-source extensionID="org.eclipse.birt.report.data.oda.jdbc" name="Data Source1" id="4708">
+            <list-property name="privateDriverProperties">
+                <ex-property>
+                    <name>metadataBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledMetadataBidiFormatStr</name>
+                </ex-property>
+                <ex-property>
+                    <name>contentBidiFormatStr</name>
+                    <value>ILYNN</value>
+                </ex-property>
+                <ex-property>
+                    <name>disabledContentBidiFormatStr</name>
+                </ex-property>
+            </list-property>
+            <property name="odaDriverClass">org.postgresql.Driver</property>
+            <property name="odaURL">jdbc:postgresql://localhost:5432/axelor_dental</property>
+            <property name="odaUser">postgres</property>
+            <encrypted-property name="odaPassword" encryptionID="base64">cm9vdA==</encrypted-property>
+        </oda-data-source>
+    </data-sources>
+    <data-sets>
+        <oda-data-set extensionID="org.eclipse.birt.report.data.oda.jdbc.JdbcSelectDataSet" name="TImeSheetLine" id="6381">
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">dailyhours</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">dailyhours</text-property>
+                    <text-property name="heading">dailyhours</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">timesheetdate</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">timesheetdate</text-property>
+                    <text-property name="heading">timesheetdate</text-property>
+                </structure>
+                <structure>
+                    <property name="columnName">empname</property>
+                    <property name="analysis">dimension</property>
+                    <text-property name="displayName">empname</text-property>
+                    <text-property name="heading">empname</text-property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">dailyhours</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">timesheetdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">empname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <method name="beforeOpen"><![CDATA[this.queryText = this.queryText.replace('@INJECTEDWHERE', "WHERE  TimesheetLine.id IN (" + params["ids"].value + ")");]]></method>
+            <property name="dataSource">Data Source1</property>
+            <list-property name="resultSet">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">dailyhours</property>
+                    <property name="nativeName">dailyhours</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">timesheetdate</property>
+                    <property name="nativeName">timesheetdate</property>
+                    <property name="dataType">date</property>
+                    <property name="nativeDataType">91</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">empname</property>
+                    <property name="nativeName">empname</property>
+                    <property name="dataType">string</property>
+                    <property name="nativeDataType">12</property>
+                </structure>
+            </list-property>
+            <xml-property name="queryText"><![CDATA[select 
+TimesheetLine.hours_duration as dailyhours,
+TimesheetLine.date_val as TimesheetDate,
+Employee.name as EmpName
+from hr_timesheet_line as TimesheetLine
+left outer join hr_employee as Employee on (TimesheetLine.employee = Employee.id)
+
+where TimesheetLine.id in (16,17,18,19);]]></xml-property>
+            <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
+  <Version>2.0</Version>
+  <design:ResultSets derivedMetaData="true">
+    <design:resultSetDefinitions>
+      <design:resultSetColumns>
+        <design:resultColumnDefinitions>
+          <design:attributes>
+            <design:identifier>
+              <design:name>id</design:name>
+              <design:position>1</design:position>
+            </design:identifier>
+            <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
+            <design:precision>19</design:precision>
+            <design:scale>0</design:scale>
+            <design:nullability>NotNullable</design:nullability>
+            <design:uiHints>
+              <design:displayName>id</design:displayName>
+            </design:uiHints>
+          </design:attributes>
+          <design:usageHints>
+            <design:label>id</design:label>
+            <design:formattingHints>
+              <design:displaySize>20</design:displaySize>
+            </design:formattingHints>
+          </design:usageHints>
+        </design:resultColumnDefinitions>
+      </design:resultSetColumns>
+      <design:criteria/>
+    </design:resultSetDefinitions>
+  </design:ResultSets>
+</model:DesignValues>]]></xml-property>
+        </oda-data-set>
+    </data-sets>
+    <styles>
+        <style name="report" id="4">
+            <property name="fontFamily">sans-serif</property>
+            <property name="fontSize">10pt</property>
+        </style>
+        <style name="crosstab-cell" id="5">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="6">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="DateFormat" id="4862">
+            <structure name="dateTimeFormat">
+                <property name="category">Custom</property>
+                <property name="pattern">dd/MM/yyyy</property>
+            </structure>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <property name="type">a4</property>
+            <property name="orientation">auto</property>
+            <property name="topMargin">0.47625cm</property>
+            <property name="leftMargin">0.3958333333333333in</property>
+            <property name="rightMargin">0.15625in</property>
+            <property name="height">297mm</property>
+            <property name="width">1100mm</property>
+            <property name="headerHeight">0in</property>
+            <property name="footerHeight">2.4cm</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <grid id="6382">
+            <column id="6383"/>
+            <column id="6384"/>
+            <column id="6385"/>
+            <row id="6386">
+                <cell id="6387"/>
+                <cell id="6388">
+                    <label id="6443">
+                        <property name="fontSize">11pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Time Sheet Report</text-property>
+                    </label>
+                </cell>
+                <cell id="6389"/>
+            </row>
+            <row id="6394">
+                <cell id="6395"/>
+                <cell id="6396"/>
+                <cell id="6397"/>
+            </row>
+        </grid>
+        <table id="6408">
+            <property name="marginTop">10pt</property>
+            <property name="dataSet">TImeSheetLine</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">dailyhours</property>
+                    <text-property name="displayName">dailyhours</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["dailyhours"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">timesheetdate</property>
+                    <text-property name="displayName">timesheetdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["timesheetdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">empname</property>
+                    <text-property name="displayName">empname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["empname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">TotalHours</property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>NewTableGroup1</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">row["dailyhours"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="6427"/>
+            <column id="6428"/>
+            <column id="6429"/>
+            <header>
+                <row id="6409">
+                    <cell id="6410">
+                        <label id="6442">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6412">
+                        <label id="6413">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Clock In Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="6414">
+                        <label id="6411">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Daily Hours</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="6430">
+                <property name="groupName">NewTableGroup1</property>
+                <expression name="keyExpr" type="javascript">row["empname"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["empname"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="6431">
+                        <cell id="6432">
+                            <data id="6439">
+                                <property name="fontSize">10pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="marginBottom">3pt</property>
+                                <property name="resultSetColumn">empname</property>
+                            </data>
+                        </cell>
+                        <cell id="6433"/>
+                        <cell id="6434"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="6435">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <cell id="6436">
+                            <label id="6440">
+                                <property name="fontWeight">bold</property>
+                                <text-property name="text">Total</text-property>
+                            </label>
+                        </cell>
+                        <cell id="6437"/>
+                        <cell id="6438">
+                            <data id="6441">
+                                <property name="fontWeight">bold</property>
+                                <property name="resultSetColumn">TotalHours</property>
+                            </data>
+                        </cell>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="6416">
+                    <cell id="6417">
+                        <data id="6422">
+                            <property name="resultSetColumn">empname</property>
+                        </data>
+                    </cell>
+                    <cell id="6419">
+                        <data id="6420">
+                            <property name="resultSetColumn">timesheetdate</property>
+                        </data>
+                    </cell>
+                    <cell id="6421">
+                        <data id="6418">
+                            <property name="resultSetColumn">dailyhours</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="6423">
+                    <cell id="6424"/>
+                    <cell id="6425"/>
+                    <cell id="6426"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
