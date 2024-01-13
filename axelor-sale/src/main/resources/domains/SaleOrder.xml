@@ -233,6 +233,9 @@
     <one-to-many ref="com.axelor.apps.sale.db.StripeRefundLine" name="stripeRefund"
       title="Stripe Refund" mappedBy="saleOrder"/>
 
+    <string name="zDentalOrderTypeSelect" title="Sale Order Type"
+      selection="sale.order.z.dental.order.type.select"/>
+
     <unique-constraint columns="saleOrderSeq,company"/>
 
     <finder-method name="findBySaleOrderSeqAndCompany" using="saleOrderSeq,company"/>

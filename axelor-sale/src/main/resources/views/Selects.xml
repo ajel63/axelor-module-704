@@ -114,4 +114,9 @@
     <option value="SalesOrderSummary">Sales Order Summary</option>
   </selection>
 
+  <selection name="sale.order.z.dental.order.type.select">
+    <option value="DDIA">DDIA</option>
+    <option value="NORMAL">NORMAL</option>
+  </selection>
+
 </object-views>

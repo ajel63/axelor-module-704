@@ -198,6 +198,12 @@ where TimesheetLine.id in (16,17,18,19);]]></xml-property>
                 <property name="pattern">dd/MM/yyyy</property>
             </structure>
         </style>
+        <style name="format" id="6446">
+            <structure name="numberFormat">
+                <property name="category">General Number</property>
+                <property name="pattern">General Number</property>
+            </structure>
+        </style>
     </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
@@ -338,6 +344,7 @@ where TimesheetLine.id in (16,17,18,19);]]></xml-property>
                         <cell id="6437"/>
                         <cell id="6438">
                             <data id="6441">
+                                <property name="style">format</property>
                                 <property name="fontWeight">bold</property>
                                 <property name="resultSetColumn">TotalHours</property>
                             </data>
@@ -359,6 +366,7 @@ where TimesheetLine.id in (16,17,18,19);]]></xml-property>
                     </cell>
                     <cell id="6421">
                         <data id="6418">
+                            <property name="style">format</property>
                             <property name="resultSetColumn">dailyhours</property>
                         </data>
                     </cell>

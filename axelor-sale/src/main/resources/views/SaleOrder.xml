@@ -471,7 +471,11 @@
           <field if="__config__.app.isApp('supplychain')" if-module="axelor-supplychain"
             colSpan="6" readonly="true" showIf="createdByInterco" name="createdByInterco"/>
         </panel>
+        <panel name="orderTypePanel" colSpan="12">
+          <field name="zDentalOrderTypeSelect" colSpan="3"/>
+        </panel>
       </panel>
+
       <panel name="addressPanel" colSpan="12" hideIf="company == null">
         <panel name="mainInvoicingAddressPanel" stacked="true">
           <field name="mainInvoicingAddress"

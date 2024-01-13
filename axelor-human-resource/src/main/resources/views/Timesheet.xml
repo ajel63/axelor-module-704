@@ -5,10 +5,13 @@
 
   <grid name="timesheet-grid" title="Timesheet" model="com.axelor.apps.hr.db.Timesheet"
     canNew="false" groupBy="employee" orderBy="employee,-fromDate">
-    <toolbar>
-		<button onClick="acction-timesheet-method-print-report" name="printTimesheetReportBtn" title="Print"/>
-	</toolbar>
     <menubar>
+      <menu name="timesheetPrintMenu" title="Prints" icon="fa-print" showTitle="true">
+        <item name="prinPdf" action="acction-timesheet-method-print-report-pdf"
+          title="Print pdf"/>
+        <item name="prinxls" action="acction-timesheet-method-print-report-xls"
+          title="Print excel"/>
+      </menu>
       <menu name="timesheetToolsMenu" title="Tools" icon="fa-wrench" showTitle="true">
         <item name="seeTimesheetLinesItem"
           action="action-timesheet-method-timesheet-line-historic" title="See timesheet lines"/>
@@ -644,9 +647,15 @@
     <call class="com.axelor.apps.hr.web.timesheet.TimesheetController"
       method="historicTimesheetLine"/>
   </action-method>
-  
-  <action-method name="acction-timesheet-method-print-report">
-  	<call class="com.axelor.apps.hr.web.timesheet.TimesheetController" method="printTimeSheetReport"/>
+
+  <action-method name="acction-timesheet-method-print-report-pdf">
+    <call class="com.axelor.apps.hr.web.timesheet.TimesheetController"
+      method="printTimeSheetReportPdf"/>
+  </action-method>
+
+  <action-method name="acction-timesheet-method-print-report-xls">
+    <call class="com.axelor.apps.hr.web.timesheet.TimesheetController"
+      method="printTimeSheetReportXls"/>
   </action-method>
 
   <action-attrs name="action-hr-attrs-set-employee-domain">
