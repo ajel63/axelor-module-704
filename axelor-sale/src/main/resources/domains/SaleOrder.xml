@@ -84,7 +84,7 @@
 
     <!-- Onglet description -->
     <string name="description" title="Comment to display" large="true"/>
-    <string name="internalNote" title="Internal note" large="true"/>
+    <string name="internalNote" title="Internal note" large="true" massUpdate="false"/>
 
     <!-- Onglet Commande Client -->
     <date name="orderDate" title="Order Date"/>
@@ -233,7 +233,7 @@
     <one-to-many ref="com.axelor.apps.sale.db.StripeRefundLine" name="stripeRefund"
       title="Stripe Refund" mappedBy="saleOrder"/>
 
-    <string name="zDentalOrderTypeSelect" title="Sale Order Type"
+    <string name="zDentalOrderTypeSelect" title="Sale Order Type" massUpdate="true"
       selection="sale.order.z.dental.order.type.select"/>
 
     <unique-constraint columns="saleOrderSeq,company"/>

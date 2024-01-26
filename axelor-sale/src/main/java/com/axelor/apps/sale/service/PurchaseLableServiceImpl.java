@@ -96,7 +96,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please add Address line, city, state and pincode on address");
     }
 
-    String customerName = saleOrder.getClientPartner().getName();
+    String customerName = saleOrder.getClientPartner().getSimpleFullName();
     String company = saleOrder.getCompany().getName();
 
     List<PurchaseLabelRateLine> purchaseLabelRateLineList = new ArrayList<PurchaseLabelRateLine>();
@@ -255,7 +255,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please add Address line, city, state and pincode on address");
     }
 
-    String customerName = saleOrder.getClientPartner().getName();
+    String customerName = saleOrder.getClientPartner().getSimpleFullName();
     Long custumerId = saleOrder.getClientPartner().getId();
     String company = saleOrder.getCompany().getName();
     Long orderId = saleOrder.getId();

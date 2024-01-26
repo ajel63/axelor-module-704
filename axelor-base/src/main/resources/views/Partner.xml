@@ -388,9 +388,8 @@
                 placeholder="e.g. POB 254"/>
               <field name="city" canNew="true" onChange="action-address-change-city"
                 form-view="city-form" grid-view="city-grid"/>
-              <field name="addressL6" x-bind="{{addressL6|uppercase}}" />
-              <field name="addressL7Country" form-view="country-form"
-                grid-view="country-grid"/>
+              <field name="addressL6" x-bind="{{addressL6|uppercase}}"/>
+              <field name="addressL7Country" form-view="country-form" grid-view="country-grid"/>
             </editor>
           </field>
         </panel>
