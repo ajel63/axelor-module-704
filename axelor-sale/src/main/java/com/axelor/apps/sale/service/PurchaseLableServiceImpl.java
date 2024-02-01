@@ -137,7 +137,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                   + company
                   + "\",\"address\":\""
                   + addressStr
-                  + "\",\"address2\":\""
+                  + "\",\"address_2\":\""
                   + addressStr2
                   + "\",\"zipCode\":\""
                   + pincode
@@ -324,7 +324,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               + company
               + "\",\"address\":\""
               + addressStr
-              + "\",\"address2\":\""
+              + "\",\"address_2\":\""
               + addressStr2
               + "\",\"zipCode\":\""
               + pincode
