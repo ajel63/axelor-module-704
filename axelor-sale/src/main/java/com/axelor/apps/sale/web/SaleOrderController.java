@@ -72,8 +72,10 @@ import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
 import com.axelor.utils.db.Wizard;
 import com.google.common.base.Function;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
+import com.google.inject.persist.Transactional;
 import java.lang.invoke.MethodHandles;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -789,5 +791,45 @@ public class SaleOrderController {
           "Status does not update in Woocommerce system due to invalid order ID please update menually.");
     }
     //		response.setNotify(status);
+  }
+
+  public void setInernalnotesOpenPopup(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    try {
+      String idsStr = "";
+      if (request.getContext().get("_ids") == null) {
+        response.setAlert("Please select the grid.");
+        return;
+      }
+      List<Integer> selectedFiels = (List<Integer>) request.getContext().get("_ids");
+      idsStr = Joiner.on(",").join(selectedFiels);
+      response.setView(
+          ActionView.define(I18n.get("Set Internal Note"))
+              .model(Wizard.class.getName())
+              .add("form", "sale-order-template-set-internal-notes-wizard-form")
+              .param("popup", "true")
+              .context("_orderId", idsStr.toString())
+              .map());
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  @Transactional
+  public void setInernalnotes(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    SaleOrderRepository saleOrderRepository = Beans.get(SaleOrderRepository.class);
+    try {
+      String idsStr = (String) request.getContext().get("_orderId");
+      String internalNote = (String) request.getContext().get("internalNote");
+      String[] idsArray = idsStr.split(",");
+      for (String id : idsArray) {
+        SaleOrder saleOrder = saleOrderRepository.find(Long.parseLong(id));
+        saleOrder.setInternalNote(internalNote);
+        saleOrderRepository.save(saleOrder);
+      }
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
   }
 }

@@ -82,6 +82,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String city = address.getCityName();
     String state = address.getState();
     String addressStr = address.getAddressL4();
+    String addressStr2 = address.getAddressL3();
 
     if (pincode == null
         || pincode == ""
@@ -136,6 +137,8 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                   + company
                   + "\",\"address\":\""
                   + addressStr
+                  + "\",\"address2\":\""
+                  + addressStr2
                   + "\",\"zipCode\":\""
                   + pincode
                   + "\",\"state\":\""
@@ -241,6 +244,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String city = address.getCityName();
     String state = address.getState();
     String addressStr = address.getAddressL4();
+    String addressStr2 = address.getAddressL3();
 
     if (pincode == null
         || pincode == ""
@@ -320,6 +324,8 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               + company
               + "\",\"address\":\""
               + addressStr
+              + "\",\"address2\":\""
+              + addressStr2
               + "\",\"zipCode\":\""
               + pincode
               + "\",\"state\":\""

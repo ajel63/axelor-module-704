@@ -5,6 +5,10 @@
 
   <grid name="sale-order-quotation-grid" title="Sale quotations"
     model="com.axelor.apps.sale.db.SaleOrder" orderBy="-creationDate">
+    <toolbar>
+      <button onClick="action-sale-order-set-internal-notes-open-popup"
+        name="setInternalNoteBtn" title="Set Internal Note"/>
+    </toolbar>
     <menubar>
       <menu name="saleOrderReportsMenu" title="Reports" icon="fa-files-o" showTitle="true">
         <item name="printItem" title="Print" action="action-sale-order-method-show-sale-order"/>
@@ -44,6 +48,10 @@
 
   <grid name="sale-order-grid" title="Sale orders" model="com.axelor.apps.sale.db.SaleOrder"
     orderBy="-creationDate">
+    <toolbar>
+      <button onClick="action-sale-order-set-internal-notes-open-popup"
+        name="setInternalNoteBtn" title="Set Internal Note"/>
+    </toolbar>
     <menubar>
       <menu name="saleOrderReportsMenu" title="Reports" icon="fa-files-o" showTitle="true">
         <item name="printItem" title="Print" action="action-sale-order-method-show-sale-order"/>
@@ -195,6 +203,15 @@
         form-view="price-list-form" grid-view="price-list-grid"/>
       <button name="createOrderFromTemplateBtn" title="Create Order from this Template"
         onClick="action-sale-order-method-generate-order" readonlyIf="!currency" colSpan="4"/>
+    </panel>
+  </form>
+
+  <form name="sale-order-template-set-internal-notes-wizard-form"
+    model="com.axelor.utils.db.Wizard" title="Set Internal Note">
+    <panel name="mainPanel">
+      <field name="internalNote" type="string" title="set Internal Note" required="true"/>
+      <button name="setInternalNoteBtn" title="Set Internal Note"
+        onClick="action-sale-order-set-internal-notes"/>
     </panel>
   </form>
 
@@ -2453,5 +2470,14 @@
     <attribute name="value" for="totalShippingCost"
       expr="eval: shippingCost + extraShippingCost"/>
   </action-attrs>
+
+  <action-method name="action-sale-order-set-internal-notes-open-popup">
+    <call class="com.axelor.apps.sale.web.SaleOrderController"
+      method="setInernalnotesOpenPopup"/>
+  </action-method>
+
+  <action-method name="action-sale-order-set-internal-notes">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="setInernalnotes"/>
+  </action-method>
 
 </object-views>
