@@ -84,7 +84,8 @@
   </action-group>
 
   <action-attrs name="action-purchase-lable-attrs-set-attributes">
-    <attribute name="value" for="referenceField1" expr="eval: _parent?.saleOrderSeq"/>
+    <attribute name="value" for="billInfo" expr="eval: _parent?.saleOrderSeq"/>
+    <attribute name="value" for="referenceField1" expr="eval: _parent?.woocommerceOrder"/>
     <attribute name="value" for="referenceField2" expr="eval: _parent?.externalReference"/>
   </action-attrs>
 

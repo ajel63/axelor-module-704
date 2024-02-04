@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
-    <property name="createdBy">Eclipse BIRT Designer Version 4.7.0.v201706222054</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.9.0.v202202011729</property>
     <list-property name="userProperties">
         <structure>
             <property name="name">test</property>
@@ -3203,7 +3203,7 @@ this.height = row["logo_height"];]]></method>
                             </structure>
                         </list-property>
                         <property name="contentType">html</property>
-                        <text-property name="content"><![CDATA[Invoice #<VALUE-OF format="^">" "</VALUE-OF> <VALUE-OF>row._outer["saleOrderSeq"]</VALUE-OF> <VALUE-OF>if(row._outer["versionNumber"] > 1) {
+                        <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF> <VALUE-OF format="^">" "</VALUE-OF> <VALUE-OF>row._outer["saleOrderSeq"]</VALUE-OF> <VALUE-OF>if(row._outer["versionNumber"] > 1) {
 	"-"+row._outer["versionNumber"]
 }</VALUE-OF>]]></text-property>
                     </text>
