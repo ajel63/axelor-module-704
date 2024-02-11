@@ -751,7 +751,7 @@ public class SaleOrderController {
       }
 
       String fileLink =
-          ReportFactory.createReport("ShippingLabel.rptdesign", "ShippingLabel" + "-${date}")
+          ReportFactory.createReport("ShippingLabel.rptdesign", "PackingSlip" + "-${date}")
               .addParam("id", saleOrder.getId())
               .addParam("carrier", carrier)
               .addParam("shipService", shipService)
@@ -759,7 +759,7 @@ public class SaleOrderController {
               .getFileLink();
 
       // System.err.println(fileLink); debug
-      response.setView(ActionView.define("Shipping Label").add("html", fileLink).map());
+      response.setView(ActionView.define("Packing Slip").add("html", fileLink).map());
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }

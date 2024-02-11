@@ -752,13 +752,16 @@ where SaleOrder.id = ?
     </styles>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
-            <property name="type">a4</property>
+            <property name="type">custom</property>
             <property name="orientation">portrait</property>
-            <property name="topMargin">0.47625cm</property>
-            <property name="leftMargin">0.3958333333333333in</property>
-            <property name="rightMargin">0.15625in</property>
+            <property name="topMargin">0.1cm</property>
+            <property name="leftMargin">0.1in</property>
+            <property name="bottomMargin">0.1in</property>
+            <property name="rightMargin">0.1in</property>
+            <property name="height">6in</property>
+            <property name="width">4in</property>
             <property name="headerHeight">0in</property>
-            <property name="footerHeight">2.4cm</property>
+            <property name="footerHeight">0cm</property>
         </simple-master-page>
     </page-setup>
     <body>
@@ -781,9 +784,9 @@ where SaleOrder.id = ?
                 <cell id="4869"/>
                 <cell id="4870">
                     <label id="4727">
-                        <property name="fontSize">16pt</property>
+                        <property name="fontSize">10pt</property>
                         <property name="fontWeight">bold</property>
-                        <property name="marginBottom">10pt</property>
+                        <property name="marginBottom">5pt</property>
                         <property name="marginRight">8pt</property>
                         <property name="textAlign">right</property>
                         <text-property name="text">Packing Slip</text-property>
@@ -798,7 +801,7 @@ where SaleOrder.id = ?
                         <property name="backgroundPositionY">0%</property>
                         <property name="backgroundRepeat">repeat</property>
                         <property name="fontFamily">sans-serif</property>
-                        <property name="fontSize">11pt</property>
+                        <property name="fontSize">8pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="fontStyle">normal</property>
                         <property name="fontVariant">normal</property>
@@ -955,7 +958,7 @@ where SaleOrder.id = ?
                         <property name="backgroundPositionY">0%</property>
                         <property name="backgroundRepeat">repeat</property>
                         <property name="fontFamily">sans-serif</property>
-                        <property name="fontSize">11pt</property>
+                        <property name="fontSize">8pt</property>
                         <property name="fontWeight">normal</property>
                         <property name="fontStyle">normal</property>
                         <property name="fontVariant">normal</property>
@@ -1033,7 +1036,7 @@ where SaleOrder.id = ?
                             <cell id="4883">
                                 <label id="4888">
                                     <property name="backgroundColor">#F1F2F2</property>
-                                    <property name="fontSize">12pt</property>
+                                    <property name="fontSize">8pt</property>
                                     <property name="fontWeight">bold</property>
                                     <property name="textAlign">center</property>
                                     <text-property name="text">Order #</text-property>
@@ -1042,7 +1045,7 @@ where SaleOrder.id = ?
                             <cell id="4884">
                                 <label id="4889">
                                     <property name="backgroundColor">#F1F2F2</property>
-                                    <property name="fontSize">12pt</property>
+                                    <property name="fontSize">8pt</property>
                                     <property name="fontWeight">bold</property>
                                     <property name="textAlign">center</property>
                                     <text-property name="text">Date</text-property>
@@ -1052,6 +1055,7 @@ where SaleOrder.id = ?
                         <row id="4885">
                             <cell id="4886">
                                 <data id="4892">
+                                    <property name="fontSize">8pt</property>
                                     <property name="textAlign">center</property>
                                     <property name="dataSet">SaleOrder</property>
                                     <list-property name="boundDataColumns">
@@ -1074,6 +1078,7 @@ where SaleOrder.id = ?
                             <cell id="4887">
                                 <data id="4893">
                                     <property name="style">DateFormat</property>
+                                    <property name="fontSize">8pt</property>
                                     <property name="textAlign">center</property>
                                     <property name="dataSet">SaleOrder</property>
                                     <list-property name="boundDataColumns">
@@ -1104,7 +1109,8 @@ where SaleOrder.id = ?
             </row>
         </grid>
         <grid id="4896">
-            <property name="marginTop">10pt</property>
+            <property name="fontSize">7pt</property>
+            <property name="marginTop">5pt</property>
             <list-property name="boundDataColumns">
                 <structure>
                     <property name="name">DelAddress</property>
@@ -1114,13 +1120,10 @@ where SaleOrder.id = ?
                 </structure>
             </list-property>
             <column id="4897">
-                <property name="width">8.049295774647888cm</property>
-            </column>
-            <column id="4898">
-                <property name="width">2.486338028169014cm</property>
+                <property name="width">50%</property>
             </column>
             <column id="4899">
-                <property name="width">9.050985915492959cm</property>
+                <property name="width">50%</property>
             </column>
             <row id="4900">
                 <cell id="4901">
@@ -1134,13 +1137,12 @@ where SaleOrder.id = ?
                     <property name="borderTopWidth">thin</property>
                     <label id="4914">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">12pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">left</property>
                         <text-property name="text">Ship To:</text-property>
                     </label>
                 </cell>
-                <cell id="4902"/>
                 <cell id="4903">
                     <property name="borderBottomStyle">none</property>
                     <property name="borderLeftStyle">none</property>
@@ -1159,6 +1161,7 @@ where SaleOrder.id = ?
                     <property name="borderTopStyle">solid</property>
                     <property name="borderTopWidth">thin</property>
                     <data id="4932">
+                        <property name="fontSize">7pt</property>
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
                             <structure>
@@ -1177,7 +1180,6 @@ where SaleOrder.id = ?
                         <property name="resultSetColumn">DelAddress</property>
                     </data>
                 </cell>
-                <cell id="4906"/>
                 <cell id="4907">
                     <property name="borderBottomStyle">none</property>
                     <property name="borderLeftStyle">none</property>
@@ -1185,19 +1187,18 @@ where SaleOrder.id = ?
                     <property name="borderTopStyle">none</property>
                 </cell>
             </row>
-            <row id="5090">
-                <property name="height">0.6797183098591549cm</property>
-                <cell id="5091"/>
-                <cell id="5092"/>
-                <cell id="5093">
+            <row id="5108">
+                <property name="height">0.3cm</property>
+                <cell id="5109"/>
+                <cell id="5111">
                     <property name="borderBottomStyle">none</property>
                     <property name="borderLeftStyle">none</property>
                     <property name="borderRightStyle">none</property>
                     <property name="borderTopStyle">none</property>
                 </cell>
             </row>
-            <row id="5094">
-                <cell id="5095">
+            <row id="5112">
+                <cell id="5113">
                     <property name="borderBottomStyle">solid</property>
                     <property name="borderBottomWidth">thin</property>
                     <property name="borderLeftStyle">solid</property>
@@ -1208,22 +1209,21 @@ where SaleOrder.id = ?
                     <property name="borderTopWidth">thin</property>
                     <label id="4912">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">12pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">left</property>
                         <text-property name="text">Bill To:</text-property>
                     </label>
                 </cell>
-                <cell id="5096"/>
-                <cell id="5097">
+                <cell id="5115">
                     <property name="borderBottomStyle">none</property>
                     <property name="borderLeftStyle">none</property>
                     <property name="borderRightStyle">none</property>
                     <property name="borderTopStyle">none</property>
                 </cell>
             </row>
-            <row id="5098">
-                <cell id="5099">
+            <row id="5116">
+                <cell id="5117">
                     <property name="borderBottomStyle">solid</property>
                     <property name="borderBottomWidth">thin</property>
                     <property name="borderLeftStyle">solid</property>
@@ -1251,8 +1251,7 @@ where SaleOrder.id = ?
                         <property name="resultSetColumn">InvAddress</property>
                     </data>
                 </cell>
-                <cell id="5100"/>
-                <cell id="5101">
+                <cell id="5119">
                     <property name="borderBottomStyle">none</property>
                     <property name="borderLeftStyle">none</property>
                     <property name="borderRightStyle">none</property>
@@ -1261,29 +1260,29 @@ where SaleOrder.id = ?
             </row>
         </grid>
         <grid id="4933">
+            <property name="fontSize">7pt</property>
+            <property name="marginTop">2pt</property>
+            <property name="marginBottom">2pt</property>
             <column id="4934">
-                <property name="width">8.013521126760564cm</property>
-            </column>
-            <column id="4935">
-                <property name="width">2.575774647887324cm</property>
+                <property name="width">50%</property>
             </column>
             <column id="4936">
-                <property name="width">8.997323943661971cm</property>
+                <property name="width">50%</property>
             </column>
             <row id="4937">
                 <cell id="4938">
                     <grid id="4915">
-                        <property name="marginTop">10pt</property>
+                        <property name="marginTop">7pt</property>
                         <column id="4916">
-                            <property name="width">2.611549295774648cm</property>
+                            <property name="width">45%</property>
                         </column>
                         <column id="4917">
-                            <property name="width">5.276760563380282cm</property>
+                            <property name="width">55%</property>
                         </column>
                         <row id="4918">
                             <cell id="4919">
                                 <label id="4921">
-                                    <property name="fontSize">10pt</property>
+                                    <property name="fontSize">7pt</property>
                                     <property name="fontWeight">bold</property>
                                     <property name="textAlign">left</property>
                                     <text-property name="text">Customer:</text-property>
@@ -1312,7 +1311,6 @@ where SaleOrder.id = ?
                         </row>
                     </grid>
                 </cell>
-                <cell id="4939"/>
                 <cell id="4940">
                     <grid id="4922">
                         <property name="backgroundAttachment">scroll</property>
@@ -1343,7 +1341,7 @@ where SaleOrder.id = ?
                         <property name="borderTopColor">black</property>
                         <property name="borderTopStyle">none</property>
                         <property name="borderTopWidth">medium</property>
-                        <property name="marginTop">10pt</property>
+                        <property name="marginTop">7pt</property>
                         <property name="marginLeft">0pt</property>
                         <property name="marginBottom">0pt</property>
                         <property name="marginRight">0pt</property>
@@ -1367,10 +1365,10 @@ where SaleOrder.id = ?
                         <property name="canShrink">false</property>
                         <property name="overflow">hidden</property>
                         <column id="4923">
-                            <property name="width">3.112394366197183cm</property>
+                            <property name="width">45%</property>
                         </column>
                         <column id="4924">
-                            <property name="width">5.777605633802817cm</property>
+                            <property name="width">55%</property>
                         </column>
                         <row id="4925">
                             <cell id="4926">
@@ -1380,7 +1378,7 @@ where SaleOrder.id = ?
                                     <property name="backgroundPositionY">0%</property>
                                     <property name="backgroundRepeat">repeat</property>
                                     <property name="fontFamily">sans-serif</property>
-                                    <property name="fontSize">10pt</property>
+                                    <property name="fontSize">7pt</property>
                                     <property name="fontWeight">bold</property>
                                     <property name="fontStyle">normal</property>
                                     <property name="fontVariant">normal</property>
@@ -1428,6 +1426,7 @@ where SaleOrder.id = ?
                             </cell>
                             <cell id="4928">
                                 <data id="5034">
+                                    <property name="fontSize">7pt</property>
                                     <property name="dataSet">SaleOrder</property>
                                     <list-property name="boundDataColumns">
                                         <structure>
@@ -1452,6 +1451,7 @@ where SaleOrder.id = ?
             </row>
         </grid>
         <grid id="4943">
+            <property name="fontSize">7pt</property>
             <property name="borderBottomStyle">solid</property>
             <property name="borderBottomWidth">thin</property>
             <property name="borderLeftStyle">solid</property>
@@ -1460,7 +1460,7 @@ where SaleOrder.id = ?
             <property name="borderRightWidth">thin</property>
             <property name="borderTopStyle">solid</property>
             <property name="borderTopWidth">thin</property>
-            <property name="marginTop">10pt</property>
+            <property name="marginTop">5pt</property>
             <column id="4944"/>
             <column id="4945"/>
             <column id="4946"/>
@@ -1473,7 +1473,7 @@ where SaleOrder.id = ?
                 <cell id="4951">
                     <label id="4964">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">Sales Rep</text-property>
@@ -1482,7 +1482,7 @@ where SaleOrder.id = ?
                 <cell id="4952">
                     <label id="4970">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">Payment Terms</text-property>
@@ -1491,7 +1491,7 @@ where SaleOrder.id = ?
                 <cell id="4953">
                     <label id="4971">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">FOB Origin</text-property>
@@ -1500,7 +1500,7 @@ where SaleOrder.id = ?
                 <cell id="4954">
                     <label id="4972">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">Carrier</text-property>
@@ -1509,7 +1509,7 @@ where SaleOrder.id = ?
                 <cell id="4955">
                     <label id="4973">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">Ship Service</text-property>
@@ -1518,7 +1518,7 @@ where SaleOrder.id = ?
                 <cell id="4956">
                     <label id="4974">
                         <property name="backgroundColor">#F1F2F2</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">bold</property>
                         <property name="textAlign">center</property>
                         <text-property name="text">Date Scheduled</text-property>
@@ -1528,6 +1528,7 @@ where SaleOrder.id = ?
             <row id="4957">
                 <cell id="4958">
                     <data id="5035">
+                        <property name="fontSize">7pt</property>
                         <property name="textAlign">center</property>
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
@@ -1554,7 +1555,7 @@ where SaleOrder.id = ?
                         <property name="backgroundPositionY">0%</property>
                         <property name="backgroundRepeat">repeat</property>
                         <property name="fontFamily">sans-serif</property>
-                        <property name="fontSize">10pt</property>
+                        <property name="fontSize">7pt</property>
                         <property name="fontWeight">normal</property>
                         <property name="fontStyle">normal</property>
                         <property name="fontVariant">normal</property>
@@ -1618,6 +1619,7 @@ where SaleOrder.id = ?
                 <cell id="4960"/>
                 <cell id="4961">
                     <data id="5036">
+                        <property name="fontSize">7pt</property>
                         <property name="textAlign">center</property>
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
@@ -1639,6 +1641,7 @@ where SaleOrder.id = ?
                 </cell>
                 <cell id="4962">
                     <data id="5037">
+                        <property name="fontSize">7pt</property>
                         <property name="textAlign">center</property>
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
@@ -1661,6 +1664,7 @@ where SaleOrder.id = ?
                 <cell id="4963">
                     <data id="5032">
                         <property name="style">DateFormat</property>
+                        <property name="fontSize">7pt</property>
                         <property name="textAlign">center</property>
                         <property name="dataSet">SaleOrder</property>
                         <list-property name="boundDataColumns">
@@ -1683,7 +1687,8 @@ where SaleOrder.id = ?
             </row>
         </grid>
         <table id="4992">
-            <property name="marginTop">20pt</property>
+            <property name="fontSize">7pt</property>
+            <property name="marginTop">15pt</property>
             <property name="dataSet">SaleOrder</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -1783,12 +1788,24 @@ where SaleOrder.id = ?
                     <property name="allowExport">true</property>
                 </structure>
             </list-property>
-            <column id="5017"/>
-            <column id="5018"/>
-            <column id="5020"/>
-            <column id="5021"/>
-            <column id="5022"/>
-            <column id="5023"/>
+            <column id="5017">
+                <property name="width">5%</property>
+            </column>
+            <column id="5018">
+                <property name="width">10%</property>
+            </column>
+            <column id="5020">
+                <property name="width">25%</property>
+            </column>
+            <column id="5021">
+                <property name="width">15%</property>
+            </column>
+            <column id="5022">
+                <property name="width">20%</property>
+            </column>
+            <column id="5023">
+                <property name="width">20%</property>
+            </column>
             <header>
                 <row id="4993">
                     <property name="borderBottomStyle">solid</property>
@@ -1796,16 +1813,16 @@ where SaleOrder.id = ?
                     <cell id="4994">
                         <label id="5024">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
-                            <text-property name="text">Item</text-property>
+                            <text-property name="text">No</text-property>
                         </label>
                     </cell>
                     <cell id="4995">
                         <label id="5025">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
                             <text-property name="text">Type</text-property>
@@ -1814,7 +1831,7 @@ where SaleOrder.id = ?
                     <cell id="4997">
                         <label id="5027">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
                             <text-property name="text">Description</text-property>
@@ -1823,7 +1840,7 @@ where SaleOrder.id = ?
                     <cell id="4998">
                         <label id="5028">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
                             <text-property name="text">Unit Price</text-property>
@@ -1832,7 +1849,7 @@ where SaleOrder.id = ?
                     <cell id="4999">
                         <label id="5029">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
                             <text-property name="text">Qty</text-property>
@@ -1841,7 +1858,7 @@ where SaleOrder.id = ?
                     <cell id="5000">
                         <label id="5030">
                             <property name="backgroundColor">#F1F2F2</property>
-                            <property name="fontSize">10pt</property>
+                            <property name="fontSize">7pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">center</property>
                             <text-property name="text">total Price</text-property>
@@ -1912,13 +1929,13 @@ where SaleOrder.id = ?
                         <grid id="5051">
                             <property name="marginTop">5pt</property>
                             <column id="5052">
-                                <property name="width">2.9514084507042253cm</property>
+                                <property name="width">50%</property>
                             </column>
                             <column id="5053">
-                                <property name="width">0.8943661971830985cm</property>
+                                <property name="width">5%</property>
                             </column>
                             <column id="5054">
-                                <property name="width">2.593661971830986cm</property>
+                                <property name="width">45%</property>
                             </column>
                             <row id="5055">
                                 <property name="borderTopStyle">solid</property>
@@ -1926,7 +1943,7 @@ where SaleOrder.id = ?
                                 <cell id="5056">
                                     <label id="5075">
                                         <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">bold</property>
                                         <property name="color">#000000</property>
                                         <property name="marginTop">5pt</property>
@@ -1944,7 +1961,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">normal</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>
@@ -2000,7 +2017,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">bold</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>
@@ -2055,7 +2072,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">normal</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>
@@ -2110,7 +2127,7 @@ where SaleOrder.id = ?
                                 <cell id="5064">
                                     <label id="5080">
                                         <property name="backgroundColor">#F1F2F2</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">bold</property>
                                         <property name="textAlign">center</property>
                                         <text-property name="text">Shipping Cost</text-property>
@@ -2125,7 +2142,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">normal</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>
@@ -2185,7 +2202,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">bold</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>
@@ -2240,7 +2257,7 @@ where SaleOrder.id = ?
                                         <property name="backgroundPositionY">0%</property>
                                         <property name="backgroundRepeat">repeat</property>
                                         <property name="fontFamily">sans-serif</property>
-                                        <property name="fontSize">10pt</property>
+                                        <property name="fontSize">7pt</property>
                                         <property name="fontWeight">normal</property>
                                         <property name="fontStyle">normal</property>
                                         <property name="fontVariant">normal</property>

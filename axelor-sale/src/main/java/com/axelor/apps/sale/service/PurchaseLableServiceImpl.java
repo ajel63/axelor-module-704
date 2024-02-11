@@ -28,6 +28,7 @@ import com.axelor.apps.sale.db.ShipmentApiConfig;
 import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.repo.ShipmentApiConfigRepository;
 import com.axelor.apps.sale.db.repo.ShippServiceRepository;
+import com.axelor.common.StringUtils;
 import com.axelor.inject.Beans;
 import com.google.inject.persist.Transactional;
 import java.math.BigDecimal;
@@ -82,7 +83,8 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     String city = address.getCityName();
     String state = address.getState();
     String addressStr = address.getAddressL4();
-    String addressStr2 = address.getAddressL3();
+    String addressStr2 =
+        (StringUtils.isBlank(address.getAddressL3())) ? "" : address.getAddressL3();
 
     if (pincode == null
         || pincode == ""
