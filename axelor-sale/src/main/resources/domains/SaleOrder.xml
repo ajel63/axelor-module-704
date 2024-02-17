@@ -192,16 +192,17 @@
     <string name="woocommerceDomain" title="Woocommerce Domain"/>
     <boolean name="isDeleted" title="Is Deleted"/>
 
-    <decimal name="amountToPay" title="Amount to Pay"/>
-    <decimal name="shippingCost" title="Shipping Cost"/>
-    <decimal name="extraShippingCost" title="Extra Shipping Cost"/>
-    <decimal name="totalShippingCost" title="Total Shipping Cost"/>
+    <decimal name="amountToPay" title="Amount to Pay" scale="2" precision="20"/>
+    <decimal name="shippingCost" title="Shipping Cost" scale="2" precision="20"/>
+    <decimal name="extraShippingCost" title="Extra Shipping Cost" scale="2" precision="20"/>
+    <decimal name="totalShippingCost" title="Total Shipping Cost" scale="2" precision="20"/>
     <string name="shippingFromAddress" title="Shipping From address" large="true"
       multiline="true"/>
     <one-to-many ref="com.axelor.apps.sale.db.StripePaymentLine" name="stripePayment"
       title="Stripe Payment" mappedBy="saleOrder"/>
-    <decimal name="stripePaidAmount" title="Stripe Paid Amount"/>
-    <decimal name="stripeRefundedAmount" title="Stripe Refunded Amount"/>
+    <decimal name="stripePaidAmount" title="Stripe Paid Amount" scale="2" precision="20"/>
+    <decimal name="stripeRefundedAmount" title="Stripe Refunded Amount" scale="2"
+      precision="20"/>
 
     <!-- Shipping details -->
 
@@ -210,9 +211,9 @@
     <string name="city" title="City"/>
     <string name="postalCode" title="postal Code"/>
 
-    <decimal name="weight" title="Weight"/>
-    <decimal name="weightOl" title="OL"/>
-    <decimal name="weightOz" title="OZ"/>
+    <decimal name="weight" title="Weight" scale="2" precision="20"/>
+    <decimal name="weightOl" title="OL" scale="2" precision="20"/>
+    <decimal name="weightOz" title="OZ" scale="2" precision="20"/>
     <many-to-one name="purchaseLable" ref="com.axelor.apps.sale.db.PurchaseLabel"
       title="Purchase Lable"/>
     <many-to-one name="shippService" ref="com.axelor.apps.sale.db.ShippService"
@@ -220,12 +221,13 @@
     <many-to-one name="shippPackage" ref="com.axelor.apps.sale.db.ShippPackage"
       title="Shipping Package"/>
     <string name="trackingNumber"/>
-    <decimal name="sizeL" title="L"/>
-    <decimal name="sizeW" title="W"/>
-    <decimal name="sizeH" title="H"/>
+    <decimal name="sizeL" title="L" scale="2" precision="20"/>
+    <decimal name="sizeW" title="W" scale="2" precision="20"/>
+    <decimal name="sizeH" title="H" scale="2" precision="20"/>
     <string name="confirmation" title="Confirmation"/>
     <string name="insurance" title="Insurance"/>
     <boolean name="isPurchaseLabelConfirm"/>
+    <string name="lableUrl" large="true" title="URL"/>
 
     <one-to-many ref="com.axelor.apps.sale.db.ShipmentLine" name="shipment"
       title="Shipments" mappedBy="saleOrder"/>

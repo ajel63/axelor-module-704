@@ -280,13 +280,19 @@
         onClick="save,action-sale-order-view-reports-wizard"/>
       <button name="sendByEmailBtn" title="Send email" icon="fa-envelope"
         onClick="action-send-by-email-with-template"/>
-      <button name="shippingLabelBtn" title="Print Label" icon="fa-print"
-        onClick="save,action-sale-order-method-print-shippinf-label"/>
       <button name="deleteBtn" title="Delete" icon="fa-delete"
         prompt="Are you sure you want to cancle and delete sale order?"
         onClick="save,action-sale-order-attrs-validate-cancle-and-delete-sale-order,action-sale-order-attrs-cancle-and-delete-sale-order,save,close"/>
     </toolbar>
     <menubar>
+      <menu name="saleOrderPackingSlipMenu" title="Pack Slip" icon="fa-print">
+        <item name="shippingLabelItem" title="Packing Slip" hideIf="clientPartner == null"
+          action="save,action-sale-order-method-print-shipping-label"/>
+        <item name="shippingLabeWithoutCostAndBilltolItem"
+          title="Packing Slip without cost and Bill TO" hideIf="clientPartner == null"
+          action="save,action-sale-order-method-print-shipping-label-without-cost-and-bill-to"/>
+      </menu>
+
       <menu name="saleOrderToolsMenu" title="Tools">
         <item name="defineAsTemplateItem" title="Define as template"
           hideIf="clientPartner == null" action="save,action-sale-order-method-generate-template"/>
@@ -731,12 +737,16 @@
         <field name="sizeH" colSpan="2"/>
         <field name="purchaseLable" colSpan="2" canEdit="true" canNew="true" canSelect="true"
           readonlyIf="isPurchaseLabelConfirm" title="Create Purchase Label"
-          onChange="action-sale-order-attrs-set-purchase-label-confirm-status,action-sale-order-attrs-set-shipping-cost,action-sale-order-attrs-calculate-total-shipping-cost"/>
+          onChange="action-sale-order-group-on-chnage-purchase-order"/>
         <field name="isPurchaseLabelConfirm" colSpan="2" title="Is Lable Confirm"
           hidden="false"/>
-        <button onClick="save" name="confirmBtn"
-          prompt="Are you sure you want to cancel Shipping lable?" title="Cancel Shipping Lable"
-          colSpan="2"/>
+        <field name="lableUrl" colSpan="2" readonly="true">
+          <viewer depends="lableUrl"><![CDATA[
+		      <div>
+		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
+		      </div>
+		    ]]></viewer>
+        </field>
 
         <field name="shippService" colSpan="3" canEdit="true" canNew="true" canSelect="true"
           grid-view="shipp-service-grid" form-view="shipp-service-form"/>
@@ -753,7 +763,6 @@
           grid-view="shipment-grid" form-view="shipment-form" colSpan="12"/>
 
       </panel>
-
 
     </panel-tabs>
     <panel name="attrsPanel">
@@ -2433,17 +2442,35 @@
     <error message="Please enter amount for payment" if="amountToPay == 0"/>
   </action-validate>
 
-  <action-method name="action-sale-order-method-print-shippinf-label">
+  <action-method name="action-sale-order-method-print-shipping-label">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="printShippingLabel"/>
+  </action-method>
+
+  <action-method
+    name="action-sale-order-method-print-shipping-label-without-cost-and-bill-to">
+    <call class="com.axelor.apps.sale.web.SaleOrderController"
+      method="printShippingLabelWithoutBillTo"/>
   </action-method>
 
   <action-method name="action-sale-order-method-calculate-total-weight">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="calculateTotalWeight"/>
   </action-method>
 
+  <action-group name="action-sale-order-group-on-chnage-purchase-order">
+    <action name="action-sale-order-attrs-set-purchase-label-confirm-status"/>
+    <action name="action-sale-order-attrs-set-shipping-cost"/>
+    <action name="action-sale-order-attrs-calculate-total-shipping-cost"/>
+    <action name="action-sale-order-method-print-lable-on-confirm"/>
+  </action-group>
+
+  <action-method name="action-sale-order-method-print-lable-on-confirm">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="printPurchaseLable"/>
+  </action-method>
+
   <action-attrs name="action-sale-order-attrs-set-purchase-label-confirm-status">
     <attribute name="value" for="isPurchaseLabelConfirm"
       expr="eval: purchaseLable?.isShippingConfirm"/>
+    <attribute name="value" for="lableUrl" expr="eval: purchaseLable?.lableUrl"/>
   </action-attrs>
 
   <action-attrs name="action-sale-order-attrs-set-address-from-company">

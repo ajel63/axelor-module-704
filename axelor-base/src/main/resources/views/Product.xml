@@ -498,16 +498,17 @@
           <field name="netMass" requiredIf="usedInDEB"/>
         </panel>
         <panel name="articleDimensionPanel" title="Article dimension" colSpan="6">
-          <field name="lengthUnit" canEdit="false" domain="self.unitTypeSelect = 2"/>
-          <field name="length" readonlyIf="diameter > 0"
+          <field name="lengthUnit" canEdit="false" domain="self.unitTypeSelect = 2"
+            x-scale="2"/>
+          <field name="length" readonlyIf="diameter > 0" x-scale="2"
             onChange="action-product-record-calculate-volume-length"/>
-          <field name="width" readonlyIf="diameter > 0"
+          <field name="width" readonlyIf="diameter > 0" x-scale="2"
             onChange="action-product-record-calculate-volume-length"/>
-          <field name="height"
+          <field name="height" x-scale="2"
             onChange="action-product-record-calculate-volume-length, action-product-record-calculate-volume-diameter"/>
-          <field name="diameter" readonlyIf="length > 0 || width > 0"
+          <field name="diameter" readonlyIf="length > 0 || width > 0" x-scale="2"
             onChange="action-product-record-calculate-volume-diameter"/>
-          <field name="articleVolume" readonly="true"/>
+          <field name="articleVolume" x-scale="2" readonly="true"/>
         </panel>
         <panel name="DEBPanel" if-module="axelor-stock" if="__config__.app.isApp('stock')">
           <field name="usedInDEB" title="Used in DEB"/>

@@ -765,6 +765,40 @@ public class SaleOrderController {
     }
   }
 
+  public void printShippingLabelWithoutBillTo(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+
+      PurchaseLabel label = saleOrder.getPurchaseLable();
+
+      String carrier = "NONE";
+      String shipService = "NONE";
+
+      if (label != null && label.getIsShippingConfirm()) {
+        for (PurchaseLabelRateLine rateLine : label.getPurchaseLabelRateLine()) {
+          if (rateLine.getIsServiceSelected()) {
+            carrier = rateLine.getCarrier();
+            shipService = rateLine.getCarrierService();
+          }
+        }
+      }
+
+      String fileLink =
+          ReportFactory.createReport(
+                  "ShippingLabel_Without_BillToAndPrice.rptdesign", "PackingSlip" + "-${date}")
+              .addParam("id", saleOrder.getId())
+              .addParam("carrier", carrier)
+              .addParam("shipService", shipService)
+              .generate()
+              .getFileLink();
+
+      // System.err.println(fileLink); debug
+      response.setView(ActionView.define("Packing Slip").add("html", fileLink).map());
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
   public void calculateTotalWeight(ActionRequest request, ActionResponse response) {
     SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
     BigDecimal grossMass = new BigDecimal(0);
@@ -828,6 +862,40 @@ public class SaleOrderController {
         saleOrder.setInternalNote(internalNote);
         saleOrderRepository.save(saleOrder);
       }
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
+
+  public void printPurchaseLable(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+    if (!saleOrder.getIsPurchaseLabelConfirm()) {
+      return;
+    }
+    try {
+      PurchaseLabel label = saleOrder.getPurchaseLable();
+      String carrier = "NONE";
+      String shipService = "NONE";
+
+      if (label != null && label.getIsShippingConfirm()) {
+        for (PurchaseLabelRateLine rateLine : label.getPurchaseLabelRateLine()) {
+          if (rateLine.getIsServiceSelected()) {
+            carrier = rateLine.getCarrier();
+            shipService = rateLine.getCarrierService();
+          }
+        }
+      }
+
+      String fileLink =
+          ReportFactory.createReport("ShippingLabel.rptdesign", "PackingSlip" + "-${date}")
+              .addParam("id", saleOrder.getId())
+              .addParam("carrier", carrier)
+              .addParam("shipService", shipService)
+              .generate()
+              .getFileLink();
+
+      response.setView(ActionView.define("Packing Slip").add("html", fileLink).map());
     } catch (Exception e) {
       TraceBackService.trace(response, e);
     }
