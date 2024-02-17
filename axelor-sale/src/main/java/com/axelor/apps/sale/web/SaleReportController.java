@@ -41,10 +41,10 @@ public class SaleReportController {
     String reportName = saleReport.getReportType();
 
     String idsStr = "";
-    List<SaleOrder> saleOrderList = Beans.get(SaleOrderRepository.class).all().fetch();
-    List<Long> idList = saleOrderList.stream().map(SaleOrder::getId).collect(Collectors.toList());
-    idsStr = Joiner.on(",").join(idList);
-    System.err.println(idsStr);
+//    List<SaleOrder> saleOrderList = Beans.get(SaleOrderRepository.class).all().fetch();
+//    List<Long> idList = saleOrderList.stream().map(SaleOrder::getId).collect(Collectors.toList());
+//    idsStr = Joiner.on(",").join(idList);
+//    System.err.println(idsStr);
 
     LocalDate fromDate = saleReport.getFromDate();
     LocalDate toDate = saleReport.getToDate();

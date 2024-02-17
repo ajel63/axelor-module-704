@@ -108,10 +108,11 @@
   </selection>
 
   <selection name="sale.z.dental.report.type.select">
-    <option value="SaleByMonth">Product Sale By Dates</option>
+    <option value="ProductSaleByDates">Product Sale By Dates</option>
     <option value="CustomerPurchaseHistory">Customer Purchase History</option>
     <option value="SaleBySalesPerson">Sale By Sales Person</option>
     <option value="SalesOrderSummary">Sales Order Summary</option>
+    <option value="SalesOrderSummaryByStatus">Sales Order Summary By Status</option>
   </selection>
 
   <selection name="sale.order.z.dental.order.type.select">
