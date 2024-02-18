@@ -274,11 +274,29 @@
 
   <dashboard name="sale.dashboard.z.dental.reports.view" title="ZDental Report">
     <dashlet action="dashlet.sales.turnover.z.dental" height="350" colSpan="12"/>
+    <dashlet action="dashlet.chart.sale.order.summary.status.select.z.dental" height="350"
+      colSpan="6"/>
+    <dashlet action="dashlet.chart.sale.order.count.by.status.select.z.dental" height="350"
+      colSpan="6"/>
   </dashboard>
 
   <action-view title="Sale turnover" model="com.axelor.apps.sale.db.SaleOrder"
     name="dashlet.sales.turnover.z.dental">
     <view type="chart" name="chart.sale.turnover.ytd.vs.previous.years.by.month2"/>
+    <context name="todayDate" expr="eval:__config__.date"/>
+  </action-view>
+
+  <action-view title="Sale Order Net Sale Summary by Status"
+    model="com.axelor.apps.sale.db.SaleOrder"
+    name="dashlet.chart.sale.order.summary.status.select.z.dental">
+    <view type="chart" name="chart.sale.order.summary.status.select.z.dental"/>
+    <context name="todayDate" expr="eval:__config__.date"/>
+  </action-view>
+
+  <action-view title="Sale Order Count by Status"
+    model="com.axelor.apps.sale.db.SaleOrder"
+    name="dashlet.chart.sale.order.count.by.status.select.z.dental">
+    <view type="chart" name="chart.sale.order.count.by.status.select.z.dental"/>
     <context name="todayDate" expr="eval:__config__.date"/>
   </action-view>
 

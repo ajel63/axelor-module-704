@@ -20,18 +20,12 @@ package com.axelor.apps.sale.web;
 
 import com.axelor.apps.ReportFactory;
 import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.SaleReport;
-import com.axelor.apps.sale.db.repo.SaleOrderRepository;
-import com.axelor.inject.Beans;
 import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
-import com.google.common.base.Joiner;
 import com.google.inject.Singleton;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Singleton
 public class SaleReportController {
@@ -41,10 +35,11 @@ public class SaleReportController {
     String reportName = saleReport.getReportType();
 
     String idsStr = "";
-//    List<SaleOrder> saleOrderList = Beans.get(SaleOrderRepository.class).all().fetch();
-//    List<Long> idList = saleOrderList.stream().map(SaleOrder::getId).collect(Collectors.toList());
-//    idsStr = Joiner.on(",").join(idList);
-//    System.err.println(idsStr);
+    //    List<SaleOrder> saleOrderList = Beans.get(SaleOrderRepository.class).all().fetch();
+    //    List<Long> idList =
+    // saleOrderList.stream().map(SaleOrder::getId).collect(Collectors.toList());
+    //    idsStr = Joiner.on(",").join(idList);
+    //    System.err.println(idsStr);
 
     LocalDate fromDate = saleReport.getFromDate();
     LocalDate toDate = saleReport.getToDate();

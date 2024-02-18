@@ -913,4 +913,72 @@
     <config name="xFormat" value="MM-YYYY"/>
   </chart>
 
+  <chart onInit="action.sale.chart.set.dates.this.last.year"
+    name="chart.sale.order.summary.status.select.z.dental"
+    title="Sale Order Net Sale Summary br Status">
+    <search-fields>
+      <field name="toDateLY" type="date" title="Year 1 To Date" x-required="true"/>
+      <field name="toDate" type="date" title="Year 2 To Date" x-required="true"/>
+    </search-fields>
+    <dataset type="sql">
+      SELECT
+      SUM(self.ex_tax_total) AS _total_net_sale,
+      CASE
+      WHEN
+      self.status_select = 1 THEN 'Draft Quotation'
+      WHEN self.status_select = 2 THEN 'Finalized
+      Quotation'
+      WHEN self.status_select = 3 THEN 'Order Confirmed'
+      WHEN self.status_select = 4 THEN
+      'Order Completed'
+      WHEN self.status_select = 5 THEN 'canceled'
+      ELSE 'N/A'
+      END AS _status
+
+      FROM
+      sale_sale_order AS self
+      WHERE
+      self.creation_date BETWEEN DATE(:toDateLY) AND DATE(:toDate)
+      GROUP
+      BY
+      _status
+    </dataset>
+    <category key="_status" type="text" title="Status"/>
+    <series key="_total_net_sale" type="bar" title="Net Sale without Tax"/>
+  </chart>
+
+  <chart onInit="action.sale.chart.set.dates.this.last.year"
+    name="chart.sale.order.count.by.status.select.z.dental" title="Sale Order count by Status">
+    <search-fields>
+      <field name="toDateLY" type="date" title="Year 1 To Date" x-required="true"/>
+      <field name="toDate" type="date" title="Year 2 To Date" x-required="true"/>
+    </search-fields>
+    <dataset type="sql">
+      SELECT
+      COUNT(self.status_select) AS _status_count,
+      CASE
+      WHEN
+      self.status_select = 1 THEN 'Draft Quotation'
+      WHEN self.status_select = 2 THEN 'Finalized
+      Quotation'
+      WHEN self.status_select = 3 THEN 'Order Confirmed'
+      WHEN self.status_select = 4 THEN
+      'Order Completed'
+      WHEN self.status_select = 5 THEN 'canceled'
+      ELSE 'N/A'
+      END AS _status
+
+      FROM
+      sale_sale_order AS self
+      WHERE
+      self.creation_date BETWEEN DATE(:toDateLY) AND DATE(:toDate)
+      GROUP
+      BY
+      _status
+    </dataset>
+    <category key="_status" type="number" title="Status"/>
+    <series key="_status_count" type="bar" title="TurnOver"/>
+    <config name="xFormat" value="MM-YYYY"/>
+  </chart>
+
 </object-views>
