@@ -915,7 +915,7 @@
 
   <chart onInit="action.sale.chart.set.dates.this.last.year"
     name="chart.sale.order.summary.status.select.z.dental"
-    title="Sale Order Net Sale Summary br Status">
+    title="Sale Order Net Sale Summary by Status">
     <search-fields>
       <field name="toDateLY" type="date" title="Year 1 To Date" x-required="true"/>
       <field name="toDate" type="date" title="Year 2 To Date" x-required="true"/>

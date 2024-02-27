@@ -113,6 +113,7 @@
     <option value="SaleBySalesPerson">Sale By Sales Person</option>
     <option value="SalesOrderSummary">Sales Order Summary</option>
     <option value="SalesOrderSummaryByStatus">Sales Order Summary By Status</option>
+    <option value="SalesOrderTax">Sales Order Tax</option>
   </selection>
 
   <selection name="sale.order.z.dental.order.type.select">
