@@ -28,6 +28,11 @@
     <one-to-many ref="com.axelor.apps.sale.db.PurchaseLabelRateLine"
       name="purchaseLabelRateLine" title="Shipments" mappedBy="purchaseLable"/>
 
+    <boolean name="isMultipalShipment" title="Is Multipal Shipment"/>
+    <one-to-many ref="com.axelor.apps.sale.db.MultiShipmentPackageLine"
+      name="multiShipmentPackageLine" title="Multiple Shipment Package" mappedBy="purchaseLable"/>
+    <decimal name="totalMultiShipmentCost" title="Total Multi Shipment Cost"/>
+
   </entity>
 
 </domain-models>

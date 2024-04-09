@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="multi-shipment-package-line-grid" title="Multi Shipment Package Line"
+    model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
+    <field name="totalPkg"/>
+    <field name="weight"/>
+    <field name="length"/>
+    <field name="width"/>
+    <field name="height"/>
+    <field name="shipmentCost"/>
+  </grid>
+
+  <form name="multi-shipment-package-line-form" title="Multi Shipment Package Line"
+    model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
+    <panel name="packPanel">
+      <field name="totalPkg"/>
+      <field name="weight"/>
+      <field name="length"/>
+      <field name="width"/>
+      <field name="height"/>
+      <field name="shipmentCost"/>
+    </panel>
+  </form>
+
+
+</object-views>

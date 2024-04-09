@@ -18,7 +18,8 @@
     onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel">
     <panel name="packPanel">
       <field name="billInfo" colSpan="4"/>
-      <spacer colSpan="8"/>
+      <spacer colSpan="4"/>
+      <field name="isMultipalShipment" colSpan="4"/>
       <field name="referenceField1" colSpan="4"/>
       <spacer colSpan="8"/>
       <field name="referenceField2" colSpan="4"/>
@@ -53,6 +54,15 @@
       <field name="selectedRate" colSpan="3" readonly="true"/>
       <field name="isShippingConfirm" colSpan="3" readonly="true"/>
     </panel>
+
+    <panel>
+      <panel-related field="multiShipmentPackageLine"
+        name="multiShipmentPackageLinePanel" colSpan="12"
+        grid-view="multi-shipment-package-line-grid" form-view="multi-shipment-package-line-form"/>
+
+      <field name="totalMultiShipmentCost" colSpan="4"/>
+    </panel>
+
 
     <panel>
       <field name="trackingNumber" colSpan="6" readonly="true"/>

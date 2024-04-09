@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="sale" package="com.axelor.apps.sale.db"/>
+
+  <entity name="MultiShipmentPackageLine">
+
+    <decimal name="totalPkg" title="Total Pkg."/>
+    <decimal name="weight" title="Weight"/>
+    <decimal name="length" title="Length"/>
+    <decimal name="width" title="Width"/>
+    <decimal name="height" title="Height"/>
+    <decimal name="shipmentCost" title="Shipment Cost"/>
+
+    <many-to-one name="purchaseLable" ref="com.axelor.apps.sale.db.PurchaseLabel"
+      title="Purchase Lable"/>
+
+  </entity>
+
+</domain-models>
