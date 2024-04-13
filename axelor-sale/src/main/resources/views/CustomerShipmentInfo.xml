@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
+
+  <grid name="customer-shipment-info-grid" title="Customer Shipment Info"
+    model="com.axelor.apps.sale.db.CustomerShipmentInfo">
+    <field name="billingName"/>
+    <field name="accountNumber"/>
+    <field name="customer"/>
+    <field name="carrier"/>
+    <field name="shipmentBillingAddress"/>
+    <field name="shippingFromAddress"/>
+    <field name="billingZip"/>
+  </grid>
+
+  <form name="customer-shipment-info-form" title="Customer Shipment Info"
+    model="com.axelor.apps.sale.db.CustomerShipmentInfo">
+    <panel name="servicePanel">
+      <field name="billingName"/>
+      <field name="accountNumber"/>
+      <field name="customer" form-view="partner-customer-form"
+        grid-view="partner-customer-grid"
+        onChange="action-customer-shipment-info-method-select-invoice-address-from-partner"/>
+      <field name="carrier" canNew="true" canEdit="true"/>
+      <field name="shipmentBillingAddress" canNew="true" canEdit="true"/>
+      <field name="shippingFromAddress" canNew="true" canEdit="true"/>
+      <field name="billingZip"/>
+    </panel>
+  </form>
+
+  <action-method
+    name="action-customer-shipment-info-method-select-invoice-address-from-partner">
+    <call class="com.axelor.apps.sale.web.CustomerShipmentInfoController"
+      method="setCustomerInvoiceAddress"/>
+  </action-method>
+
+</object-views>

@@ -18,20 +18,21 @@
     onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel">
     <panel name="packPanel">
       <field name="billInfo" colSpan="4"/>
-      <spacer colSpan="4"/>
+      <field name="labelFileType" colSpan="4"/>
       <field name="isMultipalShipment" colSpan="4"/>
       <field name="referenceField1" colSpan="4"/>
-      <spacer colSpan="8"/>
       <field name="referenceField2" colSpan="4"/>
-      <spacer colSpan="8"/>
+      <spacer colSpan="4"/>
       <field name="carrier" colSpan="4"/>
       <field name="shipPackage" colSpan="4"/>
       <spacer colSpan="4"/>
-      <field name="labelFileType" colSpan="4"/>
-      <spacer colSpan="8"/>
       <field name="phoneNumber" colSpan="4"/>
-      <spacer colSpan="8"/>
       <field name="emailAddress" colSpan="4"/>
+      <spacer colSpan="4"/>
+
+      <field name="customerShipmentInfo" colSpan="4" canEdit="true" canNew="true"/>
+      <field name="shippingFromAddress" colSpan="4" canEdit="true" canNew="true"/>
+
     </panel>
 
     <panel>
@@ -62,7 +63,6 @@
 
       <field name="totalMultiShipmentCost" colSpan="4"/>
     </panel>
-
 
     <panel>
       <field name="trackingNumber" colSpan="6" readonly="true"/>

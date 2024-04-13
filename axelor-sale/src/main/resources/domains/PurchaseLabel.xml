@@ -33,6 +33,11 @@
       name="multiShipmentPackageLine" title="Multiple Shipment Package" mappedBy="purchaseLable"/>
     <decimal name="totalMultiShipmentCost" title="Total Multi Shipment Cost"/>
 
+    <many-to-one name="customerShipmentInfo"
+      ref="com.axelor.apps.sale.db.CustomerShipmentInfo" title="Customer Shipment Info"/>
+
+    <many-to-one name="shippingFromAddress" ref="com.axelor.apps.base.db.Address"
+      title="Shipping from address"/>
   </entity>
 
 </domain-models>

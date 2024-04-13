@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://axelor.com/xml/ns/domain-models http://axelor.com/xml/ns/domain-models/domain-models_6.1.xsd">
+
+  <module name="sale" package="com.axelor.apps.sale.db"/>
+
+  <entity name="CustomerShipmentInfo">
+
+    <string name="billingName" title="Billing Name" namecolumn="true"/>
+    <many-to-one name="customer" ref="com.axelor.apps.base.db.Partner" title="Customer"/>
+    <many-to-one name="carrier" ref="com.axelor.apps.sale.db.ShippService"
+      title="Carrier"/>
+    <string name="accountNumber" title="Account Number"/>
+    <string name="billingZip" title="Billing Zip"/>
+
+    <many-to-one name="shippingFromAddress" ref="com.axelor.apps.base.db.Address"
+      title="Shipping from address"/>
+
+    <many-to-one name="shipmentBillingAddress" ref="com.axelor.apps.base.db.Address"
+      title="Shipment Billing Address"/>
+
+  </entity>
+
+</domain-models>

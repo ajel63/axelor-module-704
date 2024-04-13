@@ -192,6 +192,15 @@
   <menuitem name="sc-root-sale-conf" parent="sc-root-sale" title="Configuration"
     order="1400" icon="fa-cog"/>
 
+  <menuitem name="sale-conf-customer-billing-info" parent="sc-root-sale-conf"
+    title="Customer Billing Info" action="sale.conf.customer.billing.info" order="199"/>
+
+  <action-view name="sale.conf.customer.billing.info" title="Customer Billing Info"
+    model="com.axelor.apps.sale.db.CustomerShipmentInfo">
+    <view type="grid" name="customer-shipment-info-grid"/>
+    <view type="form" name="customer-shipment-info-form"/>
+  </action-view>
+
   <menuitem name="sale-conf-cancelreason" parent="sc-root-sale-conf" title="Cancel Reasons"
     action="sale.conf.cancelreason" order="200"/>
 
