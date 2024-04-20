@@ -38,6 +38,18 @@
 
     <many-to-one name="shippingFromAddress" ref="com.axelor.apps.base.db.Address"
       title="Shipping from address"/>
+    <many-to-one name="shippingToAddress" ref="com.axelor.apps.base.db.Address"
+      title="Shipping To address"/>
+
+    <decimal name="weight" title="Weight" scale="2" precision="20"/>
+    <decimal name="sizeL" title="L" scale="2" precision="20"/>
+    <decimal name="sizeW" title="W" scale="2" precision="20"/>
+    <decimal name="sizeH" title="H" scale="2" precision="20"/>
+    <integer name="totalPackage" title="Total Package"/>
+
+    <many-to-one name="saleOrder" ref="com.axelor.apps.sale.db.SaleOrder"
+      title="Sale Order"/>
+
   </entity>
 
 </domain-models>

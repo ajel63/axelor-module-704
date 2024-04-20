@@ -216,6 +216,8 @@
     <decimal name="weightOz" title="OZ" scale="2" precision="20"/>
     <many-to-one name="purchaseLable" ref="com.axelor.apps.sale.db.PurchaseLabel"
       title="Purchase Lable"/>
+    <one-to-many name="purchaseLableList" ref="com.axelor.apps.sale.db.PurchaseLabel"
+      title="Purchase Lable List" mappedBy="saleOrder"/>
     <many-to-one name="shippService" ref="com.axelor.apps.sale.db.ShippService"
       title="Carrier"/>
     <many-to-one name="shippPackage" ref="com.axelor.apps.sale.db.ShippPackage"

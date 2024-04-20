@@ -5,23 +5,15 @@
 
   <grid name="multi-shipment-package-line-grid" title="Multi Shipment Package Line"
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
-    <field name="totalPkg"/>
-    <field name="weight"/>
-    <field name="length"/>
-    <field name="width"/>
-    <field name="height"/>
-    <field name="shipmentCost"/>
+    <field name="trackingNumber"/>
+    <field name="lableUrl"/>
   </grid>
 
   <form name="multi-shipment-package-line-form" title="Multi Shipment Package Line"
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
     <panel name="packPanel">
-      <field name="totalPkg"/>
-      <field name="weight"/>
-      <field name="length"/>
-      <field name="width"/>
-      <field name="height"/>
-      <field name="shipmentCost"/>
+      <field name="trackingNumber"/>
+      <field name="lableUrl"/>
     </panel>
   </form>
 

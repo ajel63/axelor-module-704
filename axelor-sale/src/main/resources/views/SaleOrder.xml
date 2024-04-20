@@ -759,9 +759,12 @@
         <field name="confirmation" title="BOL Number"/>
         <field name="insurance"/>
 
+        <panel-related field="purchaseLableList" name="purchaseLableList"
+          title="Purchase Lable List" grid-view="shipment-purchase-label-grid"
+          form-view="shipment-purchase-label-form" colSpan="12"/>
+
         <panel-related field="shipment" name="shipment" title="Shipment"
           grid-view="shipment-grid" form-view="shipment-form" colSpan="12"/>
-
       </panel>
 
     </panel-tabs>

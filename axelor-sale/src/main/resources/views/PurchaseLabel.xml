@@ -22,7 +22,7 @@
       <field name="isMultipalShipment" colSpan="4"/>
       <field name="referenceField1" colSpan="4"/>
       <field name="referenceField2" colSpan="4"/>
-      <spacer colSpan="4"/>
+      <field name="totalPackage" colSpan="4" min="1"/>
       <field name="carrier" colSpan="4"/>
       <field name="shipPackage" colSpan="4"/>
       <spacer colSpan="4"/>
@@ -30,12 +30,18 @@
       <field name="emailAddress" colSpan="4"/>
       <spacer colSpan="4"/>
 
-      <field name="customerShipmentInfo" colSpan="4" canEdit="true" canNew="true"/>
+      <field name="shippingToAddress" colSpan="4" canEdit="true" canNew="true"/>
       <field name="shippingFromAddress" colSpan="4" canEdit="true" canNew="true"/>
+      <spacer colSpan="4"/>
+      <field name="customerShipmentInfo" colSpan="4" canEdit="true" canNew="true"/>
 
     </panel>
 
     <panel>
+      <field name="weight" colSpan="3"/>
+      <field name="sizeL" colSpan="3"/>
+      <field name="sizeW" colSpan="3"/>
+      <field name="sizeH" colSpan="3"/>
       <button onClick="save,action-purchase-lable-methos-get-shipment-rates,save"
         readonlyIf="isShippingConfirm" name="getshippingRateBtn" title="Get Shipment Rates"/>
     </panel>
@@ -49,19 +55,16 @@
         colSpan="3" readonlyIf="isShippingConfirm" name="confirmBtn"
         prompt="Confirm Service selection?" title="Confirm Shipping Service"/>
 
-      <button onClick="save,close" name="confirmBtn"
-        prompt="Are you sure you want to cancel Shipping lable?" title="Cancel Shipping Lable"
-        colSpan="3"/>
       <field name="selectedRate" colSpan="3" readonly="true"/>
+      <field name="totalMultiShipmentCost" colSpan="3"/>
       <field name="isShippingConfirm" colSpan="3" readonly="true"/>
+      
     </panel>
 
     <panel>
       <panel-related field="multiShipmentPackageLine"
         name="multiShipmentPackageLinePanel" colSpan="12"
         grid-view="multi-shipment-package-line-grid" form-view="multi-shipment-package-line-form"/>
-
-      <field name="totalMultiShipmentCost" colSpan="4"/>
     </panel>
 
     <panel>
@@ -97,6 +100,11 @@
     <attribute name="value" for="billInfo" expr="eval: _parent?.saleOrderSeq"/>
     <attribute name="value" for="referenceField1" expr="eval: _parent?.woocommerceOrder"/>
     <attribute name="value" for="referenceField2" expr="eval: _parent?.externalReference"/>
+    <attribute name="value" for="weight" expr="eval: _parent?.weight"/>
+    <attribute name="value" for="sizeL" expr="eval: _parent?.sizeL"/>
+    <attribute name="value" for="sizeW" expr="eval: _parent?.sizeW"/>
+    <attribute name="value" for="sizeH" expr="eval: _parent?.sizeH"/>
+    <attribute name="value" for="shippingToAddress" expr="eval: _parent?.deliveryAddress"/>
   </action-attrs>
 
   <action-method name="action-purchase-lable-method-set-attributes">
