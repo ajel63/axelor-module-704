@@ -19,19 +19,19 @@
 package com.axelor.apps.sale.service;
 
 import com.axelor.apps.base.AxelorException;
+import com.axelor.apps.sale.db.MultiShipmentPackageLine;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.ShippService;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 public interface PurchaseLableService {
   List<PurchaseLabelRateLine> getShipmentRates(PurchaseLabel purchaseLabel, SaleOrder saleOrder)
       throws AxelorException;
 
-  public Map<String, String> confirmShippingService(
+  public List<MultiShipmentPackageLine> confirmShippingService(
       PurchaseLabel purchaseLabel, SaleOrder saleOrder) throws AxelorException;
 
   public ShippService setSelectedCarrier(PurchaseLabel purchaseLabel);

@@ -16,13 +16,13 @@
 
   <form name="shipment-purchase-label-form" title="Purchase Label" canDelete="false"
     onNew="action-purchase-lable-group-on-new" model="com.axelor.apps.sale.db.PurchaseLabel">
-    <panel name="packPanel">
+    <panel name="packPanel" readonlyIf="isShippingConfirm">
       <field name="billInfo" colSpan="4"/>
       <field name="labelFileType" colSpan="4"/>
-      <field name="isMultipalShipment" colSpan="4"/>
+      <field name="totalPackage" colSpan="4" min="1"/>
       <field name="referenceField1" colSpan="4"/>
       <field name="referenceField2" colSpan="4"/>
-      <field name="totalPackage" colSpan="4" min="1"/>
+      <spacer colSpan="4"/>
       <field name="carrier" colSpan="4"/>
       <field name="shipPackage" colSpan="4"/>
       <spacer colSpan="4"/>
@@ -37,7 +37,7 @@
 
     </panel>
 
-    <panel>
+    <panel readonlyIf="isShippingConfirm">
       <field name="weight" colSpan="3"/>
       <field name="sizeL" colSpan="3"/>
       <field name="sizeW" colSpan="3"/>
@@ -47,22 +47,23 @@
     </panel>
 
     <panel-related field="purchaseLabelRateLine" name="purchaseLabelRateLinePanel"
-      colSpan="12" grid-view="shipment-purchase-label-rate-line-grid" canEdit="true"
-      form-view="shipment-purchase-label-rate-line-form"/>
+      readonlyIf="isShippingConfirm" colSpan="12" grid-view="shipment-purchase-label-rate-line-grid"
+      canEdit="true" form-view="shipment-purchase-label-rate-line-form"/>
 
     <panel>
-      <button onClick="save,action-purchase-lable-group-confirm-shipping-service,save,close"
+      <button onClick="save,action-purchase-lable-group-confirm-shipping-service,save"
         colSpan="3" readonlyIf="isShippingConfirm" name="confirmBtn"
         prompt="Confirm Service selection?" title="Confirm Shipping Service"/>
-
-      <field name="selectedRate" colSpan="3" readonly="true"/>
-      <field name="totalMultiShipmentCost" colSpan="3"/>
-      <field name="isShippingConfirm" colSpan="3" readonly="true"/>
-      
+      <field name="isEmailSend" colSpan="3" readonlyIf="isShippingConfirm"/>
+      <spacer colSpan="3"/>
+      <spacer colSpan="3"/>
+      <field name="selectedRate" colSpan="4" readonly="true"/>
+      <field name="totalMultiShipmentCost" colSpan="4" readonly="true"/>
+      <field name="isShippingConfirm" colSpan="4"/>
     </panel>
 
     <panel>
-      <panel-related field="multiShipmentPackageLine"
+      <panel-related field="multiShipmentPackageLine" readonlyIf="isShippingConfirm"
         name="multiShipmentPackageLinePanel" colSpan="12"
         grid-view="multi-shipment-package-line-grid" form-view="multi-shipment-package-line-form"/>
     </panel>

@@ -50,6 +50,8 @@
     <many-to-one name="saleOrder" ref="com.axelor.apps.sale.db.SaleOrder"
       title="Sale Order"/>
 
+    <boolean name="isEmailSend" title="Is Email Send"/>
+
   </entity>
 
 </domain-models>

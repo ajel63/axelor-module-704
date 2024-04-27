@@ -21,6 +21,7 @@ package com.axelor.apps.sale.web;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Partner;
 import com.axelor.apps.base.db.repo.PartnerRepository;
+import com.axelor.apps.sale.db.MultiShipmentPackageLine;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
@@ -119,15 +120,20 @@ public class PurchaseLableController {
       saleOrder = Beans.get(SaleOrderRepository.class).find(Long.parseLong(id));
     }
 
-    Map<String, String> map =
+    List<MultiShipmentPackageLine> multiShipmentPackageLine =
         Beans.get(PurchaseLableService.class)
             .confirmShippingService(
                 Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()), saleOrder);
-    if (map.size() > 0) {
-      response.setValue("trackingNumber", map.get("trackingNumber"));
-      response.setValue("lableUrl", map.get("labelUrl"));
+
+    if (!multiShipmentPackageLine.isEmpty()) {
+      response.setValue("multiShipmentPackageLine", multiShipmentPackageLine);
       response.setValue("isShippingConfirm", true);
     }
+    //    if (map.size() > 0) {
+    //      response.setValue("trackingNumber", map.get("trackingNumber"));
+    //      response.setValue("lableUrl", map.get("labelUrl"));
+    //      response.setValue("isShippingConfirm", true);
+    //    }
   }
 
   public void setSelectedCarrier(ActionRequest request, ActionResponse response)
@@ -143,6 +149,9 @@ public class PurchaseLableController {
                 Beans.get(PurchaseLabelRepository.class).find(purchaseLabel.getId()));
     response.setValue("carrier", shiSservice);
     response.setValue("selectedRate", selectedRate);
+    response.setValue(
+        "totalMultiShipmentCost",
+        selectedRate.multiply(new BigDecimal(purchaseLabel.getTotalPackage())));
   }
 
   public void openPrintingLable(ActionRequest request, ActionResponse response)

@@ -13,7 +13,14 @@
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
     <panel name="packPanel">
       <field name="trackingNumber"/>
-      <field name="lableUrl"/>
+      <field name="lableUrl" colSpan="12" readonly="true">
+        <viewer depends="lableUrl"><![CDATA[
+		      <div>
+		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
+		      </div>
+		    ]]></viewer>
+      </field>
+      <field name="lableUrl" colSpan="12"/>
     </panel>
   </form>
 

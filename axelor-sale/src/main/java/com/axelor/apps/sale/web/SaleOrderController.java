@@ -900,4 +900,19 @@ public class SaleOrderController {
       TraceBackService.trace(response, e);
     }
   }
+
+  public void calculateShippingCost(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+
+    BigDecimal shippingCost = new BigDecimal(0);
+
+    for (PurchaseLabel purchaseLabel : saleOrder.getPurchaseLableList()) {
+      shippingCost = shippingCost.add(purchaseLabel.getTotalMultiShipmentCost());
+    }
+    BigDecimal extraShippingCost =
+        shippingCost.multiply(new BigDecimal(30)).divide(new BigDecimal(100));
+    response.setValue("shippingCost", shippingCost);
+    response.setValue("extraShippingCost", extraShippingCost);
+  }
 }

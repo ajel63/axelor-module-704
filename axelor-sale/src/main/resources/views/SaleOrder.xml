@@ -760,6 +760,7 @@
         <field name="insurance"/>
 
         <panel-related field="purchaseLableList" name="purchaseLableList"
+          onChange="action-sale-order-group-on-chnage-purchase-lable-list"
           title="Purchase Lable List" grid-view="shipment-purchase-label-grid"
           form-view="shipment-purchase-label-form" colSpan="12"/>
 
@@ -2508,6 +2509,17 @@
 
   <action-method name="action-sale-order-set-internal-notes">
     <call class="com.axelor.apps.sale.web.SaleOrderController" method="setInernalnotes"/>
+  </action-method>
+
+  <action-group name="action-sale-order-group-on-chnage-purchase-lable-list">
+    <action
+      name="action-sale-order-method-on-chnage-purchase-lable-list-calculate-shipping-cost"/>
+    <action name="action-sale-order-attrs-calculate-total-shipping-cost"/>
+  </action-group>
+
+  <action-method
+    name="action-sale-order-method-on-chnage-purchase-lable-list-calculate-shipping-cost">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="calculateShippingCost"/>
   </action-method>
 
 </object-views>

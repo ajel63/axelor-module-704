@@ -21,6 +21,7 @@ package com.axelor.apps.sale.service;
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.base.db.Address;
 import com.axelor.apps.base.db.repo.TraceBackRepository;
+import com.axelor.apps.sale.db.MultiShipmentPackageLine;
 import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
@@ -54,29 +55,35 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
   public List<PurchaseLabelRateLine> getShipmentRates(
       PurchaseLabel purchaseLabel, SaleOrder saleOrder) throws AxelorException {
 
-    if (!(saleOrder.getWeight().compareTo(new BigDecimal(0)) == 1)) {
+    if (!(purchaseLabel.getWeight().compareTo(new BigDecimal(0)) == 1)) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_NO_VALUE, "Please add weight in shipping tab.");
     }
 
-    if (!(saleOrder.getSizeL().compareTo(new BigDecimal(0)) == 1)
-        || !(saleOrder.getSizeW().compareTo(new BigDecimal(0)) == 1)
-        || !(saleOrder.getSizeH().compareTo(new BigDecimal(0)) == 1)) {
+    if (!(purchaseLabel.getSizeL().compareTo(new BigDecimal(0)) == 1)
+        || !(purchaseLabel.getSizeW().compareTo(new BigDecimal(0)) == 1)
+        || !(purchaseLabel.getSizeH().compareTo(new BigDecimal(0)) == 1)) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_NO_VALUE,
           "Please add size of L, W and H values in shipping tab.");
     }
 
-    if (saleOrder.getDeliveryAddress() == null) {
+    if (purchaseLabel.getShippingToAddress() == null) {
       throw new AxelorException(
-          TraceBackRepository.CATEGORY_NO_VALUE, "Please add Delivery address on Sale Order");
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add Shipping To Address");
     }
 
-    Address address = saleOrder.getDeliveryAddress();
+    Address address = purchaseLabel.getShippingToAddress();
     if (address.getPostalCode() == null) {
       throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add postal code on Shipping To Address");
+    }
+
+    String RecipientDetails = address.getAddressL2();
+    if (RecipientDetails == null || RecipientDetails == "") {
+      throw new AxelorException(
           TraceBackRepository.CATEGORY_NO_VALUE,
-          "Please add postal code on Delivery address of Sale Order");
+          "Please add Recipient Details on Shiping To Address");
     }
 
     String pincode = address.getPostalCode().getCode();
@@ -96,10 +103,10 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
         || addressStr == "") {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_NO_VALUE,
-          "Please add Address line, city, state and pincode on address");
+          "Please add Address line, city, state and pincode on Shipping TO address");
     }
 
-    String customerName = saleOrder.getClientPartner().getSimpleFullName();
+    // String customerName = saleOrder.getClientPartner().getSimpleFullName();
     String company = saleOrder.getCompany().getName();
 
     List<PurchaseLabelRateLine> purchaseLabelRateLineList = new ArrayList<PurchaseLabelRateLine>();
@@ -134,7 +141,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               "{\"city\":\""
                   + city
                   + "\",\"name\":\""
-                  + customerName
+                  + RecipientDetails
                   + "\",\"company\":\""
                   + company
                   + "\",\"address\":\""
@@ -150,13 +157,13 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                   + "\",\"mail\":\""
                   + purchaseLabel.getEmailAddress()
                   + "\",\"weight\":\""
-                  + saleOrder.getWeight()
+                  + purchaseLabel.getWeight()
                   + "\",\"length\":\""
-                  + saleOrder.getSizeL()
+                  + purchaseLabel.getSizeL()
                   + "\",\"width\":\""
-                  + saleOrder.getSizeW()
+                  + purchaseLabel.getSizeW()
                   + "\",\"height\":\""
-                  + saleOrder.getSizeH()
+                  + purchaseLabel.getSizeH()
                   + "\"}");
       httpRequest.setEntity(params);
 
@@ -214,34 +221,45 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
   }
 
   @Override
-  public Map<String, String> confirmShippingService(
+  public List<MultiShipmentPackageLine> confirmShippingService(
       PurchaseLabel purchaseLabel, SaleOrder saleOrder) throws AxelorException {
 
+    List<MultiShipmentPackageLine> MultiShipmentPackageLineList =
+        new ArrayList<MultiShipmentPackageLine>();
     Map<String, String> map = new HashMap<>();
-    if (!(saleOrder.getWeight().compareTo(new BigDecimal(0)) == 1)) {
-      throw new AxelorException(
-          TraceBackRepository.CATEGORY_NO_VALUE, "Please add weight in shipping tab.");
+    if (!(purchaseLabel.getWeight().compareTo(new BigDecimal(0)) == 1)) {
+      throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, "Please add weight.");
     }
 
-    if (!(saleOrder.getSizeL().compareTo(new BigDecimal(0)) == 1)
-        || !(saleOrder.getSizeW().compareTo(new BigDecimal(0)) == 1)
-        || !(saleOrder.getSizeH().compareTo(new BigDecimal(0)) == 1)) {
+    if (!(purchaseLabel.getSizeL().compareTo(new BigDecimal(0)) == 1)
+        || !(purchaseLabel.getSizeW().compareTo(new BigDecimal(0)) == 1)
+        || !(purchaseLabel.getSizeH().compareTo(new BigDecimal(0)) == 1)) {
       throw new AxelorException(
-          TraceBackRepository.CATEGORY_NO_VALUE,
-          "Please add size of L, W and H values in shipping tab.");
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add size of L, W and H values.");
     }
 
-    if (saleOrder.getDeliveryAddress() == null) {
+    if (purchaseLabel.getShippingToAddress() == null) {
       throw new AxelorException(
-          TraceBackRepository.CATEGORY_NO_VALUE, "Please add Delivery address on Sale Order");
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add Shipping To Address");
     }
 
-    Address address = saleOrder.getDeliveryAddress();
+    Address address = purchaseLabel.getShippingToAddress();
     if (address.getPostalCode() == null) {
       throw new AxelorException(
-          TraceBackRepository.CATEGORY_NO_VALUE,
-          "Please add postal code on Delivery address of Sale Order");
+          TraceBackRepository.CATEGORY_NO_VALUE, "Please add postal code on Shipping To Address");
     }
+
+    String RecipientDetails = address.getAddressL2();
+    if (RecipientDetails == null || RecipientDetails == "") {
+      throw new AxelorException(
+          TraceBackRepository.CATEGORY_NO_VALUE,
+          "Please add Recipient Details on Shiping To Address");
+    }
+    String customerAccountId = "";
+    if (purchaseLabel.getCustomerShipmentInfo() != null) {
+      customerAccountId = purchaseLabel.getCustomerShipmentInfo().getId().toString();
+    }
+
     String pincode = address.getPostalCode().getCode();
     String city = address.getCityName();
     String state = address.getState();
@@ -261,7 +279,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please add Address line, city, state and pincode on address");
     }
 
-    String customerName = saleOrder.getClientPartner().getSimpleFullName();
+    //    String customerName = saleOrder.getClientPartner().getSimpleFullName();
     Long custumerId = saleOrder.getClientPartner().getId();
     String company = saleOrder.getCompany().getName();
     Long orderId = saleOrder.getId();
@@ -302,26 +320,26 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please configure Shipment API: base Urls and API key.");
     }
 
-    url = url + "/shipping/order";
+    url = url + "/shipping/orders";
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
 
     try {
-      String str =
+      String singleObj =
           "{\"weight\":\""
-              + saleOrder.getWeight()
+              + purchaseLabel.getWeight()
               + "\",\"length\":\""
-              + saleOrder.getSizeL()
+              + purchaseLabel.getSizeL()
               + "\",\"width\":\""
-              + saleOrder.getSizeW()
+              + purchaseLabel.getSizeW()
               + "\",\"height\":\""
-              + saleOrder.getSizeH()
+              + purchaseLabel.getSizeH()
               + "\",\"city\":\""
               + city
               + "\",\"customer\":\""
               + custumerId
               + "\",\"name\":\""
-              + customerName
+              + RecipientDetails
               + "\",\"company\":\""
               + company
               + "\",\"address\":\""
@@ -334,7 +352,9 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               + state
               + "\",\"phone\":\""
               + purchaseLabel.getPhoneNumber()
-              + "\",\"mail\":\""
+              + "\",\"send_email\":"
+              + purchaseLabel.getIsEmailSend()
+              + ",\"mail\":\""
               + purchaseLabel.getEmailAddress()
               + "\",\"orderId\":"
               + orderId
@@ -344,9 +364,15 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               + carrierServiceToken
               + "\",\"serviceName\":\""
               + carrierService
+              //              + "\",\"customerAccountId\":\""
+              //              + customerAccountId
               + "\"}";
-
-      StringEntity params = new StringEntity(str);
+      String requestBody = singleObj;
+      for (int i = 1; i < purchaseLabel.getTotalPackage(); i++) {
+        requestBody = requestBody + "," + singleObj;
+      }
+      requestBody = "[" + requestBody + "]";
+      StringEntity params = new StringEntity(requestBody);
       httpRequest.addHeader("Content-Type", "application/json");
       httpRequest.setHeader("X-Api-Key", token);
       httpRequest.setEntity(params);
@@ -357,24 +383,54 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
         JSONObject jsonObj = new JSONObject(result);
         if (jsonObj.has("type")) {
           if (jsonObj.get("type").equals("success")) {
-            JSONObject dataObj = (JSONObject) jsonObj.get("data");
-            JSONObject shippingOrderObj = (JSONObject) dataObj.get("shippingOrder");
-            JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
+            JSONArray resArray = (JSONArray) jsonObj.get("data");
 
-            String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
-            String labelUrl = (String) shippoOrderObj.get("label_url").toString();
+            for (int i = 0; i < resArray.length(); i++) {
+              MultiShipmentPackageLine purchaseLabelRateLine = new MultiShipmentPackageLine();
 
-            if (trackingNumber == ""
-                || trackingNumber == null
-                || labelUrl == ""
-                || labelUrl == null) {
-              String errMessage = shippoOrderObj.get("message").toString();
-              throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errMessage);
+              JSONObject dataObj = resArray.getJSONObject(i);
+              if (dataObj.get("status").equals("Error")) {
+                throw new AxelorException(
+                    TraceBackRepository.CATEGORY_NO_VALUE, dataObj.toString());
+              }
+
+              JSONObject shippingOrderObj = (JSONObject) dataObj.get("shippingOrder");
+              JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
+
+              String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
+              String labelUrl = (String) shippoOrderObj.get("label_url").toString();
+
+              if (trackingNumber == ""
+                  || trackingNumber == null
+                  || labelUrl == ""
+                  || labelUrl == null) {
+                String errMessage = shippoOrderObj.get("message").toString();
+                throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errMessage);
+              }
+
+              purchaseLabelRateLine.setTrackingNumber(trackingNumber);
+              purchaseLabelRateLine.setLableUrl(labelUrl);
+
+              MultiShipmentPackageLineList.add(purchaseLabelRateLine);
             }
 
-            map.put("trackingNumber", trackingNumber);
-            map.put("labelUrl", labelUrl);
-
+            /**
+             * For Single shipment
+             *
+             * <p>JSONObject dataObj = (JSONObject) jsonObj.get("data"); JSONObject shippingOrderObj
+             * = (JSONObject) dataObj.get("shippingOrder"); JSONObject shippoOrderObj = (JSONObject)
+             * dataObj.get("shippoOrder");
+             *
+             * <p>String trackingNumber = (String)
+             * shippingOrderObj.get("trackingNumber").toString(); String labelUrl = (String)
+             * shippoOrderObj.get("label_url").toString();
+             *
+             * <p>if (trackingNumber == "" || trackingNumber == null || labelUrl == "" || labelUrl
+             * == null) { String errMessage = shippoOrderObj.get("message").toString(); throw new
+             * AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errMessage); }
+             *
+             * <p>map.put("trackingNumber", trackingNumber); map.put("labelUrl", labelUrl);
+             */
           } else {
             if (jsonObj.has("type")) {
               if (jsonObj.get("type").equals("error")) {
@@ -388,7 +444,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     } catch (Exception e) {
       throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, e.toString());
     }
-    return map;
+    return MultiShipmentPackageLineList;
   }
 
   @Transactional
