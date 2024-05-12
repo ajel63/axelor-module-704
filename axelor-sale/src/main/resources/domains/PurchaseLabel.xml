@@ -34,7 +34,7 @@
     <decimal name="totalMultiShipmentCost" title="Total Multi Shipment Cost"/>
 
     <many-to-one name="customerShipmentInfo"
-      ref="com.axelor.apps.sale.db.CustomerShipmentInfo" title="Customer Shipment Info"/>
+      ref="com.axelor.apps.sale.db.CustomerShipmentInfo" title="Customer Shipping Account"/>
 
     <many-to-one name="shippingFromAddress" ref="com.axelor.apps.base.db.Address"
       title="Shipping from address"/>
