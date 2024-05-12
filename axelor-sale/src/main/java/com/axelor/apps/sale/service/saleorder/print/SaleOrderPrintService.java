@@ -36,11 +36,13 @@ public interface SaleOrderPrintService {
    */
   String printSaleOrders(List<Long> ids) throws IOException;
 
-  ReportSettings prepareReportSettings(SaleOrder saleOrder, boolean proforma, String format)
+  ReportSettings prepareReportSettings(
+      SaleOrder saleOrder, boolean proforma, String format, String reportType)
       throws AxelorException;
 
-  File print(SaleOrder saleOrder, boolean proforma, String format) throws AxelorException;
+  File print(SaleOrder saleOrder, boolean proforma, String format, String reportType)
+      throws AxelorException;
 
-  String printSaleOrder(SaleOrder saleOrder, boolean proforma, String format)
+  String printSaleOrder(SaleOrder saleOrder, boolean proforma, String format, String reportType)
       throws AxelorException, IOException;
 }

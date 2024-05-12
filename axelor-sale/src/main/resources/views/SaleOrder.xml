@@ -1349,6 +1349,10 @@
       if="format == 'doc' &amp;&amp; reportType == 1"/>
     <action name="action-sale-order-method-print-proforma-invoice"
       if="format == 'pdf' &amp;&amp; reportType == 2"/>
+    <action name="action-sale-order-method-show-sale-order"
+      if="format == 'pdf' &amp;&amp; reportType == 3"/>
+    <action name="action-sale-order-method-show-sale-order"
+      if="format == 'pdf' &amp;&amp; reportType == 4"/>
   </action-group>
 
   <cards name="sale-order-cards" title="Sale order" model="com.axelor.apps.sale.db.SaleOrder"

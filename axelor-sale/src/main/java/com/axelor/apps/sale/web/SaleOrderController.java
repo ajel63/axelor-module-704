@@ -130,7 +130,10 @@ public class SaleOrderController {
    * @param response
    */
   public void showSaleOrder(ActionRequest request, ActionResponse response) {
-    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_PDF);
+    Context context = request.getContext();
+    String reportType =
+        context.get("reportType").toString(); // ZDS: Handle Sale quote and Sale Estimate
+    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_PDF, reportType);
   }
 
   /**
@@ -140,20 +143,33 @@ public class SaleOrderController {
    * @param response
    */
   public void printProformaInvoice(ActionRequest request, ActionResponse response) {
-    this.exportSaleOrder(request, response, true, ReportSettings.FORMAT_PDF);
+    Context context = request.getContext();
+    String reportType =
+        context.get("reportType").toString(); // ZDS: Handle Sale quote and Sale Estimate
+    this.exportSaleOrder(request, response, true, ReportSettings.FORMAT_PDF, reportType);
   }
 
   public void exportSaleOrderExcel(ActionRequest request, ActionResponse response) {
-    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_XLSX);
+    Context context = request.getContext();
+    String reportType =
+        context.get("reportType").toString(); // ZDS: Handle Sale quote and Sale Estimate
+    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_XLSX, reportType);
   }
 
   public void exportSaleOrderWord(ActionRequest request, ActionResponse response) {
-    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_DOC);
+    Context context = request.getContext();
+    String reportType =
+        context.get("reportType").toString(); // ZDS: Handle Sale quote and Sale Estimate
+    this.exportSaleOrder(request, response, false, ReportSettings.FORMAT_DOC, reportType);
   }
 
   @SuppressWarnings("unchecked")
   public void exportSaleOrder(
-      ActionRequest request, ActionResponse response, boolean proforma, String format) {
+      ActionRequest request,
+      ActionResponse response,
+      boolean proforma,
+      String format,
+      String reportType) {
 
     Context context = request.getContext();
     String fileLink;
@@ -180,7 +196,7 @@ public class SaleOrderController {
         SaleOrder saleOrder =
             Beans.get(SaleOrderRepository.class).find(Long.parseLong(context.get("id").toString()));
         title = Beans.get(SaleOrderService.class).getFileName(saleOrder);
-        fileLink = saleOrderPrintService.printSaleOrder(saleOrder, proforma, format);
+        fileLink = saleOrderPrintService.printSaleOrder(saleOrder, proforma, format, reportType);
         response.setCanClose(true);
 
         logger.debug("Printing " + title);

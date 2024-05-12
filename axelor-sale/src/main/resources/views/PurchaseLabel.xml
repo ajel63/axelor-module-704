@@ -30,10 +30,13 @@
       <field name="emailAddress" colSpan="4"/>
       <spacer colSpan="4"/>
 
-      <field name="shippingToAddress" colSpan="4" canEdit="true" canNew="true" form-view="address-form" grid-view="address-grid"/>
-      <field name="shippingFromAddress" colSpan="4" canEdit="true" canNew="true" form-view="address-form" grid-view="address-grid"/>
+      <field name="shippingToAddress" colSpan="4" canEdit="true" canNew="true"
+        form-view="address-form" grid-view="address-grid"/>
+      <field name="shippingFromAddress" colSpan="4" canEdit="true" canNew="true"
+        form-view="address-form" grid-view="address-grid"/>
       <spacer colSpan="4"/>
-      <field name="customerShipmentInfo" colSpan="4" canEdit="true" canNew="true" title="Customer Shipping Account"/>
+      <field name="customerShipmentInfo" colSpan="4" canEdit="true" canNew="true"
+        title="Customer Shipping Account"/>
 
     </panel>
 

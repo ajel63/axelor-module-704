@@ -56,11 +56,12 @@ public class SaleOrderPrintServiceImpl implements SaleOrderPrintService {
   }
 
   @Override
-  public String printSaleOrder(SaleOrder saleOrder, boolean proforma, String format)
+  public String printSaleOrder(
+      SaleOrder saleOrder, boolean proforma, String format, String reportType)
       throws AxelorException, IOException {
     String fileName = saleOrderService.getFileName(saleOrder) + "." + format;
 
-    return PdfTool.getFileLinkFromPdfFile(print(saleOrder, proforma, format), fileName);
+    return PdfTool.getFileLinkFromPdfFile(print(saleOrder, proforma, format, reportType), fileName);
   }
 
   @Override
@@ -72,7 +73,7 @@ public class SaleOrderPrintServiceImpl implements SaleOrderPrintService {
         new ThrowConsumer<SaleOrder, Exception>() {
           @Override
           public void accept(SaleOrder saleOrder) throws Exception {
-            printedSaleOrders.add(print(saleOrder, false, ReportSettings.FORMAT_PDF));
+            printedSaleOrders.add(print(saleOrder, false, ReportSettings.FORMAT_PDF, ""));
           }
         });
     Integer status = Beans.get(SaleOrderRepository.class).find(ids.get(0)).getStatusSelect();
@@ -80,13 +81,15 @@ public class SaleOrderPrintServiceImpl implements SaleOrderPrintService {
     return PdfTool.mergePdfToFileLink(printedSaleOrders, fileName);
   }
 
-  public File print(SaleOrder saleOrder, boolean proforma, String format) throws AxelorException {
-    ReportSettings reportSettings = prepareReportSettings(saleOrder, proforma, format);
+  public File print(SaleOrder saleOrder, boolean proforma, String format, String reportType)
+      throws AxelorException {
+    ReportSettings reportSettings = prepareReportSettings(saleOrder, proforma, format, reportType);
     return reportSettings.generate().getFile();
   }
 
   @Override
-  public ReportSettings prepareReportSettings(SaleOrder saleOrder, boolean proforma, String format)
+  public ReportSettings prepareReportSettings(
+      SaleOrder saleOrder, boolean proforma, String format, String reportType)
       throws AxelorException {
 
     if (saleOrder.getPrintingSettings() == null) {
@@ -107,6 +110,15 @@ public class SaleOrderPrintServiceImpl implements SaleOrderPrintService {
 
     ReportSettings reportSetting =
         ReportFactory.createReport(IReport.SALES_ORDER, title + " - ${date}");
+
+    if (reportType.equals("3")) {
+      reportSetting = ReportFactory.createReport("SaleOrderQuote.rptdesign", title + " - ${date}");
+    }
+
+    if (reportType.equals("4")) {
+      reportSetting =
+          ReportFactory.createReport("SaleOrderEstimate.rptdesign", title + " - ${date}");
+    }
 
     return reportSetting
         .addParam("SaleOrderId", saleOrder.getId())

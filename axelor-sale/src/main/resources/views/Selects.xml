@@ -77,6 +77,8 @@
   <selection name="sale.order.report.type">
     <option value="1">Original sale order</option>
     <option value="2">Proforma invoice</option>
+    <option value="3">Sale Quote</option>
+    <option value="4">Sale Estimate</option>
   </selection>
 
   <selection name="sale.order.report.format">
