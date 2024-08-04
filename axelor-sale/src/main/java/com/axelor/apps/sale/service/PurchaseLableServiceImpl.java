@@ -128,7 +128,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please configure Shipment API: base Urls and API key.");
     }
 
-    url = url + "/shipping/cost";
+    url = url + "/shipping/easypost/cost"; // url = url + "/shipping/cost"; // (Shipo)
 
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
@@ -174,9 +174,9 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
         JSONObject jsonObj = new JSONObject(result);
         if (jsonObj.has("type")) {
           if (jsonObj.get("type").equals("success")) {
-            JSONObject shippingRatesObj = (JSONObject) jsonObj.get("shippingRates");
+            JSONObject ratesObj = (JSONObject) jsonObj.get("shippingRates");
 
-            JSONObject ratesObj = (JSONObject) shippingRatesObj.get("rates");
+            //            JSONObject ratesObj = (JSONObject) shippingRatesObj.get("rates");
 
             Iterator<String> keysIterator = ratesObj.keys();
 
@@ -188,16 +188,18 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               for (int i = 0; i < serviceTypeArray.length(); i++) {
                 PurchaseLabelRateLine purchaseLabelRateLine = new PurchaseLabelRateLine();
                 JSONObject serviceTypeObj = serviceTypeArray.getJSONObject(i);
-                purchaseLabelRateLine.setCarrier(
-                    (String) serviceTypeObj.get("provider").toString());
-
-                JSONObject servicelevelObj = (JSONObject) serviceTypeObj.get("servicelevel");
+                purchaseLabelRateLine.setCarrier((String) serviceTypeObj.get("carrier").toString());
                 purchaseLabelRateLine.setCarrierService(
-                    (String) servicelevelObj.get("name").toString());
-                purchaseLabelRateLine.setCarrierServiceToken(
-                    (String) servicelevelObj.get("token").toString());
+                    (String) serviceTypeObj.get("service").toString());
 
-                String amountStr = (String) serviceTypeObj.get("amount").toString();
+                //                JSONObject servicelevelObj = (JSONObject)
+                // serviceTypeObj.get("service");
+                //                purchaseLabelRateLine.setCarrierService(
+                //                    (String) servicelevelObj.get("name").toString());
+                //                purchaseLabelRateLine.setCarrierServiceToken(
+                //                    (String) servicelevelObj.get("token").toString());
+
+                String amountStr = (String) serviceTypeObj.get("list_rate").toString();
                 purchaseLabelRateLine.setRate(new BigDecimal(amountStr));
 
                 purchaseLabelRateLineList.add(purchaseLabelRateLine);
@@ -296,12 +298,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       }
     }
 
-    if (carrier == ""
-        || carrier == null
-        || carrierService == ""
-        || carrierService == null
-        || carrierServiceToken == ""
-        || carrierServiceToken == null) {
+    if (carrier == "" || carrier == null || carrierService == "" || carrierService == null) {
       throw new AxelorException(
           TraceBackRepository.CATEGORY_NO_VALUE,
           "Carrier, Carrier Service or Carrier Service token not found in request.");
@@ -320,7 +317,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
           "Please configure Shipment API: base Urls and API key.");
     }
 
-    url = url + "/shipping/orders";
+    url = url + "/shipping/easypost/orders";
     CloseableHttpClient httpClient = HttpClients.createDefault();
     HttpPost httpRequest = new HttpPost(url);
 
@@ -360,8 +357,6 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               + orderId
               + ",\"carrier\":\""
               + carrier.toLowerCase()
-              + "\",\"servicelevel_token\":\""
-              + carrierServiceToken
               + "\",\"serviceName\":\""
               + carrierService
               //              + "\",\"customerAccountId\":\""
@@ -380,6 +375,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       HttpEntity entity = httpRresponse.getEntity();
       if (entity != null) {
         String result = EntityUtils.toString(entity);
+        System.err.println(result);
         JSONObject jsonObj = new JSONObject(result);
         if (jsonObj.has("type")) {
           if (jsonObj.get("type").equals("success")) {
@@ -395,21 +391,22 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               }
 
               JSONObject shippingOrderObj = (JSONObject) dataObj.get("shippingOrder");
-              JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
+              //              JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
 
               String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
-              String labelUrl = (String) shippoOrderObj.get("label_url").toString();
+              String trackingLink = (String) shippingOrderObj.get("trackingLink").toString();
+              // String labelUrl = (String) shippingOrderObj.get("label_url").toString();
 
               if (trackingNumber == ""
                   || trackingNumber == null
-                  || labelUrl == ""
-                  || labelUrl == null) {
-                String errMessage = shippoOrderObj.get("message").toString();
-                throw new AxelorException(TraceBackRepository.CATEGORY_NO_VALUE, errMessage);
+                  || trackingLink == ""
+                  || trackingLink == null) {
+                throw new AxelorException(
+                    TraceBackRepository.CATEGORY_NO_VALUE, "Traking number or Lable not found.");
               }
 
               purchaseLabelRateLine.setTrackingNumber(trackingNumber);
-              purchaseLabelRateLine.setLableUrl(labelUrl);
+              purchaseLabelRateLine.setLableUrl(trackingLink);
 
               MultiShipmentPackageLineList.add(purchaseLabelRateLine);
             }
