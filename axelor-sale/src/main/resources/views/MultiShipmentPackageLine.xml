@@ -7,6 +7,7 @@
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
     <field name="trackingNumber"/>
     <field name="lableUrl"/>
+    <button onClick="action-multi-shipment-line-print-lable" name="printBtn" title="Print"  icon="fa-envelope"/>
   </grid>
 
   <form name="multi-shipment-package-line-form" title="Multi Shipment Package Line"
@@ -24,5 +25,8 @@
     </panel>
   </form>
 
+ <action-method name="action-multi-shipment-line-print-lable">
+ 	<call class="com.axelor.apps.sale.web.MultiShipmentPackageLineController" method="prtinLable"/>
+ </action-method>
 
 </object-views>
