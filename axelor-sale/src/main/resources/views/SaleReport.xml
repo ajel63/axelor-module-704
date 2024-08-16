@@ -11,13 +11,16 @@
   </grid>
 
   <form name="sale-z-dental-report-form" title="Sale Report"
-    model="com.axelor.apps.sale.db.SaleReport">
+    onNew="action-sale-report-on-new-set-report-format,action-sale-report-on-change-show-customer"
+    onLoad="action-sale-report-on-change-show-customer" model="com.axelor.apps.sale.db.SaleReport">
     <panel name="mainPanel">
-      <field name="reportType"/>
+      <field name="reportType" onChange="action-sale-report-on-change-show-customer"/>
+      <field name="reportFormat"/>
+      <field name="clientPartner" domain="self.isCustomer = true OR self.isProspect = true"/>
       <spacer colSpan="6"/>
       <field name="fromDate"/>
       <field name="toDate"/>
-      <button onClick="action-sale-report-method-print-sale-report" name="printBtn"
+      <button onClick="save,action-sale-report-method-print-sale-report" name="printBtn"
         title="Print"/>
     </panel>
   </form>
@@ -25,5 +28,14 @@
   <action-method name="action-sale-report-method-print-sale-report">
     <call class="com.axelor.apps.sale.web.SaleReportController" method="printReport"/>
   </action-method>
+
+  <action-attrs name="action-sale-report-on-change-show-customer">
+    <attribute name="hidden" for="clientPartner"
+      expr="eval: !reportType.equals('PrincipalsUltimateOralHealthSolution')"/>
+  </action-attrs>
+
+  <action-attrs name="action-sale-report-on-new-set-report-format">
+    <attribute name="value" for="reportFormat" expr="eval: 'pdf'"/>
+  </action-attrs>
 
 </object-views>

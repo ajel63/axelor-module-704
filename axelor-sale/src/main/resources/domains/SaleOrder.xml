@@ -231,6 +231,8 @@
     <boolean name="isPurchaseLabelConfirm"/>
     <string name="lableUrl" large="true" title="URL"/>
 
+    <string name="coupons" title="Coupons"/>
+
     <one-to-many ref="com.axelor.apps.sale.db.ShipmentLine" name="shipment"
       title="Shipments" mappedBy="saleOrder"/>
 

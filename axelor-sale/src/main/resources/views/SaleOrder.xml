@@ -283,8 +283,7 @@
       <button name="deleteBtn" title="Delete" icon="fa-delete"
         prompt="Are you sure you want to cancle and delete sale order?"
         onClick="save,action-sale-order-attrs-validate-cancle-and-delete-sale-order,action-sale-order-attrs-cancle-and-delete-sale-order,save,close"/>
-        <button name="emailBtn" title="ZDS Email" icon="fa-envelope"
-        onClick="save"/>  
+      <button name="emailBtn" title="ZDS Email" icon="fa-envelope" onClick="save"/>
     </toolbar>
     <menubar>
       <menu name="saleOrderPackingSlipMenu" title="Pack Slip" icon="fa-print">
@@ -565,6 +564,7 @@
           <field name="quickBooksClassName" title="QuickBooks ClassName"/>
           <field name="locationGroupName" title="Location Group Name"/>
           <field name="carrierService" title="Carrier Service"/>
+           <field name="coupons" />
           <field name="cfAetnaMember" title="Cf Aetna Member"/>
           <field name="cfAetnaBulk" title="Cf Aetna Bulk"/>
           <field name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>

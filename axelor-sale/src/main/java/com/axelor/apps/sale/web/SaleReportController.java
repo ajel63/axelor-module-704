@@ -35,23 +35,49 @@ public class SaleReportController {
     String reportName = saleReport.getReportType();
 
     String idsStr = "";
-    //    List<SaleOrder> saleOrderList = Beans.get(SaleOrderRepository.class).all().fetch();
-    //    List<Long> idList =
-    // saleOrderList.stream().map(SaleOrder::getId).collect(Collectors.toList());
-    //    idsStr = Joiner.on(",").join(idList);
-    //    System.err.println(idsStr);
 
     LocalDate fromDate = saleReport.getFromDate();
     LocalDate toDate = saleReport.getToDate();
 
-    String fileLink =
-        ReportFactory.createReport(reportName + ".rptdesign", reportName + "-${date}")
-            .addParam("ids", idsStr)
-            .addParam("fromDate", fromDate.toString())
-            .addParam("toDate", toDate.toString())
-            .generate()
-            .getFileLink();
+    if (fromDate == null || toDate == null) {
+      response.setError("Please select From date and To date.");
+      return;
+    }
 
-    response.setView(ActionView.define("Sale Report").add("html", fileLink).map());
+    if (saleReport.getReportFormat() == null) {
+      response.setError("Please select report format.");
+      return;
+    }
+
+    if (saleReport.getReportType().equals("PrincipalsUltimateOralHealthSolution")) {
+      if (saleReport.getClientPartner() == null) {
+        response.setError("Please select Customer.");
+        return;
+      }
+
+      String customerId = saleReport.getClientPartner().getId().toString();
+      String fileLink =
+          ReportFactory.createReport(reportName + ".rptdesign", reportName + "-${date}")
+              .addParam("ids", idsStr)
+              .addParam("fromDate", fromDate.toString())
+              .addParam("toDate", toDate.toString())
+              .addParam("customerId", customerId)
+              .addFormat(saleReport.getReportFormat())
+              .generate()
+              .getFileLink();
+
+      response.setView(ActionView.define("Sale Report").add("html", fileLink).map());
+    } else {
+      String fileLink =
+          ReportFactory.createReport(reportName + ".rptdesign", reportName + "-${date}")
+              .addParam("ids", idsStr)
+              .addParam("fromDate", fromDate.toString())
+              .addParam("toDate", toDate.toString())
+              .addFormat(saleReport.getReportFormat())
+              .generate()
+              .getFileLink();
+
+      response.setView(ActionView.define("Sale Report").add("html", fileLink).map());
+    }
   }
 }

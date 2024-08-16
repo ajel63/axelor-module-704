@@ -11,6 +11,9 @@
       title="Report Type"/>
     <date name="fromDate" title="From Date"/>
     <date name="toDate" title="To Date"/>
+    <string name="reportFormat" title="Format" selection="sale.order.report.format"/>
+    <many-to-one name="clientPartner" ref="com.axelor.apps.base.db.Partner"
+      title="Customer"/>
 
   </entity>
 
