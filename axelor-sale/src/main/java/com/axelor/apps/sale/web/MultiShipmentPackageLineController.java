@@ -19,33 +19,18 @@
 package com.axelor.apps.sale.web;
 
 import com.axelor.apps.base.AxelorException;
-import com.axelor.apps.base.db.Partner;
-import com.axelor.apps.base.db.repo.PartnerRepository;
 import com.axelor.apps.sale.db.MultiShipmentPackageLine;
-import com.axelor.apps.sale.db.PurchaseLabel;
-import com.axelor.apps.sale.db.PurchaseLabelRateLine;
-import com.axelor.apps.sale.db.SaleOrder;
-import com.axelor.apps.sale.db.ShipmentLine;
-import com.axelor.apps.sale.db.ShippService;
-import com.axelor.apps.sale.db.repo.PurchaseLabelRepository;
-import com.axelor.apps.sale.db.repo.SaleOrderRepository;
-import com.axelor.apps.sale.service.PurchaseLableService;
-import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
 import com.google.inject.Singleton;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
 
 @Singleton
 public class MultiShipmentPackageLineController {
 
-  public void prtinLable(ActionRequest request, ActionResponse response)
-      throws AxelorException {
+  public void prtinLable(ActionRequest request, ActionResponse response) throws AxelorException {
     Context context = request.getContext();
-    MultiShipmentPackageLine multiShipmentPackageLine = request.getContext().asType(MultiShipmentPackageLine.class);
-    
+    MultiShipmentPackageLine multiShipmentPackageLine =
+        request.getContext().asType(MultiShipmentPackageLine.class);
   }
 }

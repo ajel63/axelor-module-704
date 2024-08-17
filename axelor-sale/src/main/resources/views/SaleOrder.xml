@@ -564,7 +564,7 @@
           <field name="quickBooksClassName" title="QuickBooks ClassName"/>
           <field name="locationGroupName" title="Location Group Name"/>
           <field name="carrierService" title="Carrier Service"/>
-           <field name="coupons" />
+          <field name="coupons"/>
           <field name="cfAetnaMember" title="Cf Aetna Member"/>
           <field name="cfAetnaBulk" title="Cf Aetna Bulk"/>
           <field name="cfShippedByPitneyBowes" title="Cf Shipped By Pitney Bowes"/>

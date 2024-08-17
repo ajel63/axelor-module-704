@@ -285,7 +285,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     Long custumerId = saleOrder.getClientPartner().getId();
     String company = saleOrder.getCompany().getName();
     Long orderId = saleOrder.getId();
-
+    
     String carrier = "";
     String carrierService = "";
     String carrierServiceToken = "";
@@ -394,8 +394,8 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               //              JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
 
               String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
-              String trackingLink = (String) shippingOrderObj.get("trackingLink").toString();
-              // String labelUrl = (String) shippingOrderObj.get("label_url").toString();
+//              String trackingLink = (String) shippingOrderObj.get("trackingLink").toString();
+              String trackingLink = (String) shippingOrderObj.get("lableUrl").toString();
 
               if (trackingNumber == ""
                   || trackingNumber == null
