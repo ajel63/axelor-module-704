@@ -29,6 +29,7 @@ import com.axelor.apps.sale.db.ShipmentLine;
 import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.repo.PurchaseLabelRepository;
 import com.axelor.apps.sale.db.repo.SaleOrderRepository;
+import com.axelor.apps.sale.db.repo.ShipmentLineRepository;
 import com.axelor.apps.sale.service.PurchaseLableService;
 import com.axelor.inject.Beans;
 import com.axelor.rpc.ActionRequest;
@@ -173,6 +174,21 @@ public class PurchaseLableController {
       }
     } catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+
+  public void sendEmail(ActionRequest request, ActionResponse response) throws AxelorException {
+    ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
+
+    String responsStr =
+        Beans.get(PurchaseLableService.class)
+            .sendEmailApi(Beans.get(ShipmentLineRepository.class).find(shipmentLine.getId()));
+
+    if (responsStr.equals("Email send successfully")) {
+      response.setValue("isEmailSent", true);
+      response.setNotify(responsStr);
+    } else {
+      response.setError(responsStr);
     }
   }
 }

@@ -20,6 +20,9 @@
     <string name="trackingLink" title="Tracking Link"/>
     <string name="lableUrl" large="true" title="URL"/>
 
+    <boolean name="isEmailSent" title="Is Email Sent"/>
+    <boolean name="isReturnConfirm" title="Is Return Confirm"/>
+
   </entity>
 
 </domain-models>

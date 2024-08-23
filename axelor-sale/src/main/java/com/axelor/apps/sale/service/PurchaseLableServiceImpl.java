@@ -26,6 +26,7 @@ import com.axelor.apps.sale.db.PurchaseLabel;
 import com.axelor.apps.sale.db.PurchaseLabelRateLine;
 import com.axelor.apps.sale.db.SaleOrder;
 import com.axelor.apps.sale.db.ShipmentApiConfig;
+import com.axelor.apps.sale.db.ShipmentLine;
 import com.axelor.apps.sale.db.ShippService;
 import com.axelor.apps.sale.db.repo.ShipmentApiConfigRepository;
 import com.axelor.apps.sale.db.repo.ShippServiceRepository;
@@ -285,7 +286,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     Long custumerId = saleOrder.getClientPartner().getId();
     String company = saleOrder.getCompany().getName();
     Long orderId = saleOrder.getId();
-    
+
     String carrier = "";
     String carrierService = "";
     String carrierServiceToken = "";
@@ -394,7 +395,8 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
               //              JSONObject shippoOrderObj = (JSONObject) dataObj.get("shippoOrder");
 
               String trackingNumber = (String) shippingOrderObj.get("trackingNumber").toString();
-//              String trackingLink = (String) shippingOrderObj.get("trackingLink").toString();
+              //              String trackingLink = (String)
+              // shippingOrderObj.get("trackingLink").toString();
               String trackingLink = (String) shippingOrderObj.get("lableUrl").toString();
 
               if (trackingNumber == ""
@@ -471,5 +473,31 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
       }
     }
     return new BigDecimal(0);
+  }
+
+  @Override
+  public String sendEmailApi(ShipmentLine shipmentLine) {
+    try {
+      String url = "https://axelor-api.zdental.com/api/shipping/email";
+
+      CloseableHttpClient httpClient = HttpClients.createDefault();
+      HttpPost httpRequest = new HttpPost(url);
+      httpRequest.addHeader("Content-Type", "application/json");
+      String shippingId = shipmentLine.getId().toString();
+      //    shippingId = "4352";
+      String requestBody = "{\"shippingId\":" + shippingId + "}";
+
+      StringEntity params = new StringEntity(requestBody);
+      httpRequest.setEntity(params);
+      CloseableHttpResponse httpRresponse;
+      httpRresponse = httpClient.execute(httpRequest);
+      HttpEntity entity = httpRresponse.getEntity();
+      if (entity != null) {
+        return EntityUtils.toString(entity);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return "Error during sending Email";
   }
 }
