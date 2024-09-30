@@ -191,4 +191,15 @@ public class PurchaseLableController {
       response.setError(responsStr);
     }
   }
+
+  public void returnPurchaseLable(ActionRequest request, ActionResponse response)
+      throws AxelorException {
+    ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
+
+    Boolean returnedLable =
+        Beans.get(PurchaseLableService.class)
+            .returnShipmentLable(
+                Beans.get(ShipmentLineRepository.class).find(shipmentLine.getId()));
+    response.setValue("isReturnConfirm", returnedLable);
+  }
 }

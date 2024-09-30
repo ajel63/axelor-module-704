@@ -500,4 +500,39 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
     }
     return "Error during sending Email";
   }
+
+  @Override
+  public Boolean returnShipmentLable(ShipmentLine shipmentLine) throws AxelorException {
+    try {
+      String url = "https://axelor-api.zdental.com/api/shipping/refund";
+
+      CloseableHttpClient httpClient = HttpClients.createDefault();
+      HttpPost httpRequest = new HttpPost(url);
+      httpRequest.addHeader("Content-Type", "application/json");
+      String shippingId = shipmentLine.getId().toString();
+      String requestBody = "{\"shippingId\":" + shippingId + "}";
+
+      StringEntity params = new StringEntity(requestBody);
+      httpRequest.setEntity(params);
+      CloseableHttpResponse httpRresponse;
+      httpRresponse = httpClient.execute(httpRequest);
+      HttpEntity entity = httpRresponse.getEntity();
+      if (entity != null) {
+        String result = EntityUtils.toString(entity);
+        System.err.println(result);
+        JSONObject jsonObj = new JSONObject(result);
+        if (jsonObj.has("type")) {
+          if (jsonObj.get("type").equals("success")) {
+            return true;
+          } else {
+            throw new AxelorException(0, result);
+          }
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new AxelorException(0, e.toString());
+    }
+    throw new AxelorException(0, "Error in return shipment lable.");
+  }
 }

@@ -4,6 +4,7 @@
   xsi:schemaLocation="http://axelor.com/xml/ns/object-views http://axelor.com/xml/ns/object-views/object-views_6.1.xsd">
 
   <grid name="shipment-grid" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
+    <hilite if="isReturnConfirm" color="red"/>
     <field name="customer"/>
     <field name="trackStatus"/>
     <field name="rate"/>
@@ -40,8 +41,8 @@
     <panel>
       <button onClick="action-shipment-line-method-send-email,save" name="sendEmail"
         title="Email Send" prompt="Please confirm Email send to Customer."/>
-      <button onClick="save" name="refund Lable" title="Refund Lable"
-        prompt="Are you sure you want to return lable?"/>
+      <button onClick="save,action-shipment-line-method-return-lable,save"
+        name="refund Lable" title="Refund Lable" prompt="Are you sure you want to return lable?"/>
       <field name="isEmailSent"/>
       <field name="isReturnConfirm"/>
     </panel>
@@ -53,6 +54,10 @@
 
   <action-method name="action-shipment-line-method-send-email">
     <call class="com.axelor.apps.sale.web.PurchaseLableController" method="sendEmail"/>
+  </action-method>
+
+  <action-method name="action-shipment-line-method-return-lable">
+    <call class="com.axelor.apps.sale.web.PurchaseLableController" method="returnPurchaseLable"/>
   </action-method>
 
 </object-views>

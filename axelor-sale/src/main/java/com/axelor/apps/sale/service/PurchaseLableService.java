@@ -40,4 +40,6 @@ public interface PurchaseLableService {
   public BigDecimal getSelectedCarrierPrice(PurchaseLabel purchaseLabel);
 
   public String sendEmailApi(ShipmentLine shipmentLine);
+
+  public Boolean returnShipmentLable(ShipmentLine shipmentLine) throws AxelorException;
 }
