@@ -200,7 +200,7 @@ public class PurchaseLableServiceImpl implements PurchaseLableService {
                 //                purchaseLabelRateLine.setCarrierServiceToken(
                 //                    (String) servicelevelObj.get("token").toString());
 
-                String amountStr = (String) serviceTypeObj.get("list_rate").toString();
+                String amountStr = (String) serviceTypeObj.get("rate").toString();
                 purchaseLabelRateLine.setRate(new BigDecimal(amountStr));
 
                 purchaseLabelRateLineList.add(purchaseLabelRateLine);
