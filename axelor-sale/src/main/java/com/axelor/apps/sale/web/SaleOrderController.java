@@ -931,4 +931,21 @@ public class SaleOrderController {
     response.setValue("shippingCost", shippingCost);
     response.setValue("extraShippingCost", extraShippingCost);
   }
+
+  public void printPaymentReceipt(ActionRequest request, ActionResponse response) {
+    try {
+      SaleOrder saleOrder = request.getContext().asType(SaleOrder.class);
+
+      String fileLink =
+          ReportFactory.createReport("PaymentReceipt.rptdesign", "PaymentReceipt" + "-${date}")
+              .addParam("id", saleOrder.getId())
+              .generate()
+              .getFileLink();
+
+      // System.err.println(fileLink); debug
+      response.setView(ActionView.define("Payment Receipt").add("html", fileLink).map());
+    } catch (Exception e) {
+      TraceBackService.trace(response, e);
+    }
+  }
 }

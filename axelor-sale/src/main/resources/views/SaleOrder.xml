@@ -275,9 +275,6 @@
     model="com.axelor.apps.sale.db.SaleOrder" onLoad="action-group-sale-saleorder-onload"
     onNew="action-group-sale-saleorder-onnew">
     <toolbar>
-      <button name="reportsBtn" title="Reports" icon="fa-print"
-        hideIf="clientPartner == null" readonlyIf="!id"
-        onClick="save,action-sale-order-view-reports-wizard"/>
       <button name="sendByEmailBtn" title="Send email" icon="fa-envelope" hidden="true"
         onClick="action-send-by-email-with-template"/>
       <button name="deleteBtn" title="Delete" icon="fa-delete"
@@ -286,6 +283,14 @@
       <button name="emailBtn" title="ZDS Email" icon="fa-envelope" onClick="save"/>
     </toolbar>
     <menubar>
+      <menu name="saleOrderReportMenu" title="Reports" icon="fa-print">
+        <item name="saleOrderReportlItem" title="Sale Reports" hideIf="clientPartner == null"
+          readonlyIf="!id" action="save,action-sale-order-view-reports-wizard"/>
+        <item name="PaymentReciptItem" title="Payment receipt" hideIf="clientPartner == null"
+          action="save,action-sale-order-method-print-payment-receipt"/>
+      </menu>
+
+
       <menu name="saleOrderPackingSlipMenu" title="Pack Slip" icon="fa-print">
         <item name="shippingLabelItem" title="Packing Slip" hideIf="clientPartner == null"
           action="save,action-sale-order-method-print-shipping-label"/>
@@ -2460,6 +2465,10 @@
     name="action-sale-order-method-print-shipping-label-without-cost-and-bill-to">
     <call class="com.axelor.apps.sale.web.SaleOrderController"
       method="printShippingLabelWithoutBillTo"/>
+  </action-method>
+
+  <action-method name="action-sale-order-method-print-payment-receipt">
+    <call class="com.axelor.apps.sale.web.SaleOrderController" method="printPaymentReceipt"/>
   </action-method>
 
   <action-method name="action-sale-order-method-calculate-total-weight">
