@@ -33,7 +33,9 @@ public class MultiShipmentPackageLineController {
     Context context = request.getContext();
     MultiShipmentPackageLine multiShipmentPackageLine =
         request.getContext().asType(MultiShipmentPackageLine.class);
-    response.setView(ActionView.define(multiShipmentPackageLine.getTrackingNumber()).add("html", multiShipmentPackageLine.getLableUrl()).map());
-    
+    response.setView(
+        ActionView.define(multiShipmentPackageLine.getTrackingNumber())
+            .add("html", multiShipmentPackageLine.getLableUrl())
+            .map());
   }
 }

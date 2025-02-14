@@ -5,8 +5,8 @@
 
   <grid name="shipment-grid" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
     <hilite if="isReturnConfirm" color="red"/>
-    <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn" title="Print"
-      icon="fa-print"/> 
+    <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn"
+      title="Print" icon="fa-print"/>
     <field name="customer"/>
     <field name="trackStatus"/>
     <field name="rate"/>
@@ -35,9 +35,9 @@
 		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
 		      </div>
 		    ]]></viewer>
-		<editor colSpan="12" showTitle="false">
-			<field name="lableUrl" />
-		</editor>
+        <editor colSpan="12" showTitle="false">
+          <field name="lableUrl"/>
+        </editor>
       </field>
     </panel>
 

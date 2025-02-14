@@ -6,7 +6,7 @@
   <grid name="multi-shipment-package-line-grid" title="Multi Shipment Package Line"
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
     <button onClick="action-multi-shipment-line-print-lable" name="printBtn" title="Print"
-      icon="fa-envelope" />
+      icon="fa-envelope"/>
     <field name="trackingNumber"/>
     <field name="lableUrl"/>
   </grid>
@@ -21,9 +21,9 @@
 		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
 		      </div>
 		    ]]></viewer>
-		    <editor colSpan="12" showTitle="false">
-			<field name="lableUrl" />
-		</editor>
+        <editor colSpan="12" showTitle="false">
+          <field name="lableUrl"/>
+        </editor>
       </field>
       <field name="lableUrl" colSpan="12"/>
     </panel>

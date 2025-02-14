@@ -159,7 +159,10 @@ public class PurchaseLableController {
   public void openPrintingLable(ActionRequest request, ActionResponse response)
       throws AxelorException {
     ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
-    response.setView(ActionView.define(shipmentLine.getTrackingNumber()).add("html", shipmentLine.getLableUrl()).map());
+    response.setView(
+        ActionView.define(shipmentLine.getTrackingNumber())
+            .add("html", shipmentLine.getLableUrl())
+            .map());
   }
 
   public void sendEmail(ActionRequest request, ActionResponse response) throws AxelorException {
