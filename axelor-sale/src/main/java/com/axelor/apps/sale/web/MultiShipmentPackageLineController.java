@@ -20,6 +20,7 @@ package com.axelor.apps.sale.web;
 
 import com.axelor.apps.base.AxelorException;
 import com.axelor.apps.sale.db.MultiShipmentPackageLine;
+import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
@@ -32,5 +33,7 @@ public class MultiShipmentPackageLineController {
     Context context = request.getContext();
     MultiShipmentPackageLine multiShipmentPackageLine =
         request.getContext().asType(MultiShipmentPackageLine.class);
+    response.setView(ActionView.define(multiShipmentPackageLine.getTrackingNumber()).add("html", multiShipmentPackageLine.getLableUrl()).map());
+    
   }
 }

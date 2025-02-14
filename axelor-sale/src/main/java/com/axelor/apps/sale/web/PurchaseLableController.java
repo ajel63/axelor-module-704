@@ -32,6 +32,7 @@ import com.axelor.apps.sale.db.repo.SaleOrderRepository;
 import com.axelor.apps.sale.db.repo.ShipmentLineRepository;
 import com.axelor.apps.sale.service.PurchaseLableService;
 import com.axelor.inject.Beans;
+import com.axelor.meta.schema.actions.ActionView;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.axelor.rpc.Context;
@@ -158,23 +159,7 @@ public class PurchaseLableController {
   public void openPrintingLable(ActionRequest request, ActionResponse response)
       throws AxelorException {
     ShipmentLine shipmentLine = request.getContext().asType(ShipmentLine.class);
-
-    String os = System.getProperty("os.name").toLowerCase();
-
-    try {
-      if (os.contains("win")) {
-        // For Windows
-        Runtime.getRuntime()
-            .exec("rundll32 url.dll,FileProtocolHandler " + shipmentLine.getLableUrl());
-      } else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
-        // For Unix/Linux/Mac
-        Runtime.getRuntime().exec("xdg-open " + shipmentLine.getLableUrl());
-      } else {
-        System.out.println("Unsupported operating system: " + os);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    response.setView(ActionView.define(shipmentLine.getTrackingNumber()).add("html", shipmentLine.getLableUrl()).map());
   }
 
   public void sendEmail(ActionRequest request, ActionResponse response) throws AxelorException {

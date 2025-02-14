@@ -5,22 +5,25 @@
 
   <grid name="multi-shipment-package-line-grid" title="Multi Shipment Package Line"
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
+    <button onClick="action-multi-shipment-line-print-lable" name="printBtn" title="Print"
+      icon="fa-envelope" />
     <field name="trackingNumber"/>
     <field name="lableUrl"/>
-    <button onClick="action-multi-shipment-line-print-lable" name="printBtn" title="Print"
-      icon="fa-envelope"/>
   </grid>
 
   <form name="multi-shipment-package-line-form" title="Multi Shipment Package Line"
     model="com.axelor.apps.sale.db.MultiShipmentPackageLine">
     <panel name="packPanel">
       <field name="trackingNumber"/>
-      <field name="lableUrl" colSpan="12" readonly="true">
+      <field name="lableUrl" colSpan="12" readonly="false">
         <viewer depends="lableUrl"><![CDATA[
 		      <div>
 		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
 		      </div>
 		    ]]></viewer>
+		    <editor colSpan="12" showTitle="false">
+			<field name="lableUrl" />
+		</editor>
       </field>
       <field name="lableUrl" colSpan="12"/>
     </panel>

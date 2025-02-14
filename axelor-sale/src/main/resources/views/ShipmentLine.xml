@@ -5,6 +5,8 @@
 
   <grid name="shipment-grid" title="Shipment" model="com.axelor.apps.sale.db.ShipmentLine">
     <hilite if="isReturnConfirm" color="red"/>
+    <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn" title="Print"
+      icon="fa-print"/> 
     <field name="customer"/>
     <field name="trackStatus"/>
     <field name="rate"/>
@@ -13,8 +15,6 @@
     <field name="trackingNumber"/>
     <field name="shippDate"/>
     <field name="saleOrder"/>
-    <!-- <button onClick="save,action-shipment-line-method-open-print-lable" name="printBtn" title="Print"
-      icon="fa-print"/> -->
     <field name="isEmailSent"/>
     <field name="isReturnConfirm"/>
   </grid>
@@ -29,12 +29,15 @@
       <field name="shippDate"/>
       <field name="trackingNumber"/>
       <field name="trackingLink"/>
-      <field name="lableUrl" colSpan="6" readonly="true">
+      <field name="lableUrl" colSpan="12" readonly="false">
         <viewer depends="lableUrl"><![CDATA[
 		      <div>
 		        <span ng-show="record.lableUrl != null" ><a href={{record.lableUrl}} target="_blank">Lable Link</a></span>
 		      </div>
 		    ]]></viewer>
+		<editor colSpan="12" showTitle="false">
+			<field name="lableUrl" />
+		</editor>
       </field>
     </panel>
 
