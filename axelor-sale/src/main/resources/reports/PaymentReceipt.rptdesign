@@ -957,7 +957,7 @@ where SaleOrder.id = ?
             <property name="overflow">hidden</property>
             <property name="contentType">html</property>
             <text-property name="content"><![CDATA[If you have any questions, visit our support site at <b>https://myzsonic.com/</b><br/><br/>
-Contact us at <b>p.zajas@zdental.com</b> or call us at <b>+1 888-228-7706</b>]]></text-property>
+Contact us at <b>orders@zdental.com</b> or call us at <b>+1 888-228-7706</b>]]></text-property>
         </text>
     </body>
 </report>

@@ -122,6 +122,7 @@
   <selection name="sale.order.z.dental.order.type.select">
     <option value="DDIA">DDIA</option>
     <option value="NORMAL">NORMAL</option>
+    <option value="GIVE-AWAYS">GIVE-AWAYS</option>
   </selection>
 
 </object-views>
